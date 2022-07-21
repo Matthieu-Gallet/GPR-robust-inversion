@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MIRAG.optim.admm_func &mdash; MIRAG 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> MIRAG
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">MIRAG</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MIRAG</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>MIRAG.optim.admm_func</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for MIRAG.optim.admm_func</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Complementary module for the ``ADMM`` convolutional</span>
+
+<span class="sd">References</span>
+<span class="sd">----------</span>
+<span class="sd">.. [1] &#39;Multichannel sparse recovery of complex-valued signals using Huber’s criterion&#39;,Esa Ollila</span>
+<span class="sd">        Avalaible at: https://arxiv.org/pdf/1504.04184.pdf</span>
+
+<span class="sd">.. [2] &#39;Robust Principal Component Analysis?&#39;, Candes &amp; al.</span>
+<span class="sd">        Avalaible at: http://www.columbia.edu/~jw2966/papers/CLMW11-JACM.pdf</span>
+
+<span class="sd">.. [3] &#39;Distributed Optimization and Statistical Learning</span>
+<span class="sd">        via the Alternating Direction Method of Multipliers p.23&#39;, Stephen Boyd</span>
+<span class="sd">        Avalaible at: https://web.stanford.edu/~boyd/papers/pdf/admm_distr_stats.pdf</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">linalg</span>
+<span class="kn">from</span> <span class="nn">pywt</span> <span class="kn">import</span> <span class="n">threshold</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span>
+
+<div class="viewcode-block" id="huber_complex"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.huber_complex">[docs]</a><span class="k">def</span> <span class="nf">huber_complex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Huber function applied to a complex array as proposed in [1]_</span>
+
+<span class="sd">    :math:`\rho_{H, \delta}(x)=\left\{\begin{array}{ll}|x|^{2}, &amp; \text { for }|x| \leq \delta </span>
+<span class="sd">    \\2 \delta|x|-\delta^{2}, &amp; \text { for }|x|&gt;\delta\end{array}\right.`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : complex</span>
+<span class="sd">        array to apply the Huber function</span>
+<span class="sd">    delta : float</span>
+<span class="sd">        threshold parameter</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : complex</span>
+<span class="sd">        array with the Huber function applied</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">delta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&gt;</span><span class="n">delta</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">delta</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">delta</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span></div>
+
+    
+<div class="viewcode-block" id="sign_complex_array"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.sign_complex_array">[docs]</a><span class="k">def</span> <span class="nf">sign_complex_array</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot; Determine the sign of a complex array, based on [1]_</span>
+
+<span class="sd">    :math:`\operatorname{sign}(e)=\left\{\begin{array}{ll}</span>
+<span class="sd">    e /|e|, &amp; \text { for } e \neq 0 \\</span>
+<span class="sd">    0, &amp; \text { for } e=0</span>
+<span class="sd">    \end{array}\right.`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : complex</span>
+<span class="sd">        array to determine the sign</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : int</span>
+<span class="sd">        array with the sign of the input array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span><span class="o">!=</span><span class="mi">0</span><span class="p">,</span><span class="n">x</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="loss_derivative_function_complex"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.loss_derivative_function_complex">[docs]</a><span class="k">def</span> <span class="nf">loss_derivative_function_complex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot; Derivative of the Huber function, based on [1]_</span>
+
+<span class="sd">    :math:`\psi_{H, \delta}(x)=\left\{\begin{array}{ll}</span>
+<span class="sd">    x, &amp; \text { for }|x| \leq \delta \\</span>
+<span class="sd">    \delta \operatorname{sign}(x), &amp; \text { for }|x|&gt;\delta</span>
+<span class="sd">    \end{array}\right.`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : complex</span>
+<span class="sd">        array to apply the Huber function</span>
+<span class="sd">    delta : float</span>
+<span class="sd">        threshold parameter</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : complex</span>
+<span class="sd">        array with the derivative of the Huber function applied</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&gt;</span><span class="n">delta</span><span class="p">,</span><span class="n">delta</span><span class="o">*</span><span class="n">sign_complex_array</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="gradient_huber"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.gradient_huber">[docs]</a><span class="k">def</span> <span class="nf">gradient_huber</span><span class="p">(</span><span class="n">S_tilde</span><span class="p">,</span> <span class="n">X_m_tilde</span><span class="p">,</span> <span class="n">D_m_tilde</span><span class="p">,</span> <span class="n">D_m_H_tilde</span><span class="p">,</span> <span class="n">Z_m_tilde</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot; Function to compute the gradient of the Huber function of the following </span>
+<span class="sd">    minimization problem:</span>
+
+<span class="sd">    :math:`\underset{\mathbf{\hat{c}}}{\operatorname{argmin}}</span>
+<span class="sd">    \sum_N\mathcal{H}_\delta(\mathbf{\hat{D}} \cdot \mathbf{\hat{c}}-\mathbf{\hat{y}})+</span>
+<span class="sd">    \frac{\rho}{2}\Big|\Big| {\mathbf{\hat{c}}-\mathbf{\hat{z}}}\Big|\Big|_2^2`</span>
+
+<span class="sd">    The gradient is computed as follows:</span>
+
+<span class="sd">    :math:`\nabla_\mathbf{\hat{c}}f=\{\mathbf{\tilde{DH}_m}\}_k\odot\Psi_\delta</span>
+<span class="sd">    \left(\sum_{k}\mathbf{\tilde{D}_m}_k\odot\mathbf{\tilde{X}_m}_k</span>
+<span class="sd">    -\mathbf{\tilde{S}}\right)+\rho({\mathbf{\tilde{X}_m}-\mathbf{\tilde{Z}_m}})`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    S_tilde : complex</span>
+<span class="sd">        fft of the original signal (Nx,Ny)</span>
+<span class="sd">    X_m_tilde : complex</span>
+<span class="sd">        fft of the coefficients maps :math:`\mathbf{\hat{C}_k}` (Nx,Ny,K)</span>
+<span class="sd">    D_m_tilde : complex</span>
+<span class="sd">        fft of the dictionary :math:`\mathbf{\hat{D}_k}` (Nx,Ny,K)</span>
+<span class="sd">    D_m_H_tilde : complex</span>
+<span class="sd">        fft hermitian of the dictionary :math:`\mathbf{\hat{D}_k}^H` (Nx,Ny,K)</span>
+<span class="sd">    Z_m_tilde : complex</span>
+<span class="sd">        fft (auxiliary variable- dual variable)  (Nx,Ny,K)</span>
+<span class="sd">    rho : float</span>
+<span class="sd">        regularization parameter</span>
+<span class="sd">    delta : float</span>
+<span class="sd">        threshold parameter</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out: complex</span>
+<span class="sd">        gradient of the Huber function (NX,NY,K)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r_n_tilde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">D_m_tilde</span><span class="o">*</span><span class="n">X_m_tilde</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="n">S_tilde</span>
+    <span class="n">xi</span> <span class="o">=</span> <span class="n">loss_derivative_function_complex</span><span class="p">(</span><span class="n">r_n_tilde</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
+    <span class="n">nabla_w</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">xi</span><span class="o">*</span><span class="n">D_m_H_tilde</span><span class="p">)</span>
+    <span class="n">nabla_q</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">*</span> <span class="p">(</span><span class="n">X_m_tilde</span><span class="o">+</span><span class="n">Z_m_tilde</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">nabla_w</span><span class="o">+</span><span class="n">nabla_q</span></div>
+
+
+<div class="viewcode-block" id="proxH"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.proxH">[docs]</a><span class="k">def</span> <span class="nf">proxH</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">seuil</span><span class="p">,</span><span class="n">rho</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; proximal operator of the Huber function</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x :  ndarray</span>
+<span class="sd">        input signal</span>
+<span class="sd">    seuil :  float</span>
+<span class="sd">        threshold</span>
+<span class="sd">    rho :  float</span>
+<span class="sd">        regularization parameter</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray</span>
+<span class="sd">        result of the proximal operator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">seuil</span><span class="o">*</span><span class="p">(</span><span class="n">rho</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="n">rho</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">x</span><span class="o">-</span><span class="n">seuil</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">sign_complex_array</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="thresholding_nuclear"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.thresholding_nuclear">[docs]</a><span class="k">def</span> <span class="nf">thresholding_nuclear</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">lambdaS</span><span class="p">,</span><span class="n">rho</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Fonction de calcul du seuillage par valeurs singulières</span>
+<span class="sd">    Elle est la résultante de l&#39;opérateur proximal associé à la </span>
+<span class="sd">    norme nucléaire.</span>
+
+<span class="sd">    :math:`\underset{\mathbf{{L}}}{\operatorname{argmin}}</span>
+<span class="sd">    \lambda||\mathbf{L}||_* +</span>
+<span class="sd">    \frac{\rho_L}{2}\Big|\Big|\mathbf{X}-\mathbf{L}\Big|\Big|_2^2 =</span>
+<span class="sd">    \mathrm{prox}_{||.||_*,\lambda/\rho_L}(\mathbf{X})</span>
+<span class="sd">    \\</span>
+<span class="sd">    \ \mathrm{avec}\ \ \mathrm{prox}_{||.||_*,\lambda/\rho_L}(x)=</span>
+<span class="sd">    \mathcal{T}_{\lambda/\rho_L}\left(x\right)`</span>
+
+<span class="sd">    Basée sur [2]_</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    M : float</span>
+<span class="sd">        tenseur de dimension Nx,Ny,K</span>
+<span class="sd">    i : int</span>
+<span class="sd">        i ème couche à seuiller (0&lt;i&lt;K)</span>
+<span class="sd">    lambdaS : float</span>
+<span class="sd">        Paramètre de parcimonie (si existant &gt;0)</span>
+<span class="sd">    rho : float</span>
+<span class="sd">        Paramètre de pénalité &gt;0</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    L : float</span>
+<span class="sd">        Résultat de la minimisation pour une couche i</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="p">[</span><span class="n">u_temp</span><span class="p">,</span><span class="n">Sig_temp</span><span class="p">,</span><span class="n">v_temp</span><span class="p">]</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">((</span><span class="n">M</span><span class="p">)[:,:,</span><span class="n">i</span><span class="p">],</span><span class="n">check_finite</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">Sig_temp</span> <span class="o">=</span> <span class="n">diag_thresh</span><span class="p">(</span><span class="n">u_temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">u_temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">Sig_temp</span><span class="p">)</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="n">u_temp</span><span class="nd">@threshold</span><span class="p">(</span><span class="n">Sig_temp</span><span class="p">,(</span><span class="n">lambdaS</span><span class="o">/</span><span class="n">rho</span><span class="p">),</span><span class="s1">&#39;soft&#39;</span><span class="p">)</span><span class="nd">@v_temp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">L</span></div>
+
+
+<div class="viewcode-block" id="update_rhoLS_adp"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.update_rhoLS_adp">[docs]</a><span class="k">def</span> <span class="nf">update_rhoLS_adp</span><span class="p">(</span><span class="n">er_prim</span><span class="p">,</span><span class="n">er_dual</span><span class="p">,</span><span class="n">rhoLS</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Fonction d&#39;adaptation des paramètres de pénalités dans</span>
+<span class="sd">    l&#39;`ADMM` à partir des erreurs faites sur le primal et le dual.</span>
+<span class="sd">    Basée sur [3]_</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    er_prim : float</span>
+<span class="sd">        erreur du primal</span>
+<span class="sd">    er_dual : float</span>
+<span class="sd">        erreur du dual</span>
+<span class="sd">    rhoLS : float</span>
+<span class="sd">        valeur du paramètre à actualiser</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    rhoLS : float</span>
+<span class="sd">        paramètre de pénalité actualisé</span>
+<span class="sd">    k : float</span>
+<span class="sd">        facteur de dilation/contraction utilisé</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">er_prim</span><span class="o">&gt;</span><span class="mi">10</span><span class="o">*</span><span class="n">er_dual</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">rhoLS</span><span class="o">&lt;</span><span class="mf">1e5</span><span class="p">):</span>
+        <span class="n">k</span><span class="o">=</span><span class="mi">2</span>
+        <span class="n">rhoLS</span> <span class="o">=</span> <span class="n">k</span><span class="o">*</span><span class="n">rhoLS</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">er_dual</span><span class="o">&gt;</span><span class="mi">10</span><span class="o">*</span><span class="n">er_prim</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">rhoLS</span><span class="o">&lt;</span><span class="mf">1e5</span><span class="p">):</span>
+        <span class="n">k</span><span class="o">=</span><span class="mf">0.5</span>
+        <span class="n">rhoLS</span> <span class="o">=</span> <span class="n">k</span><span class="o">*</span><span class="n">rhoLS</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">k</span><span class="o">=</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">rhoLS</span><span class="p">,</span><span class="n">k</span></div>
+
+
+<div class="viewcode-block" id="Sherman_MorrisonF"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.Sherman_MorrisonF">[docs]</a><span class="k">def</span> <span class="nf">Sherman_MorrisonF</span><span class="p">(</span><span class="n">DF_H</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">rho</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Solve a diagonal block linear system with a scaled identity </span>
+<span class="sd">    term using the Sherman-Morrison equation</span>
+
+<span class="sd">    The solution is obtained by independently solving a set of linear </span>
+<span class="sd">    systems of the form (see wohlberg-2015-efficient)</span>
+
+<span class="sd">    :math:`(a\cdot a^H +\rho I)x = b`</span>
+
+<span class="sd">    In this equation inner products and matrix products are taken along</span>
+<span class="sd">    the 3rd dimension of the corresponding multi-dimensional arrays; the</span>
+<span class="sd">    solutions are independent over the 1st and 2nd (and 4th, if </span>
+<span class="sd">    non-singleton) dimensions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    DF_H :complex</span>
+<span class="sd">        Conjugate of Multi-dimensional array containing :math:`a^H`</span>
+<span class="sd">    b :complex</span>
+<span class="sd">        Multi-dimensional array containing b</span>
+<span class="sd">    c :complex</span>
+<span class="sd">        Multi-dimensional array containing pre-computed quantities :math:`a^H/(a^H\cdot a +\\rho)`</span>
+<span class="sd">    rho :float</span>
+<span class="sd">        Scalar rho</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    x :complex</span>
+<span class="sd">        Multi-dimensional array containing linear system solution</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Adapted from matlab code : Brendt Wohlberg &lt;brendt@lanl.gov&gt;  Modified: 2014-12-18 </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># cb=np.repeat(cb[:,:,np.newaxis],K,axis=2)</span>
+    <span class="n">cba</span> <span class="o">=</span> <span class="n">cb</span> <span class="o">*</span> <span class="n">DF_H</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">cba</span><span class="p">)</span> <span class="o">/</span> <span class="n">rho</span>
+    <span class="k">return</span> <span class="n">x</span></div>
+
+
+<div class="viewcode-block" id="diag_thresh"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.diag_thresh">[docs]</a><span class="k">def</span> <span class="nf">diag_thresh</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Retourne une matrice diagonale de dimension mxn à partir d&#39;un vecteur s</span>
+<span class="sd">    Utilisation après `np.linalg.svd` pour obtenir une matrice à partir de S</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    m :int</span>
+<span class="sd">        dimension verticale de la matrice souhaitée</span>
+<span class="sd">    n :int</span>
+<span class="sd">        dimension horizontale de la matrice souhaitée</span>
+<span class="sd">    s :float</span>
+<span class="sd">        vecteur à diagonaliser</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out :float</span>
+<span class="sd">        Matrice diagonale (à partir de S)    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">m</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">)[:,</span> <span class="n">q</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">)[:,</span> <span class="n">q</span><span class="p">:]</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">)[:,</span> <span class="n">q</span><span class="p">:]</span></div>
+
+<div class="viewcode-block" id="SVD_gpr"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.SVD_gpr">[docs]</a><span class="k">def</span> <span class="nf">SVD_gpr</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span><span class="n">rank</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Perform a SVD on the reference image and dump the first n rank singular values</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ref :  ndarray</span>
+<span class="sd">        reference image</span>
+<span class="sd">    rank : int</span>
+<span class="sd">        rank of the SVD</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    A_remake : ndarray</span>
+<span class="sd">        Reconstructed reference image without the rank-n singular values</span>
+<span class="sd">         </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">U</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">VT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">D</span><span class="p">[:</span><span class="n">rank</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">diag_D</span> <span class="o">=</span> <span class="n">diag_thresh</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">VT</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">D</span><span class="p">)</span>
+    <span class="n">A_remake</span> <span class="o">=</span> <span class="p">(</span><span class="n">U</span> <span class="o">@</span> <span class="n">diag_D</span> <span class="o">@</span> <span class="n">VT</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A_remake</span></div>
+
+
+<div class="viewcode-block" id="roll_fft"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.roll_fft">[docs]</a><span class="k">def</span> <span class="nf">roll_fft</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Correction de la position des coefficients des cartes en fonctions</span>
+<span class="sd">    de la position centrale des hyperboles + Sommation des C_k</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    alpha :float</span>
+<span class="sd">        Tenseur complexe (M x N x K) des cartes de coefficients</span>
+<span class="sd">    t :int</span>
+<span class="sd">        position (pixel) centrale des hyperboles utilisées (ordonnée).</span>
+<span class="sd">    x :int</span>
+<span class="sd">        position (pixel) centrale des hyperboles utilisées (abscisse).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out :float</span>
+<span class="sd">        Matrice corrigée et réduite (M x N)       </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Q</span></div>
+
+<span class="k">class</span> <span class="nc">ConvolutionalSparseCoding</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base classe for convolutional sparse coding for image processing applications</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dictionary : array_like of shape (n_pixelsx, n_pixelx_y, n_atoms)</span>
+<span class="sd">        Dictionary for sparse coding.</span>
+<span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_dictionary</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_set_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Setting the internal dictionary.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dictionary : array_like of shape (n_pixelsx, n_pixelx_y, n_atoms)</span>
+<span class="sd">        Dictionary for sparse coding.</span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        AttributeError</span>
+<span class="sd">            When the dimesnion of the dictionary is not 3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="c1">#check_array(dictionary)</span>
+        <span class="k">if</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">ndim</span><span class="o">!=</span><span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimension of array </span><span class="si">{</span><span class="n">dictionary</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2"> != 3&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span> <span class="o">=</span> <span class="n">dictionary</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Matthieu Gallet.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

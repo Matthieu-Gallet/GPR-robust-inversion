@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MIRAG.filtrage_func &mdash; MIRAG 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> MIRAG
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">MIRAG</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MIRAG</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>MIRAG.filtrage_func</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for MIRAG.filtrage_func</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module de filtrage des reconstructions par seuillage / abandon d&#39;atomes du dictionnaire</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="SVD_gpr"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.filtrage_func.SVD_gpr">[docs]</a><span class="k">def</span> <span class="nf">SVD_gpr</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span><span class="n">rank</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Make a SVD of the reference image and put to zero the first rank singular values.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ref :  float</span>
+<span class="sd">        Reference image (Nx,Ny)</span>
+<span class="sd">    rank :  int</span>
+<span class="sd">        Rank of the SVD to set to zero.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ref_svd : float</span>
+<span class="sd">        Reference image with the first rank singular values set to zero.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">U</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">VT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">D</span><span class="p">[:</span><span class="n">rank</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">A_remake</span> <span class="o">=</span> <span class="p">(</span><span class="n">U</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">D</span><span class="p">)</span> <span class="o">@</span> <span class="n">VT</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A_remake</span></div>
+
+<div class="viewcode-block" id="dropR"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.filtrage_func.dropR">[docs]</a><span class="k">def</span> <span class="nf">dropR</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">Dic</span><span class="p">,</span> <span class="n">p_acond</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">acond</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Supprime après ADMM les atomes non désirés pour la reconstruction</span>
+
+<span class="sd">    .. warning::</span>
+<span class="sd">        A utiliser spécifiquement pour l&#39;ADMM 1 contrainte (ADMM 2 ou Source separation</span>
+<span class="sd">        utilise la matrice creuse L)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    C :float</span>
+<span class="sd">        Cartes des coefficients à alléger (Nx,Ny,K) avec K le nombre d&#39;atomes, </span>
+<span class="sd">        Nx,Ny les dimensions de la reconstruction.</span>
+<span class="sd">    Dic :float</span>
+<span class="sd">        Dictionnaire à alléger (Nx,Ny,K) avec K le nombre d&#39;atomes,</span>
+<span class="sd">        Nx,Ny les dimensions de la reconstruction.</span>
+<span class="sd">    p_acond :int{500}, optional</span>
+<span class="sd">        condition sur le paramètre p du dictionnaire.</span>
+<span class="sd">        Garde tous les atomes tq :math:`a/p &lt; p_{cond}`.</span>
+<span class="sd">    acond :float{0.1}, optional</span>
+<span class="sd">        condition sur le paramètre a du dictionnaire.</span>
+<span class="sd">        Garde tous les atomes tq :math:`a &gt; a_{cond}`.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Cprim :float</span>
+<span class="sd">        Cartes des coefficients allégés (Nx,Ny,K&#39;) avec K&#39;&lt;K</span>
+<span class="sd">    Hprim :float</span>
+<span class="sd">        Dictionnaire allégé (Nx,Ny,K&#39;) avec K&#39;&lt;K</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cond1</span> <span class="o">=</span> <span class="n">Dic</span><span class="p">[</span><span class="s2">&quot;param&quot;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">Dic</span><span class="p">[</span><span class="s2">&quot;param&quot;</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p_acond</span>
+    <span class="n">cond2</span> <span class="o">=</span> <span class="n">Dic</span><span class="p">[</span><span class="s2">&quot;param&quot;</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">acond</span>
+    <span class="n">l_red</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cond1</span> <span class="o">&amp;</span> <span class="n">cond2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">Cprim</span> <span class="o">=</span> <span class="n">C</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">l_red</span><span class="p">]</span>
+    <span class="n">Him</span> <span class="o">=</span> <span class="n">Dic</span><span class="p">[</span><span class="s2">&quot;atoms&quot;</span><span class="p">][:,</span> <span class="p">:,</span> <span class="n">l_red</span><span class="p">]</span>
+    <span class="n">par</span> <span class="o">=</span> <span class="n">Dic</span><span class="p">[</span><span class="s2">&quot;param&quot;</span><span class="p">][</span><span class="n">l_red</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="n">Hprim</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;atoms&quot;</span><span class="p">:</span> <span class="n">Him</span><span class="p">,</span> <span class="s2">&quot;param&quot;</span><span class="p">:</span> <span class="n">par</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">Cprim</span><span class="p">,</span> <span class="n">Hprim</span></div>
+
+
+<div class="viewcode-block" id="thresh_Ck"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.filtrage_func.thresh_Ck">[docs]</a><span class="k">def</span> <span class="nf">thresh_Ck</span><span class="p">(</span><span class="n">Cprim</span><span class="p">,</span> <span class="n">seuil</span><span class="o">=</span><span class="mf">0.45</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Seuillage des cartes C_k.</span>
+<span class="sd">    Met à zéros les valeurs qui respecte les condtions suivantes pour un signal découpé </span>
+<span class="sd">    en histogramme à 1000 tranches:</span>
+
+<span class="sd">    .. math:: 0.5\cdot\mathrm{seuil}*1000&lt; \mathrm{signal}&lt;1000*(1- 0.5\cdot\mathrm{seuil}) </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Cprim :float</span>
+<span class="sd">        Tenseur C_k à seuiller (dynamique 0-1) (Nx,Ny,K)</span>
+<span class="sd">    seuil :float{0.45}, optional</span>
+<span class="sd">        seuil des valeurs (entre 0 et 1).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Cter :float</span>
+<span class="sd">        Tenseur des cartes de coefficients seuillé (Nx,Ny,K)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Cter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Cprim</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Cprim</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Cprim</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">])</span>
+        <span class="n">_</span><span class="p">,</span> <span class="nb">bin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="n">bin_min</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">seuil</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)]</span>
+        <span class="n">bin_max</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="mi">1000</span> <span class="o">-</span> <span class="p">(</span><span class="n">seuil</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))]</span>
+        <span class="n">Cter</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">Q</span> <span class="o">&lt;</span> <span class="n">bin_min</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">Q</span> <span class="o">&gt;</span> <span class="n">bin_max</span><span class="p">),</span> <span class="n">Q</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Cter</span></div>
+
+
+<div class="viewcode-block" id="submax_Ck"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.filtrage_func.submax_Ck">[docs]</a><span class="k">def</span> <span class="nf">submax_Ck</span><span class="p">(</span><span class="n">Csec</span><span class="p">,</span> <span class="n">seuil</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Seuillage des cartes C_k.</span>
+<span class="sd">    Ne garde que les valeurs qui respectent les conditions:</span>
+
+<span class="sd">    .. math:: 0.5\cdot\mathrm{seuil}*1000&lt; \mathrm{signal}&lt;1000*(1- 0.5\cdot\mathrm{seuil}) </span>
+
+<span class="sd">    Utile pour faire ressortir les signaux faibles (principalement ADMM1).</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Csec :float</span>
+<span class="sd">        Tenseur C_k à seuiller (dynamique 0-1) (Nx,Ny,K)</span>
+<span class="sd">    seuil :float{0.1}, optional</span>
+<span class="sd">        seuil des valeurs (entre 0 et 1).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Cfin :float</span>
+<span class="sd">        Tenseur des cartes de coefficients seuillé (Nx,Ny,K)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Cprim</span> <span class="o">=</span> <span class="n">Csec</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">Cfin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Cprim</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Cprim</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Cprim</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">])</span>
+        <span class="n">_</span><span class="p">,</span> <span class="nb">bin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="n">bin_min</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">seuil</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)]</span>
+        <span class="n">bin_max</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="mi">1000</span> <span class="o">-</span> <span class="p">(</span><span class="n">seuil</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))]</span>
+        <span class="n">Cfin</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">Q</span> <span class="o">&lt;</span> <span class="n">bin_min</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">Q</span> <span class="o">&gt;</span> <span class="n">bin_max</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Cfin</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Matthieu Gallet.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

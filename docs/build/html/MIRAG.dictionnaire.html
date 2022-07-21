@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MIRAG.dictionnaire package &mdash; MIRAG 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MIRAG.optim package" href="MIRAG.optim.html" />
+    <link rel="prev" title="Modules complémentaires" href="MIRAG.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> MIRAG
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">MIRAG</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MIRAG.dictionnaire package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-MIRAG.dictionnaire.dico_func">MIRAG.dictionnaire.dico_func</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-MIRAG.dictionnaire.dico_phy">MIRAG.dictionnaire.dico_phy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-MIRAG.dictionnaire.dico_phy_plot">MIRAG.dictionnaire.dico_phy_plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-MIRAG.dictionnaire.dictionary">MIRAG.dictionnaire.dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MIRAG.optim.html">MIRAG.optim package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MIRAG.html">Modules complémentaires</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MIRAG</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">MIRAG</a> &raquo;</li>
+          <li><a href="MIRAG.html">Modules complémentaires</a> &raquo;</li>
+      <li>MIRAG.dictionnaire package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/MIRAG.dictionnaire.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mirag-dictionnaire-package">
+<h1>MIRAG.dictionnaire package<a class="headerlink" href="#mirag-dictionnaire-package" title="Permalink to this heading"></a></h1>
+<section id="module-MIRAG.dictionnaire.dico_func">
+<span id="mirag-dictionnaire-dico-func"></span><h2>MIRAG.dictionnaire.dico_func<a class="headerlink" href="#module-MIRAG.dictionnaire.dico_func" title="Permalink to this heading"></a></h2>
+<p>Module compémentaire de création du dictionnaire d’hyperbole pour l’<code class="docutils literal notranslate"><span class="pre">ADMM</span></code> convolutionnel
+pour les approches mathématiques et physiques</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.Deph1">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">Deph1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#Deph1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.Deph1" title="Permalink to this definition"></a></dt>
+<dd><p>fonctions pour calculer les termes de déphasage (et, si pertes, d’atténuation)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – nombre de couche</p></li>
+<li><p><strong>param</strong> (<em>float</em>) – dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – déphasage à la couche n</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_MAXGs" title="MIRAG.dictionnaire.dico_func.parametre_MAXGs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_MAXGs</span></code></a>, <a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_4L" title="MIRAG.dictionnaire.dico_func.parametre_4L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_4L</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.Deph2">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">Deph2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#Deph2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.Deph2" title="Permalink to this definition"></a></dt>
+<dd><p>fonctions pour calculer les termes de déphasage (et, si pertes, d’atténuation)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – nombre de couche</p></li>
+<li><p><strong>param</strong> (<em>float</em>) – dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – déphasage à la couche n</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_MAXGs" title="MIRAG.dictionnaire.dico_func.parametre_MAXGs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_MAXGs</span></code></a>, <a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_4L" title="MIRAG.dictionnaire.dico_func.parametre_4L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_4L</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.atompos2C">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">atompos2C</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#atompos2C"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.atompos2C" title="Permalink to this definition"></a></dt>
+<dd><p>Retourne la permittivité équivalente homogénéisée
+par le modèle 1 (“parametre_MAXGs”) à 2 couches: (air-(matrice+inclusions)).
+Peut être en modifié en utilisant le modèle 2 (“parametre_4L”)
+qui utilise 4 couches: (air-matrice-cible-matrice)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ta</strong> (<em>float</em>) – épaisseur de la couche d’air (m)</p></li>
+<li><p><strong>tm</strong> (<em>float</em>) – permittivité effective du milieu (relative)</p></li>
+<li><p><strong>freq</strong> (<em>float</em>) – fréquence de fonctionnement du radar</p></li>
+<li><p><strong>cond</strong> (<em>float</em>) – conductivité du milieu</p></li>
+<li><p><strong>marge</strong> (<em>float{0.1}</em><em>, </em><em>optional</em>) – marge de variation sur la permittivité du milieu et l’épaisseur de l’air
+pour obtenir une solution.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – permittivité équivalente homogénéisée</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Cette approche est intéressante mais reste subjective avec notamment les marges acceptées et
+la boucle <code class="docutils literal notranslate"><span class="pre">while</span></code> qui nous éloigne un peu du monde physique (~bricolage) et alourdisse le traitement.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_MAXGs" title="MIRAG.dictionnaire.dico_func.parametre_MAXGs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_MAXGs</span></code></a>, <a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_4L" title="MIRAG.dictionnaire.dico_func.parametre_4L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_4L</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.eps2vprop">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">eps2vprop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par_vp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">margeR</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.075</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#eps2vprop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.eps2vprop" title="Permalink to this definition"></a></dt>
+<dd><p>Retourne la vitesse de propagation fictive de matériaux
+à permittivité équivalente à partir des paramètres physiques
+et du modèle d’homogénéisation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>par_vp</strong> (<em>float</em>) – dictionnaire de paramètres (fréquence,permittivité effective du milieu,conductivité, épaisseur de l’air)</p></li>
+<li><p><strong>margeR</strong> (<em>float{1e-4}</em><em>, </em><em>optional</em>) – marge appliqué aux paramètres du dico pour trouver les permittivtés</p></li>
+<li><p><strong>diff</strong> (<em>float{0.075}</em><em>, </em><em>optional</em>) – critère de différence entre chaque vitesse calculée (%).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>vprM</strong> – array de vitesse de propagation</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Cette approche est intéressante mais reste subjective avec notamment les marges acceptées et le
+critère de différence qui nous éloigne un peu du monde physique (~bricolage)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.filtre2D_B">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">filtre2D_B</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Nx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Nt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coef</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#filtre2D_B"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.filtre2D_B" title="Permalink to this definition"></a></dt>
+<dd><p>Réalise un filtre 2D de type hanning centré sur la position
+de l’atome avec un facteur de dilation coef</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Nx</strong> (<em>int</em>) – dimension horizontale de l’image de l’atome</p></li>
+<li><p><strong>Nt</strong> (<em>int</em>) – dimension verticale de l’image de l’atome</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – coordonnée centrale horizontale de l’atome (en pixels)</p></li>
+<li><p><strong>t</strong> (<em>int</em>) – coordonnée centrale verticale de l’atome (en pixels)</p></li>
+<li><p><strong>coef</strong> (<em>int{1}</em><em>, </em><em>optional</em>) – coeff de dilation du filtre (1 = filtre pour fenêtre 256x256)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>M</strong> – Matrice d’atténuation centrée (Nx*Ny)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.homogeneisation_an">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">homogeneisation_an</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_cp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cste</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TE'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#homogeneisation_an"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.homogeneisation_an" title="Permalink to this definition"></a></dt>
+<dd><p>méthode analytique de l’homogénéisation.</p>
+<p>Fonction de calcul de la permittivité équivalente donnant le même
+cofficient de réflexion total pour plusieurs couches qu’une couche
+à l’interface du vide.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>angle</strong> (<em>float</em>) – angle d’incidence de l’onde considérée</p></li>
+<li><p><strong>gamma_cp</strong> (<em>float</em>) – coefficient de réflexion total(2/4 couches)</p></li>
+<li><p><strong>cste</strong> (<em>float</em>) – <p>dictionnaire des constantes:</p>
+<ul>
+<li><p>pulsation (w)</p></li>
+<li><p>perméabilité vide (mu0)</p></li>
+<li><p>permittivité vide (e0)</p></li>
+</ul>
+</p></li>
+<li><p><strong>c_i</strong> (<em>float</em>) – dictionnaire des paramètres physiques de la première couche
+perméabilité,permittivité et conductivité du matériaux (mui,ei,sigi)</p></li>
+<li><p><strong>polarisation</strong> (<em>str{&quot;TE&quot;</em><em>,</em><em>&quot;TM&quot;}</em>) – polarisation désirée : electrique “TE” ou magnetique “TM”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>e_eq</strong> – permittivité équivalente relative</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.maxwell_garnett">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">maxwell_garnett</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deli</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#maxwell_garnett"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.maxwell_garnett" title="Permalink to this definition"></a></dt>
+<dd><p>Retourne la permittivité effective d’un matériau de type
+inclusion dans une matrice.</p>
+<p>Pour plus d’informations : <a class="reference external" href="https://en.wikipedia.org/wiki/Effective_medium_approximations">https://en.wikipedia.org/wiki/Effective_medium_approximations</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m</strong> (<em>float</em>) – vecteur de permittivité de matrice</p></li>
+<li><p><strong>n</strong> (<em>float</em>) – vecteur de permittivité d’inclusions (cibles)</p></li>
+<li><p><strong>deli</strong> (<em>float</em>) – fraction volumique des inclusions</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>eff</strong> – tableau de permittivité effective</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.parametre_4L">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">parametre_4L</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">350000000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permitivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thick_air</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thick_mat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1.0,</span> <span class="pre">1.0]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#parametre_4L"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.parametre_4L" title="Permalink to this definition"></a></dt>
+<dd><p>Retourne le dictionnaire complet des paramètres nécessaire à
+l’homogénisation de la permittivité pour un coefficient de réflexion totale
+dans le cas d’un modèle à 4 couches (air-matrice-cible-matrice)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frequence</strong> (<em>float{350E6}</em><em>, </em><em>optional</em>) – fréquence de fonctionnement du radar</p></li>
+<li><p><strong>conductivity</strong> (<em>float{0.0}</em><em>, </em><em>optional</em>) – conductivité du milieu</p></li>
+<li><p><strong>permitivity</strong> (<em>list{</em><em>[</em><em>1.0</em><em>, </em><em>1.0</em><em>]</em><em>}</em><em>, </em><em>optional</em>) – permittivités des matériaux (relatives)(matrice+cible)</p></li>
+<li><p><strong>thick_air</strong> (<em>float{1.0}</em><em>, </em><em>optional</em>) – épaisseur de la couche d’air (m)</p></li>
+<li><p><strong>thick_mat</strong> (<em>list{</em><em>[</em><em>1.0</em><em>, </em><em>1.0</em><em>]</em><em>}</em><em>, </em><em>optional</em>) – épaisseur des matériaux (m)(matrice+cible)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul>
+<li><p><strong>cste</strong> (<em>float</em>) – dictionnaire des constantes (fréquence, longeur d’onde, permittivité du vide et pulsation)</p></li>
+<li><p><strong>c_i</strong> (<em>float</em>) – REDONDANT dictionnaire des paramètres de la première couche
+(permeabilite,permittivité,conductivité)</p></li>
+<li><p><strong>p</strong> (<em>float</em>) – dictionnaire complet de tous les paramètres pour chaque couche
+(permeabilite,permittivité,conductivité,angle)</p></li>
+<li><p><em>.. warning::</em> – <strong>A faire</strong></p>
+<p>Modifier la fonction pour éviter la redondance de la variable de sortie <cite>c_i</cite></p>
+</li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_MAXGs" title="MIRAG.dictionnaire.dico_func.parametre_MAXGs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_MAXGs</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.parametre_MAXGs">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">parametre_MAXGs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">350000000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permitivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thick_air</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#parametre_MAXGs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.parametre_MAXGs" title="Permalink to this definition"></a></dt>
+<dd><p>Retourne le dictionnaire complet des paramètres nécessaire à
+l’homogénisation de la permittivité pour un coefficient de réflexion totale
+dans le cas d’un modèle à 2 couches (air-(matrice+inclusion))</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frequence</strong> (<em>float{350E6}</em><em>, </em><em>optional</em>) – fréquence de fonctionnement du radar</p></li>
+<li><p><strong>conductivity</strong> (<em>float{0.0}</em><em>, </em><em>optional</em>) – conductivité du milieu</p></li>
+<li><p><strong>permitivity</strong> (<em>list{</em><em>[</em><em>1.0</em><em>, </em><em>1.0</em><em>]</em><em>}</em><em>, </em><em>optional</em>) – permittivités des matériaux (relatives)(matrice+cible)</p></li>
+<li><p><strong>thick_air</strong> (<em>float{1.0}</em><em>, </em><em>optional</em>) – épaisseur de la couche d’air (m)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul>
+<li><p><strong>cste</strong> (<em>float</em>) – dictionnaire des constantes (fréquence, longeur d’onde, permittivité du vide et pulsation)</p></li>
+<li><p><strong>c_i</strong> (<em>float</em>) – REDONDANT dictionnaire des paramètres de la première couche
+(permeabilite,permittivité,conductivité)</p></li>
+<li><p><strong>p</strong> (<em>float</em>) – dictionnaire complet de tous les paramètres pour chaque couche
+(permeabilite,permittivité,conductivité,angle)</p></li>
+<li><p><em>.. warning::</em> – <strong>A faire</strong></p>
+<p>Modifier la fonction pour éviter la redondance de la variable de sortie <cite>c_i</cite></p>
+</li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_4L" title="MIRAG.dictionnaire.dico_func.parametre_4L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_4L</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.ref">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#ref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.ref" title="Permalink to this definition"></a></dt>
+<dd><p>fonctions pour calculer les coefficients de reflexion à la n_ième interface</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – nombre de couche</p></li>
+<li><p><strong>param</strong> (<em>float</em>) – dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L</p></li>
+<li><p><strong>polarisation</strong> (<em>str{&quot;TE&quot;</em><em>,</em><em>&quot;TM&quot;}</em>) – polarisation désirée : electrique “TE” ou magnetique “TM”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – coefficients reflexion à la n_ième interface</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_MAXGs" title="MIRAG.dictionnaire.dico_func.parametre_MAXGs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_MAXGs</span></code></a>, <a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_4L" title="MIRAG.dictionnaire.dico_func.parametre_4L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_4L</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.ref_tot">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">ref_tot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#ref_tot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.ref_tot" title="Permalink to this definition"></a></dt>
+<dd><p>fonction récursive pour déterminer le coefficient de reflexion total</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int{1}</em>) – numero de la couche de démarrage (1)</p></li>
+<li><p><strong>param</strong> (<em>float</em>) – dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L</p></li>
+<li><p><strong>polarisation</strong> (<em>str{&quot;TE&quot;</em><em>,</em><em>&quot;TM&quot;}</em>) – polarisation désirée : electrique “TE” ou magnetique “TM”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – array des réflexions totales</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_MAXGs" title="MIRAG.dictionnaire.dico_func.parametre_MAXGs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_MAXGs</span></code></a>, <a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_4L" title="MIRAG.dictionnaire.dico_func.parametre_4L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_4L</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.tra">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">tra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#tra"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.tra" title="Permalink to this definition"></a></dt>
+<dd><p>fonctions pour calculer les coefficients transmission à la n_ième interface</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – nombre de couche</p></li>
+<li><p><strong>param</strong> (<em>float</em>) – dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L</p></li>
+<li><p><strong>polarisation</strong> (<em>str{&quot;TE&quot;</em><em>,</em><em>&quot;TM&quot;}</em>) – polarisation désirée : electrique “TE” ou magnetique “TM”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – coefficients transmission à la n_ième interface</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_MAXGs" title="MIRAG.dictionnaire.dico_func.parametre_MAXGs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_MAXGs</span></code></a>, <a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_4L" title="MIRAG.dictionnaire.dico_func.parametre_4L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_4L</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.tran_tot">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">tran_tot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#tran_tot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.tran_tot" title="Permalink to this definition"></a></dt>
+<dd><p>fonction récursive pour déterminer le coefficient de transmission total</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int{1}</em>) – numero de la couche de démarrage (1)</p></li>
+<li><p><strong>param</strong> (<em>float</em>) – dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L</p></li>
+<li><p><strong>polarisation</strong> (<em>str{&quot;TE&quot;</em><em>,</em><em>&quot;TM&quot;}</em>) – polarisation désirée : electrique “TE” ou magnetique “TM”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – array des transmissions totales</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_MAXGs" title="MIRAG.dictionnaire.dico_func.parametre_MAXGs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_MAXGs</span></code></a>, <a class="reference internal" href="#MIRAG.dictionnaire.dico_func.parametre_4L" title="MIRAG.dictionnaire.dico_func.parametre_4L"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parametre_4L</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_func.v_prop">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_func.</span></span><span class="sig-name descname"><span class="pre">v_prop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ome</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_func.html#v_prop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_func.v_prop" title="Permalink to this definition"></a></dt>
+<dd><p>Calcule la vitesse de propagation d’une onde à partir de
+la permittivité, conductivité et fréquence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>float</strong> (<em>ome</em>) – permittivité électrique (peut être complexe) (<span class="math notranslate nohighlight">\(F/m\)</span>)</p></li>
+<li><p><strong>float</strong> – conductivité électrique (peut être complexe) (<span class="math notranslate nohighlight">\(\Omega \cdot m\)</span>)</p></li>
+<li><p><strong>float</strong> – fréquence électrique (<span class="math notranslate nohighlight">\(Hz\)</span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – vitesse de propagation</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-MIRAG.dictionnaire.dico_phy">
+<span id="mirag-dictionnaire-dico-phy"></span><h2>MIRAG.dictionnaire.dico_phy<a class="headerlink" href="#module-MIRAG.dictionnaire.dico_phy" title="Permalink to this heading"></a></h2>
+<p>Module de création du dictionnaire d’hyperbole pour l’<code class="docutils literal notranslate"><span class="pre">ADMM</span></code> convolutionnel par approche physique</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_phy.create_dicoPHY2">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_phy.</span></span><span class="sig-name descname"><span class="pre">create_dicoPHY2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paraDic</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_phy.html#create_dicoPHY2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_phy.create_dicoPHY2" title="Permalink to this definition"></a></dt>
+<dd><p>Fonction supérieure de crétion dictionnaire d’hyperboles ou d’atomes
+par modélisation physique</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>paraDic</strong> (<em>dic</em>) – dictionnaire des paramètres de création</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>paraDic[‘dim’] (array) : Dimension of the radargramme</p></li>
+<li><p>paraDic[‘std’] (array) : Input vector of sigma parameter</p></li>
+<li><p>paraDic[‘position’] (array) : Position of the top of the hyperbola</p></li>
+<li><p>paraDic[‘v_prop’] (array) : Input vector of velocity</p></li>
+<li><p>paraDic[‘coef’] (array) : 2D filter coefficient for the size of the hyperbola</p></li>
+<li><p>paraDic[‘size_ns_m’] (array) : value of corresponding measure in time and meter for the radar.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>DioH</strong> – structure de la forme {“atoms”: Dico, “param”: param} où <code class="docutils literal notranslate"><span class="pre">Dico</span></code> est le tenseur
+des hyperboles (Nx*Ny*K) et <code class="docutils literal notranslate"><span class="pre">param</span></code> le tenseur des caractéristiques correspondants
+pour chaque hyperbole (K*3) (vitesse, coeff atténuation, sigma)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dic</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_phy.dico_PHY2">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_phy.</span></span><span class="sig-name descname"><span class="pre">dico_PHY2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Dimxt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_n_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_phy.html#dico_PHY2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_phy.dico_PHY2" title="Permalink to this definition"></a></dt>
+<dd><p>Une fonction pour générer un atome ou une hyperbole afin
+de créer un dictionnaire pour la reconstruction GPR, et ce à partir
+de la modèlisation physique du problème.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Dimxt</strong> (<em>list{</em><em>[</em><em>256</em><em>,</em><em>256</em><em>]</em><em>}</em>) – dimension de l’hyperbole (Nx * Ny)</p></li>
+<li><p><strong>pos</strong> (<em>list{</em><em>[</em><em>60</em><em>,</em><em>128</em><em>]</em><em>}</em>) – position centrée de l’hyperbole</p></li>
+<li><p><strong>v</strong> (<em>float</em>) – vitesse de propagation  pour l’hyperbole</p></li>
+<li><p><strong>dim_n_m</strong> (<em>list{</em><em>[</em><em>900</em><em>,</em><em>40</em><em>]</em><em>}</em>) – dimensions réelles de l’image (y = [ns] et x= [m])</p></li>
+<li><p><strong>A</strong> (<em>int{None}</em><em>, </em><em>optional</em>) – matrice d’atténuation  (Nx * Ny)</p></li>
+<li><p><strong>sigma</strong> (<em>int{5}</em><em>, </em><em>optional</em>) – paramètre épaisseur de l’hyperbole.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>h</strong> – atome construit de dimension (Nx*Ny)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_phy.param_loadPHY">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_phy.</span></span><span class="sig-name descname"><span class="pre">param_loadPHY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_phy.html#param_loadPHY"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_phy.param_loadPHY" title="Permalink to this definition"></a></dt>
+<dd><p>Charge les paramètres et
+retourne un dictionnaire d’atomes de dimension “size”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>list{</em><em>[</em><em>256</em><em>,</em><em>256</em><em>]</em><em>}</em>) – dimension de l’image originale, donc des atomes.</p></li>
+<li><p><strong>opt</strong> (<em>dic</em>) – dictionnaire d’options de creation d’hyperboles</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>atm</strong> (<em>dic</em>) – structure de la forme {“atoms”: Dico, “param”: param} où <code class="docutils literal notranslate"><span class="pre">Dico</span></code> est le tenseur
+des hyperboles (Nx*Ny*K) et <code class="docutils literal notranslate"><span class="pre">param</span></code> le tenseur des caractéristiques correspondants
+pour chaque hyperbole (K*3)</p></li>
+<li><p><strong>opt</strong> (<em>dic</em>) – dictionnaire d’entrée augmenté des valeurs utilisées par la fonctions
+(pour le suivit des modifications)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>ATTENTION</strong></p>
+<p>Modification des paramètres de création du dico directement dans le fichier
+python !!</p>
+<p><strong>A faire</strong></p>
+<ul class="simple">
+<li><p>Ajout de l’option lecture des paramètres par un fichier YAML</p></li>
+</ul>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-MIRAG.dictionnaire.dico_phy_plot">
+<span id="mirag-dictionnaire-dico-phy-plot"></span><h2>MIRAG.dictionnaire.dico_phy_plot<a class="headerlink" href="#module-MIRAG.dictionnaire.dico_phy_plot" title="Permalink to this heading"></a></h2>
+<p>Module d’affichage des résultats liés au dictionnaire créé de manière physique</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_phy_plot.affichage_Eeq_an">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_phy_plot.</span></span><span class="sig-name descname"><span class="pre">affichage_Eeq_an</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thetai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_phy_plot.html#affichage_Eeq_an"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_phy_plot.affichage_Eeq_an" title="Permalink to this definition"></a></dt>
+<dd><p>fonction d’affichage permittivités équivalentes homogénéisées en
+fonction de l’angle d’incidence pour la version analytique
+de l’homogeneisation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eps2</strong> (<em>float</em>) – tableau des permittivités équivalentes homogénéisées</p></li>
+<li><p><strong>thetai</strong> (<em>float</em>) – tableau des angles étudiés</p></li>
+<li><p><strong>polarisation</strong> (<em>string{&quot;TE&quot;</em><em>,</em><em>&quot;TM&quot;}</em>) – polarisation electrique “TE” ou magnétique “TM”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_phy_plot.affichage_RT">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_phy_plot.</span></span><span class="sig-name descname"><span class="pre">affichage_RT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gammat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ttot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thetai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">typec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_phy_plot.html#affichage_RT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_phy_plot.affichage_RT" title="Permalink to this definition"></a></dt>
+<dd><p>affichage des coefficients de réflexion et transmission :
+partie réelle et partie imaginaire</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gammat</strong> (<em>float</em>) – tableau des transmissions totales</p></li>
+<li><p><strong>ttot</strong> (<em>float</em>) – tableau des réflexions totales</p></li>
+<li><p><strong>thetai</strong> (<em>float</em>) – tableau des angles étudiés</p></li>
+<li><p><strong>polarisation</strong> (<em>string{&quot;TE&quot;</em><em>,</em><em>&quot;TM&quot;}</em>) – polarisation electrique “TE” ou magnétique “TM”</p></li>
+<li><p><strong>typec</strong> (<em>string</em>) – Texte supplémentaire pour le titre</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_phy_plot.affichage_RT2">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_phy_plot.</span></span><span class="sig-name descname"><span class="pre">affichage_RT2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gammat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ttot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thetai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polarisation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_phy_plot.html#affichage_RT2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_phy_plot.affichage_RT2" title="Permalink to this definition"></a></dt>
+<dd><p>affichage des coefficients de réflexion et transmission:
+module et argument</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gammat</strong> (<em>float</em>) – tableau des transmissions totales</p></li>
+<li><p><strong>ttot</strong> (<em>float</em>) – tableau des réflexions totales</p></li>
+<li><p><strong>thetai</strong> (<em>float</em>) – tableau des angles étudiés</p></li>
+<li><p><strong>polarisation</strong> (<em>string{&quot;TE&quot;</em><em>,</em><em>&quot;TM&quot;}</em>) – polarisation electrique “TE” ou magnétique “TM”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dico_phy_plot.affichage_sum_mod2">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dico_phy_plot.</span></span><span class="sig-name descname"><span class="pre">affichage_sum_mod2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gammat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ttot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thetai</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dico_phy_plot.html#affichage_sum_mod2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dico_phy_plot.affichage_sum_mod2" title="Permalink to this definition"></a></dt>
+<dd><p>affichage de la somme des carrés des modules de Gamma et T</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gammat</strong> (<em>float</em>) – tableau des transmissions totales</p></li>
+<li><p><strong>ttot</strong> (<em>float</em>) – tableau des réflexions totales</p></li>
+<li><p><strong>thetai</strong> (<em>float</em>) – tableau des angles étudiés</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-MIRAG.dictionnaire.dictionary">
+<span id="mirag-dictionnaire-dictionary"></span><h2>MIRAG.dictionnaire.dictionary<a class="headerlink" href="#module-MIRAG.dictionnaire.dictionary" title="Permalink to this heading"></a></h2>
+<p>Module de création du dictionnaire d’hyperbole pour l’<code class="docutils literal notranslate"><span class="pre">ADMM</span></code> convolutionnel
+basée sur la publication <a class="footnote-reference brackets" href="#id4" id="id1">1</a></p>
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dictionary.create_dicoH">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dictionary.</span></span><span class="sig-name descname"><span class="pre">create_dicoH</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paraDic</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dictionary.html#create_dicoH"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dictionary.create_dicoH" title="Permalink to this definition"></a></dt>
+<dd><p>Fonction supérieure de crétion dictionnaire d’hyperboles ou d’atomes (Basée sur <a class="footnote-reference brackets" href="#id4" id="id2">1</a>.)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>paradic</strong> (<em>dic</em>) – dictionnary of parameters</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>paraDic[‘dim’] (array) : Dimension of the radargramme</p></li>
+<li><p>paraDic[‘scale_a’] (array) : Input vector of a parameter</p></li>
+<li><p>paraDic[‘scale_s’] (array) : Input vector of sigma parameter</p></li>
+<li><p>paraDic[‘f’] (array) : Input vector of f parameter</p></li>
+<li><p>paraDic[‘position’] (array) : Position of the top of the hyperbola</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>DioH</strong> – structure de la forme {“atoms”: Dico, “param”: param} où <code class="docutils literal notranslate"><span class="pre">Dico</span></code> est le tenseur
+des hyperboles (Nx*Ny*K) et <code class="docutils literal notranslate"><span class="pre">param</span></code> le tenseur des caractéristiques correspondants
+pour chaque hyperbole (K*4)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dic</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dictionary.hyperbola_atomTH">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dictionary.</span></span><span class="sig-name descname"><span class="pre">hyperbola_atomTH</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Nx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Nt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dictionary.html#hyperbola_atomTH"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dictionary.hyperbola_atomTH" title="Permalink to this definition"></a></dt>
+<dd><p>Une fonction pour générer un atome d’hyperbole afin
+de créer un dictionnaire pour la reconstruction GPR. (Basée sur <a class="footnote-reference brackets" href="#id4" id="id3">1</a>.)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Nx</strong> (<em>int</em>) – Size of GPR radargram in the distance dimension</p></li>
+<li><p><strong>Nt</strong> (<em>int</em>) – Size of GPR radargram in the time dimension</p></li>
+<li><p><strong>x_0</strong> (<em>float</em>) – position of the hyperobla in distance dimension</p></li>
+<li><p><strong>t_0</strong> (<em>float</em>) – position of the hyperobla in time dimension</p></li>
+<li><p><strong>A</strong> (<em>ndarray{None}</em><em>, </em><em>optional</em>) – Attenuation array</p></li>
+<li><p><strong>sigma</strong> (<em>int{5}</em><em>, </em><em>optional</em>) – Thickness of the hyperbola</p></li>
+<li><p><strong>a</strong> (<em>float{0.8}</em><em>, </em><em>optional</em>) – Affects the opening of the hyperbola.</p></li>
+<li><p><strong>f</strong> (<em>int{500}</em><em>, </em><em>optional</em>) – Affects the flattening at the top of the hyperbola.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>h</strong> – atome construit de dimension (Nx*Ny)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id2">2</a>,<a href="#id3">3</a>)</span></dt>
+<dd><p>‘Sparse Decomposition of the GPR Useful Signal from Hyperbola Dictionary’,
+Guillaume Terasse, Jean-Marie Nicolas, Emmanuel Trouvé and Émeline Drouet</p>
+<p>Avalaible at: <a class="reference external" href="https://hal.archives-ouvertes.fr/hal-01351242">https://hal.archives-ouvertes.fr/hal-01351242</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MIRAG.dictionnaire.dictionary.param_load">
+<span class="sig-prename descclassname"><span class="pre">MIRAG.dictionnaire.dictionary.</span></span><span class="sig-name descname"><span class="pre">param_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/dictionnaire/dictionary.html#param_load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.dictionnaire.dictionary.param_load" title="Permalink to this definition"></a></dt>
+<dd><p>Charge les paramètres et
+retourne un dictionnaire d’atomes de dimension “size”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>list{</em><em>[</em><em>256</em><em>,</em><em>256</em><em>]</em><em>}</em>) – dimension de l’image originale, donc des atomes.</p></li>
+<li><p><strong>opt</strong> (<em>dic</em>) – dictionnaire d’options de creation d’hyperboles</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>out</strong> (<em>dic</em>) – structure de la forme {“atoms”: Dico, “param”: param} où <code class="docutils literal notranslate"><span class="pre">Dico</span></code> est le tenseur
+des hyperboles (Nx*Ny*K) et <code class="docutils literal notranslate"><span class="pre">param</span></code> le tenseur des caractéristiques correspondants
+pour chaque hyperbole (K*4)</p></li>
+<li><p><strong>opt</strong> (<em>dic</em>) – dictionnaire d’entrée augmenté des valeurs utilisées par la fonctions
+(pour le suivit des modifications)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>ATTENTION</strong></p>
+<p>Modification des paramètres de création du dico directement dans le fichier
+python !!</p>
+<p><strong>A faire</strong></p>
+<ul class="simple">
+<li><p>Ajout de l’option lecture des paramètres par un fichier YAML</p></li>
+</ul>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="MIRAG.html" class="btn btn-neutral float-left" title="Modules complémentaires" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MIRAG.optim.html" class="btn btn-neutral float-right" title="MIRAG.optim package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Matthieu Gallet.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction &mdash; MIRAG 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MIRAG" href="modules.html" />
+    <link rel="prev" title="Welcome to MIRAG Inversion’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> MIRAG
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#contexte">Contexte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#organisation-du-module">Organisation du module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">MIRAG</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MIRAG</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/intro.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
+<blockquote>
+<div><p><strong>MIRAG</strong> : <strong>M</strong>odule d’ <strong>I</strong>nversion et de <strong>R</strong>econstruction par <strong>A</strong>DMM pour le <strong>G</strong>PR</p>
+</div></blockquote>
+<p>Le stage réalisé au sein du LISTIC et en collaboration avec l’entreprise Géolithe dans le cadre du projet SMGA <a class="footnote-reference brackets" href="#id6" id="id1">1</a>, a pour but la mise en œuvre de techniques de traitement des signaux afin d’exploiter le concept de GPR (<strong>G</strong>round <strong>P</strong>enetrating <strong>R</strong>adar) aéroporté, cette démarche s’inscrit dans une optique de preuve de concept ou faisabilité.</p>
+<p>Cette proposition est relativement nouvelle et profite de l’essor conjoint des technologies de drone et de l’intelligence artificielle. Ce stage s’articule autour de deux axes principaux : l’amélioration de la qualité des radargrammes obtenus et la classification de signaux d’intérêt au sein de ces derniers. Dans ce présent rapport nous nous concentrons principalement sur la présentation du premier axe, et présentons les pistes et méthodes du second axe qui seront utilisés pour la deuxième partie du stage.</p>
+<p>Jusqu’à très récemment l’utilisation du GPR était souvent associée à des configurations où le radar réalisant la mesure était posé, avec l’antenne plaqué au sol. De cette manière le radar peut maximiser la propagation de l’onde dans le sol avec peu de pertes au niveau de l’interface entre le radar et le sol. Mais depuis l’essor des drones, ces derniers sont des pistes intéressantes pour ausculter des lieux à distances et difficile d’accès.
+C’est dans ce contexte que l’entreprise Géolithe désire étudier la faisabilité de ces GPR aéroportés. afin d’en améliorer l’acquisition d’image radar pour l’étude de cavités.</p>
+<p>L’intérêt est double puisqu’il s’agit d’automatiser le traitement et l’interprétation de radargrammes dans le contexte des radar aéroportés où l’identification des zones d’intérêt est rendue plus difficile par 2 composantes :</p>
+<ul class="simple">
+<li><p>La stabilité et la position de l’appareil qui doivent être d’une grande précision pour permettre la construction de l’image sans artefact.</p></li>
+<li><p>La couche d’air présente entre le radar et la surface du sol à étudiée, qui atténue fortement la propagation de l’onde et qui peut varier en fonction de la hauteur de l’appareil.</p></li>
+</ul>
+<section id="contexte">
+<h2>Contexte<a class="headerlink" href="#contexte" title="Permalink to this heading"></a></h2>
+<p>Le principe du GPR est connu et principalement utilisé dans des domaines variés, des fouilles archéologiques en passant par la détection de mine ou la reconnaissance de marqueurs paléoclimatiques (Daniels <a class="footnote-reference brackets" href="#id7" id="id2">2</a>,Tinelli <a class="footnote-reference brackets" href="#id8" id="id3">3</a>). Cette méthode peut être schématisée de la manière suivante:</p>
+<img alt="alternate text" class="with-shadow" src="_images/contexte.png" />
+<p>Le GPR plaqué au sol se déplace lentement dans une direction et envoie une onde électromagnétique. Cette dernière est réfléchie par tous les obstacles qu’elle rencontre jusqu’à son atténuation. Le GPR va ainsi enregistrer toutes les réflexions en fonction du temps à une position donnée pour former une trace appelée A-scan. L’enregistrement et la concaténation d’un grand nombre d’A-scan le long du déplacement du GPR donne naissance au radargramme appelé B-scan.</p>
+<p>Les interfaces ou changements de matériaux, apparaissent ainsi comme des traits, tandis que les cibles sont reconnaissables à la forme de l’hyperbole, paramétrée par les caractéristiques du milieu (permittivité, fréquence de l’onde) et due à la variation de la distance entre le GPR et la cible.
+Durant ce stage, nous faisons l’hypothèse d’un radar de type mono-statique où l’antenne réceptrice et émettrice sont confondues dans le GPR.</p>
+</section>
+<section id="organisation-du-module">
+<h2>Organisation du module<a class="headerlink" href="#organisation-du-module" title="Permalink to this heading"></a></h2>
+<p>Afin de répondre aux problématique énoncées ci dessus, nous nous sommes basés sur les travaux de Terrasse <a class="footnote-reference brackets" href="#id9" id="id4">4</a> et Wohlberg <a class="footnote-reference brackets" href="#id10" id="id5">5</a>. La solution de reconstruction et d’amélioration des radargrammes étant la modélisation de ce dernier par le produit de convolution entre un dictionnaire de motifs simple et des cartes de coefficients.</p>
+<img alt="alternate text" class="with-shadow" src="_images/conv.png" />
+<p>Le module se divise en deux grandes catégories :</p>
+<ul class="simple">
+<li><p>dictionnaire : fonctions qui permettent la création du dictionnaire pour la résolution du problème d’inversion, et ce par 2 approches mathématique et physique.</p></li>
+<li><p>optmisation : fonctions qui réalisent l’inversion pour sortir les meilleures cartes de coefficients nécessaire pour la reconstruction.</p></li>
+</ul>
+<p>A cela s’ajoute des fonctions complémentaires d’affichages, de calcul de métrique et de filtrage nécessaire au bon fonctionnement du module.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Stratigraphie de Montagne par Géoradar Aéroporté.</p>
+</dd>
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>David Daniels. A review of gpr for landmine detection. Sensing and Imaging,7 :90–123, 09 2006.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>Chiara Tinelli, Adriano Ribolini, Giovanni Bianucci, Monica Bini, and Walter Landini. Ground penetrating radar and palaeontology : The detection of sirenian fossil bones under a sunflower field in tuscany (italy). Comptes Rendus Palevol,11(6) :445–454, 2012.</p>
+</dd>
+<dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p>Guillaume Terrasse. Géodétection des réseaux enterrés par imagerie radar. Theses,Télécom ParisTech, March 2017</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
+<dd><p>Brendt Wohlberg. Admm penalty parameter selection by residual balancing, 2017</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to MIRAG Inversion’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="MIRAG" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Matthieu Gallet.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

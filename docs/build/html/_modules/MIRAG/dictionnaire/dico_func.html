@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MIRAG.dictionnaire.dico_func &mdash; MIRAG 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> MIRAG
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">MIRAG</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MIRAG</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>MIRAG.dictionnaire.dico_func</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for MIRAG.dictionnaire.dico_func</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module compémentaire de création du dictionnaire d&#39;hyperbole pour l&#39;``ADMM`` convolutionnel</span>
+<span class="sd">pour les approches mathématiques et physiques</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="filtre2D_B"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.filtre2D_B">[docs]</a><span class="k">def</span> <span class="nf">filtre2D_B</span><span class="p">(</span><span class="n">Nx</span><span class="p">,</span> <span class="n">Nt</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">coef</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Réalise un filtre 2D de type hanning centré sur la position</span>
+<span class="sd">    de l&#39;atome avec un facteur de dilation coef</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Nx :int</span>
+<span class="sd">        dimension horizontale de l&#39;image de l&#39;atome</span>
+<span class="sd">    Nt :int</span>
+<span class="sd">        dimension verticale de l&#39;image de l&#39;atome</span>
+<span class="sd">    x :int</span>
+<span class="sd">        coordonnée centrale horizontale de l&#39;atome (en pixels)</span>
+<span class="sd">    t :int</span>
+<span class="sd">        coordonnée centrale verticale de l&#39;atome (en pixels)</span>
+<span class="sd">    coef :int{1}, optional</span>
+<span class="sd">        coeff de dilation du filtre (1 = filtre pour fenêtre 256x256)</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    M : float</span>
+<span class="sd">        Matrice d&#39;atténuation centrée (Nx*Ny)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">Nt</span><span class="p">,</span> <span class="n">Nx</span><span class="p">))</span>
+    <span class="n">rdimX</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">coef</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rdimX</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">rdimX</span> <span class="o">=</span> <span class="n">rdimX</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">Dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hanning</span><span class="p">(</span><span class="n">rdimX</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">rdimX</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">Dx</span> <span class="o">=</span> <span class="n">Dx</span> <span class="o">@</span> <span class="n">Dx</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">coor_win</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">t</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">rdimX</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">t</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">rdimX</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">x</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">rdimX</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">x</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">rdimX</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">coor_win</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">Dx</span> <span class="o">=</span> <span class="n">Dx</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">coor_win</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">coor_win</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">coor_win</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">Dx</span> <span class="o">=</span> <span class="n">Dx</span><span class="p">[:</span> <span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">coor_win</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">:]</span>
+        <span class="n">coor_win</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">coor_win</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">Dx</span> <span class="o">=</span> <span class="n">Dx</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">coor_win</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="p">:]</span>
+        <span class="n">coor_win</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">coor_win</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">Dx</span> <span class="o">=</span> <span class="n">Dx</span><span class="p">[:,</span> <span class="p">:</span> <span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">coor_win</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+        <span class="n">coor_win</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">M</span><span class="p">[</span><span class="n">coor_win</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="n">coor_win</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">coor_win</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">:</span> <span class="n">coor_win</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Dx</span>
+    <span class="k">return</span> <span class="n">M</span></div>
+
+
+<span class="c1"># Fonctions dictionnaire physique</span>
+<div class="viewcode-block" id="ref"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.ref">[docs]</a><span class="k">def</span> <span class="nf">ref</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;fonctions pour calculer les coefficients de reflexion à la n_ième interface</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n :int</span>
+<span class="sd">        nombre de couche</span>
+<span class="sd">    param :float</span>
+<span class="sd">        dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L</span>
+<span class="sd">    polarisation :str{&quot;TE&quot;,&quot;TM&quot;}</span>
+<span class="sd">        polarisation désirée : electrique &quot;TE&quot; ou magnetique &quot;TM&quot;.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : float</span>
+<span class="sd">        coefficients reflexion à la n_ième interface</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    parametre_MAXGs,parametre_4L</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">polarisation</span> <span class="o">==</span> <span class="s2">&quot;TM&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="o">-</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">])</span>
+            <span class="o">+</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">])</span>
+            <span class="o">+</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">polarisation</span> <span class="o">==</span> <span class="s2">&quot;TE&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">])</span>
+            <span class="o">-</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">])</span>
+            <span class="o">+</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;erreur de polarisation&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="tra"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.tra">[docs]</a><span class="k">def</span> <span class="nf">tra</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;fonctions pour calculer les coefficients transmission à la n_ième interface</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n :int</span>
+<span class="sd">        nombre de couche</span>
+<span class="sd">    param :float</span>
+<span class="sd">        dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L</span>
+<span class="sd">    polarisation :str{&quot;TE&quot;,&quot;TM&quot;}</span>
+<span class="sd">        polarisation désirée : electrique &quot;TE&quot; ou magnetique &quot;TM&quot;.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : float</span>
+<span class="sd">        coefficients transmission à la n_ième interface</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    parametre_MAXGs,parametre_4L</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">polarisation</span> <span class="o">==</span> <span class="s2">&quot;TM&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">])</span>
+            <span class="o">+</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">polarisation</span> <span class="o">==</span> <span class="s2">&quot;TE&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">])</span>
+            <span class="o">+</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;erreur de polarisation&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Deph1"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.Deph1">[docs]</a><span class="k">def</span> <span class="nf">Deph1</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;fonctions pour calculer les termes de déphasage (et, si pertes, d&#39;atténuation)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n :int</span>
+<span class="sd">        nombre de couche</span>
+<span class="sd">    param :float</span>
+<span class="sd">        dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : float</span>
+<span class="sd">        déphasage à la couche n</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    parametre_MAXGs,parametre_4L</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+        <span class="o">-</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;c_propag&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;haut&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Deph2"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.Deph2">[docs]</a><span class="k">def</span> <span class="nf">Deph2</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;fonctions pour calculer les termes de déphasage (et, si pertes, d&#39;atténuation)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n :int</span>
+<span class="sd">        nombre de couche</span>
+<span class="sd">    param :float</span>
+<span class="sd">        dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : float</span>
+<span class="sd">        déphasage à la couche n</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    parametre_MAXGs,parametre_4L</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+        <span class="o">-</span><span class="mi">2</span>
+        <span class="o">*</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;c_propag&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="o">*</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;haut&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ref_tot"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.ref_tot">[docs]</a><span class="k">def</span> <span class="nf">ref_tot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;fonction récursive pour déterminer le coefficient de reflexion total</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x :int{1}</span>
+<span class="sd">        numero de la couche de démarrage (1)</span>
+<span class="sd">    param :float</span>
+<span class="sd">        dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L</span>
+<span class="sd">    polarisation :str{&quot;TE&quot;,&quot;TM&quot;}</span>
+<span class="sd">        polarisation désirée : electrique &quot;TE&quot; ou magnetique &quot;TM&quot;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : float</span>
+<span class="sd">        array des réflexions totales</span>
+<span class="sd">    </span>
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    parametre_MAXGs,parametre_4L</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;nb_c&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">ref</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">ref</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">ref_tot</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">)</span> <span class="o">*</span> <span class="n">Deph2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span>
+        <span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="mi">1</span>
+            <span class="o">+</span> <span class="n">ref</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">ref_tot</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">Deph2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="tran_tot"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.tran_tot">[docs]</a><span class="k">def</span> <span class="nf">tran_tot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;fonction récursive pour déterminer le coefficient de transmission total</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x :int{1}</span>
+<span class="sd">        numero de la couche de démarrage (1)</span>
+<span class="sd">    param :float</span>
+<span class="sd">        dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L</span>
+<span class="sd">    polarisation :str{&quot;TE&quot;,&quot;TM&quot;}</span>
+<span class="sd">        polarisation désirée : electrique &quot;TE&quot; ou magnetique &quot;TM&quot;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : float</span>
+<span class="sd">        array des transmissions totales</span>
+<span class="sd">    </span>
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    parametre_MAXGs,parametre_4L</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;nb_c&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">tra</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">tra</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">)</span>
+            <span class="o">*</span> <span class="p">(</span><span class="n">tran_tot</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">))</span>
+            <span class="o">*</span> <span class="n">Deph1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span>
+        <span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="mi">1</span>
+            <span class="o">+</span> <span class="n">ref</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">ref_tot</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">Deph2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">param</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="homogeneisation_an"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.homogeneisation_an">[docs]</a><span class="k">def</span> <span class="nf">homogeneisation_an</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">gamma_cp</span><span class="p">,</span> <span class="n">cste</span><span class="p">,</span> <span class="n">c_i</span><span class="p">,</span> <span class="n">polarisation</span><span class="o">=</span><span class="s2">&quot;TE&quot;</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;méthode analytique de l&#39;homogénéisation.</span>
+
+<span class="sd">    Fonction de calcul de la permittivité équivalente donnant le même</span>
+<span class="sd">    cofficient de réflexion total pour plusieurs couches qu&#39;une couche</span>
+<span class="sd">    à l&#39;interface du vide.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    angle :float</span>
+<span class="sd">        angle d&#39;incidence de l&#39;onde considérée</span>
+<span class="sd">    gamma_cp :float</span>
+<span class="sd">        coefficient de réflexion total(2/4 couches)</span>
+<span class="sd">    cste :float</span>
+<span class="sd">        dictionnaire des constantes:</span>
+
+<span class="sd">        - pulsation (w)</span>
+<span class="sd">        - perméabilité vide (mu0)</span>
+<span class="sd">        - permittivité vide (e0)</span>
+<span class="sd">    c_i :float</span>
+<span class="sd">        dictionnaire des paramètres physiques de la première couche </span>
+<span class="sd">        perméabilité,permittivité et conductivité du matériaux (mui,ei,sigi) </span>
+<span class="sd">    polarisation :str{&quot;TE&quot;,&quot;TM&quot;}</span>
+<span class="sd">        polarisation désirée : electrique &quot;TE&quot; ou magnetique &quot;TM&quot;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    e_eq : float</span>
+<span class="sd">        permittivité équivalente relative</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y_propi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+        <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_i</span><span class="p">[</span><span class="s2">&quot;mui&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_i</span><span class="p">[</span><span class="s2">&quot;sigi&quot;</span><span class="p">]</span>
+        <span class="o">-</span> <span class="n">c_i</span><span class="p">[</span><span class="s2">&quot;mui&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_i</span><span class="p">[</span><span class="s2">&quot;ei&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="p">)</span>
+
+    <span class="n">etai</span> <span class="o">=</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_i</span><span class="p">[</span><span class="s2">&quot;mui&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">y_propi</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_propi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="o">/</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">polarisation</span> <span class="o">==</span> <span class="s2">&quot;TE&quot;</span><span class="p">:</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gamma_cp</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">gamma_cp</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">e_eq</span> <span class="o">=</span> <span class="p">(</span><span class="n">K</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;mu0&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">etai</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">M</span> <span class="o">/</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;mu0&quot;</span><span class="p">]))</span> <span class="o">/</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;e0&quot;</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="n">polarisation</span> <span class="o">==</span> <span class="s2">&quot;TM&quot;</span><span class="p">:</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">gamma_cp</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">gamma_cp</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">K</span> <span class="o">*</span> <span class="n">etai</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;mu0&quot;</span><span class="p">]</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">M</span> <span class="o">/</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;mu0&quot;</span><span class="p">])</span>
+        <span class="n">DELTA</span> <span class="o">=</span> <span class="n">B</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">A</span> <span class="o">*</span> <span class="n">C</span>
+        <span class="n">e_eq1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">B</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">DELTA</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">A</span><span class="p">)</span>
+        <span class="n">e_eq2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">B</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">DELTA</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">A</span><span class="p">)</span>
+        <span class="n">e_eq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">e_eq1</span><span class="p">,</span> <span class="n">e_eq2</span><span class="p">])</span> <span class="o">/</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;e0&quot;</span><span class="p">]</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Erreur polarisation&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">e_eq</span></div>
+
+
+<div class="viewcode-block" id="parametre_MAXGs"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.parametre_MAXGs">[docs]</a><span class="k">def</span> <span class="nf">parametre_MAXGs</span><span class="p">(</span><span class="n">frequence</span><span class="o">=</span><span class="mf">350e6</span><span class="p">,</span> <span class="n">conductivity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">permitivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">thick_air</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Retourne le dictionnaire complet des paramètres nécessaire à</span>
+<span class="sd">    l&#39;homogénisation de la permittivité pour un coefficient de réflexion totale</span>
+<span class="sd">    dans le cas d&#39;un modèle à 2 couches (air-(matrice+inclusion))</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    frequence :float{350E6}, optional</span>
+<span class="sd">        fréquence de fonctionnement du radar</span>
+<span class="sd">    conductivity :float{0.0}, optional</span>
+<span class="sd">        conductivité du milieu</span>
+<span class="sd">    permitivity :list{[1.0, 1.0]}, optional</span>
+<span class="sd">        permittivités des matériaux (relatives)(matrice+cible)</span>
+<span class="sd">    thick_air :float{1.0}, optional</span>
+<span class="sd">        épaisseur de la couche d&#39;air (m)</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    cste :float</span>
+<span class="sd">        dictionnaire des constantes (fréquence, longeur d&#39;onde, permittivité du vide et pulsation)</span>
+<span class="sd">    c_i :float</span>
+<span class="sd">        REDONDANT dictionnaire des paramètres de la première couche</span>
+<span class="sd">        (permeabilite,permittivité,conductivité)</span>
+<span class="sd">    p :float</span>
+<span class="sd">        dictionnaire complet de tous les paramètres pour chaque couche</span>
+<span class="sd">        (permeabilite,permittivité,conductivité,angle)</span>
+<span class="sd">    </span>
+<span class="sd">    .. warning::</span>
+<span class="sd">       **A faire**</span>
+
+<span class="sd">       Modifier la fonction pour éviter la redondance de la variable de sortie `c_i`</span>
+<span class="sd">      </span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    parametre_4L</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">frequence</span>
+
+    <span class="n">cste</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;mu0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4e-7</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;e0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">8.85e-12</span>
+    <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cste</span><span class="p">[</span><span class="s2">&quot;e0&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;mu0&quot;</span><span class="p">])</span>
+    <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span>
+    <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;lbda&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">f</span>
+
+    <span class="n">haut_air</span> <span class="o">=</span> <span class="n">thick_air</span> <span class="o">/</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;lbda&quot;</span><span class="p">]</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;nb_c&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;haut&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;lbda&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">haut_air</span><span class="p">,</span> <span class="mf">1e10</span><span class="p">,</span> <span class="mf">1e10</span><span class="p">])</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;e0&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">permitivity</span><span class="p">,</span> <span class="n">permitivity</span><span class="p">])</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permeab&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;mu0&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;conduct&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">conductivity</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="c1">### impédances</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+        <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permeab&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permit&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;conduct&quot;</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="c1">### indices de réfraction</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;ind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;permit&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permeab&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">cste</span><span class="p">[</span><span class="s2">&quot;e0&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;mu0&quot;</span><span class="p">]))</span>
+    <span class="c1">### constantes de propagation</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;c_propag&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+        <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permeab&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;conduct&quot;</span><span class="p">]</span>
+        <span class="o">-</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permeab&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permit&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="p">)</span>
+    <span class="c1">### angles d&#39;incidence de l&#39;onde sur les différentes couches</span>
+    <span class="c1"># theta_incident = np.array([0,22.5*np.pi/180,45*np.pi/180])</span>
+    <span class="n">theta_incident</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;nb_c&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">theta_incident</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;cfloat&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">theta_incident</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;nb_c&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">p</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">])</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;ind&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">]</span> <span class="o">/</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;ind&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="c1">##### caractéristiques du milieu incident</span>
+    <span class="n">c_i</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">c_i</span><span class="p">[</span><span class="s2">&quot;mui&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permeab&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">c_i</span><span class="p">[</span><span class="s2">&quot;ei&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permit&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">c_i</span><span class="p">[</span><span class="s2">&quot;sigi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;conduct&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">cste</span><span class="p">,</span> <span class="n">c_i</span><span class="p">,</span> <span class="n">p</span></div>
+
+
+<div class="viewcode-block" id="parametre_4L"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.parametre_4L">[docs]</a><span class="k">def</span> <span class="nf">parametre_4L</span><span class="p">(</span>
+    <span class="n">frequence</span><span class="o">=</span><span class="mf">350e6</span><span class="p">,</span>
+    <span class="n">conductivity</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">permitivity</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+    <span class="n">thick_air</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">thick_mat</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+<span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Retourne le dictionnaire complet des paramètres nécessaire à</span>
+<span class="sd">    l&#39;homogénisation de la permittivité pour un coefficient de réflexion totale</span>
+<span class="sd">    dans le cas d&#39;un modèle à 4 couches (air-matrice-cible-matrice)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    frequence :float{350E6}, optional</span>
+<span class="sd">        fréquence de fonctionnement du radar</span>
+<span class="sd">    conductivity :float{0.0}, optional</span>
+<span class="sd">        conductivité du milieu</span>
+<span class="sd">    permitivity :list{[1.0, 1.0]}, optional</span>
+<span class="sd">        permittivités des matériaux (relatives)(matrice+cible)</span>
+<span class="sd">    thick_air :float{1.0}, optional</span>
+<span class="sd">        épaisseur de la couche d&#39;air (m)</span>
+<span class="sd">    thick_mat :list{[1.0, 1.0]}, optional</span>
+<span class="sd">        épaisseur des matériaux (m)(matrice+cible)</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    cste :float</span>
+<span class="sd">        dictionnaire des constantes (fréquence, longeur d&#39;onde, permittivité du vide et pulsation)</span>
+<span class="sd">    c_i :float</span>
+<span class="sd">        REDONDANT dictionnaire des paramètres de la première couche</span>
+<span class="sd">        (permeabilite,permittivité,conductivité)</span>
+<span class="sd">    p :float</span>
+<span class="sd">        dictionnaire complet de tous les paramètres pour chaque couche</span>
+<span class="sd">        (permeabilite,permittivité,conductivité,angle)</span>
+<span class="sd">    </span>
+<span class="sd">    .. warning::</span>
+<span class="sd">       **A faire**</span>
+
+<span class="sd">       Modifier la fonction pour éviter la redondance de la variable de sortie `c_i`</span>
+<span class="sd">      </span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    parametre_MAXGs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">frequence</span>
+
+    <span class="n">cste</span> <span class="o">=</span> <span class="n">c_i</span> <span class="o">=</span> <span class="n">p</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;mu0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4e-7</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;e0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">8.85e-12</span>
+    <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cste</span><span class="p">[</span><span class="s2">&quot;e0&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;mu0&quot;</span><span class="p">])</span>
+    <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span>
+    <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;lbda&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">f</span>
+
+    <span class="n">haut_air</span> <span class="o">=</span> <span class="n">thick_air</span> <span class="o">/</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;lbda&quot;</span><span class="p">]</span>
+    <span class="n">haut_matrice</span> <span class="o">=</span> <span class="n">thick_mat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">permitivity</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">]</span>
+    <span class="n">haut_cible</span> <span class="o">=</span> <span class="n">thick_mat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">permitivity</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">]</span>
+    <span class="c1"># print(haut_air,haut_cible,haut_matrice)</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;nb_c&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;haut&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;lbda&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">haut_air</span><span class="p">,</span> <span class="n">haut_matrice</span><span class="p">,</span> <span class="n">haut_cible</span><span class="p">,</span> <span class="mf">1e10</span><span class="p">])</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;e0&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">permitivity</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">permitivity</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">permitivity</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="p">)</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permeab&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;mu0&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;conduct&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">conductivity</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="c1">### impédances</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;eta&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+        <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permeab&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permit&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;conduct&quot;</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="c1">### indices de réfraction</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;ind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;permit&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permeab&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">cste</span><span class="p">[</span><span class="s2">&quot;e0&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;mu0&quot;</span><span class="p">]))</span>
+    <span class="c1">### constantes de propagation</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;c_propag&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+        <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permeab&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;conduct&quot;</span><span class="p">]</span>
+        <span class="o">-</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permeab&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permit&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cste</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="p">)</span>
+    <span class="c1">### angles d&#39;incidence de l&#39;onde sur les différentes couches</span>
+    <span class="c1"># theta_incident = np.arange(0,45*np.pi/180,(1*np.pi/180))</span>
+    <span class="c1"># theta_incident = np.array([0,22.5*np.pi/180,45*np.pi/180])</span>
+    <span class="n">theta_incident</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;nb_c&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">theta_incident</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;cfloat&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">theta_incident</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;nb_c&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">p</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">])</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;ind&quot;</span><span class="p">][</span><span class="n">n</span><span class="p">]</span> <span class="o">/</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;ind&quot;</span><span class="p">][</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="c1">##### caractéristiques du milieu incident</span>
+    <span class="n">c_i</span><span class="p">[</span><span class="s2">&quot;mui&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permeab&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">c_i</span><span class="p">[</span><span class="s2">&quot;ei&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;permit&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">c_i</span><span class="p">[</span><span class="s2">&quot;sigi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;conduct&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">cste</span><span class="p">,</span> <span class="n">c_i</span><span class="p">,</span> <span class="n">p</span></div>
+
+
+<div class="viewcode-block" id="atompos2C"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.atompos2C">[docs]</a><span class="k">def</span> <span class="nf">atompos2C</span><span class="p">(</span><span class="n">ta</span><span class="p">,</span> <span class="n">tm</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">cond</span><span class="p">,</span> <span class="n">marge</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Retourne la permittivité équivalente homogénéisée</span>
+<span class="sd">    par le modèle 1 (&quot;parametre_MAXGs&quot;) à 2 couches: (air-(matrice+inclusions)).</span>
+<span class="sd">    Peut être en modifié en utilisant le modèle 2 (&quot;parametre_4L&quot;)</span>
+<span class="sd">    qui utilise 4 couches: (air-matrice-cible-matrice)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ta :float</span>
+<span class="sd">        épaisseur de la couche d&#39;air (m)</span>
+<span class="sd">    tm :float</span>
+<span class="sd">        permittivité effective du milieu (relative)</span>
+<span class="sd">    freq :float</span>
+<span class="sd">        fréquence de fonctionnement du radar</span>
+<span class="sd">    cond :float</span>
+<span class="sd">        conductivité du milieu</span>
+<span class="sd">    marge :float{0.1}, optional</span>
+<span class="sd">        marge de variation sur la permittivité du milieu et l&#39;épaisseur de l&#39;air</span>
+<span class="sd">        pour obtenir une solution.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : float</span>
+<span class="sd">        permittivité équivalente homogénéisée</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Cette approche est intéressante mais reste subjective avec notamment les marges acceptées et </span>
+<span class="sd">    la boucle ``while`` qui nous éloigne un peu du monde physique (~bricolage) et alourdisse le traitement. </span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    parametre_MAXGs,parametre_4L</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e2</span><span class="p">)):</span>
+        <span class="n">co</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">eq</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">while</span> <span class="n">eq</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ta_rd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">marge</span> <span class="o">*</span> <span class="n">ta</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">ta</span> <span class="o">-</span> <span class="n">marge</span> <span class="o">*</span> <span class="n">ta</span><span class="p">)</span>
+            <span class="n">tm_rd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">marge</span> <span class="o">*</span> <span class="n">tm</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">tm</span> <span class="o">-</span> <span class="n">marge</span> <span class="o">*</span> <span class="n">tm</span><span class="p">)</span>
+            <span class="n">cste</span><span class="p">,</span> <span class="n">ci</span><span class="p">,</span> <span class="n">param</span> <span class="o">=</span> <span class="n">parametre_MAXGs</span><span class="p">(</span>
+                <span class="n">frequence</span><span class="o">=</span><span class="n">freq</span><span class="p">,</span> <span class="n">conductivity</span><span class="o">=</span><span class="n">cond</span><span class="p">,</span> <span class="n">permitivity</span><span class="o">=</span><span class="n">tm_rd</span><span class="p">,</span> <span class="n">thick_air</span><span class="o">=</span><span class="n">ta_rd</span>
+            <span class="p">)</span>
+            <span class="n">param</span><span class="p">[</span><span class="s2">&quot;R_mlt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ref_tot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">polarisation</span><span class="o">=</span><span class="s2">&quot;TE&quot;</span><span class="p">)</span>
+            <span class="n">eq</span> <span class="o">=</span> <span class="n">homogeneisation_an</span><span class="p">(</span>
+                <span class="n">param</span><span class="p">[</span><span class="s2">&quot;theta&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="s2">&quot;R_mlt&quot;</span><span class="p">],</span> <span class="n">cste</span><span class="p">,</span> <span class="n">ci</span><span class="p">,</span> <span class="n">polarisation</span><span class="o">=</span><span class="s2">&quot;TE&quot;</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">co</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">:</span>
+                <span class="n">eq</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="k">break</span>
+            <span class="n">co</span> <span class="o">=</span> <span class="n">co</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">eq</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">t</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="maxwell_garnett"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.maxwell_garnett">[docs]</a><span class="k">def</span> <span class="nf">maxwell_garnett</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">deli</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Retourne la permittivité effective d&#39;un matériau de type</span>
+<span class="sd">    inclusion dans une matrice.</span>
+
+<span class="sd">    Pour plus d&#39;informations : https://en.wikipedia.org/wiki/Effective_medium_approximations</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    m :float</span>
+<span class="sd">        vecteur de permittivité de matrice</span>
+<span class="sd">    n :float</span>
+<span class="sd">        vecteur de permittivité d&#39;inclusions (cibles)</span>
+<span class="sd">    deli :float</span>
+<span class="sd">        fraction volumique des inclusions</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    eff : float</span>
+<span class="sd">        tableau de permittivité effective</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">eff</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">e_m</span> <span class="ow">in</span> <span class="n">m</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">e_i</span> <span class="ow">in</span> <span class="n">n</span><span class="p">:</span>
+            <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">deli</span> <span class="o">*</span> <span class="p">(</span><span class="n">e_i</span> <span class="o">-</span> <span class="n">e_m</span><span class="p">))</span> <span class="o">+</span> <span class="n">e_i</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">e_m</span><span class="p">)</span>
+            <span class="n">denum</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">e_m</span><span class="p">)</span> <span class="o">+</span> <span class="n">e_i</span> <span class="o">-</span> <span class="p">(</span><span class="n">deli</span> <span class="o">*</span> <span class="p">(</span><span class="n">e_i</span> <span class="o">-</span> <span class="n">e_m</span><span class="p">))</span>
+            <span class="n">e_eff</span> <span class="o">=</span> <span class="n">e_m</span> <span class="o">*</span> <span class="n">num</span> <span class="o">/</span> <span class="n">denum</span>
+            <span class="n">eff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e_eff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">eff</span></div>
+
+
+<div class="viewcode-block" id="v_prop"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.v_prop">[docs]</a><span class="k">def</span> <span class="nf">v_prop</span><span class="p">(</span><span class="n">eps</span><span class="p">,</span> <span class="n">sig</span><span class="p">,</span> <span class="n">ome</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calcule la vitesse de propagation d&#39;une onde à partir de</span>
+<span class="sd">    la permittivité, conductivité et fréquence.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    eps float</span>
+<span class="sd">        permittivité électrique (peut être complexe) (:math:`F/m`)</span>
+<span class="sd">    sig float</span>
+<span class="sd">        conductivité électrique (peut être complexe) (:math:`\Omega \cdot m`)</span>
+<span class="sd">    ome float</span>
+<span class="sd">        fréquence électrique (:math:`Hz`)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : float</span>
+<span class="sd">        vitesse de propagation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">celer</span> <span class="o">=</span> <span class="mf">3e8</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">e_eff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">eps</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span> <span class="o">/</span> <span class="n">ome</span><span class="p">)</span>
+    <span class="n">s_eff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">eps</span><span class="p">)</span> <span class="o">*</span> <span class="n">ome</span><span class="p">)</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">e_eff</span><span class="p">)</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">s_eff</span><span class="p">)</span>
+    <span class="c1"># print(p[&quot;eps&quot;],p[&quot;sig&quot;])</span>
+    <span class="n">denum1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">sig</span> <span class="o">/</span> <span class="n">ome</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">denumF</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">eps</span> <span class="o">*</span> <span class="n">denum1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">celer</span> <span class="o">/</span> <span class="n">denumF</span></div>
+
+
+<div class="viewcode-block" id="eps2vprop"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_func.eps2vprop">[docs]</a><span class="k">def</span> <span class="nf">eps2vprop</span><span class="p">(</span><span class="n">par_vp</span><span class="p">,</span> <span class="n">margeR</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">diff</span><span class="o">=</span><span class="mf">0.075</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Retourne la vitesse de propagation fictive de matériaux</span>
+<span class="sd">    à permittivité équivalente à partir des paramètres physiques</span>
+<span class="sd">    et du modèle d&#39;homogénéisation</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    par_vp :float</span>
+<span class="sd">        dictionnaire de paramètres (fréquence,permittivité effective du milieu,conductivité, épaisseur de l&#39;air)</span>
+<span class="sd">    margeR :float{1e-4}, optional</span>
+<span class="sd">        marge appliqué aux paramètres du dico pour trouver les permittivtés</span>
+<span class="sd">    diff :float{0.075}, optional</span>
+<span class="sd">        critère de différence entre chaque vitesse calculée (%).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    vprM : float</span>
+<span class="sd">        array de vitesse de propagation</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Cette approche est intéressante mais reste subjective avec notamment les marges acceptées et le</span>
+<span class="sd">    critère de différence qui nous éloigne un peu du monde physique (~bricolage) </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">freq</span> <span class="o">=</span> <span class="n">par_vp</span><span class="p">[</span><span class="s2">&quot;freq&quot;</span><span class="p">]</span>
+    <span class="n">cond</span> <span class="o">=</span> <span class="n">par_vp</span><span class="p">[</span><span class="s2">&quot;cond&quot;</span><span class="p">]</span>
+    <span class="n">thick_air</span> <span class="o">=</span> <span class="n">par_vp</span><span class="p">[</span><span class="s2">&quot;thick_air&quot;</span><span class="p">]</span>
+    <span class="n">perm_eff</span> <span class="o">=</span> <span class="n">par_vp</span><span class="p">[</span><span class="s2">&quot;perm_eff&quot;</span><span class="p">]</span>
+    <span class="n">eq_tot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+    <span class="c1"># k = 0</span>
+    <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">perm_eff</span><span class="p">),</span> <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ef</span> <span class="ow">in</span> <span class="n">perm_eff</span><span class="p">:</span>
+        <span class="n">eq</span> <span class="o">=</span> <span class="n">atompos2C</span><span class="p">(</span><span class="n">thick_air</span><span class="p">,</span> <span class="n">ef</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">cond</span><span class="p">,</span> <span class="n">marge</span><span class="o">=</span><span class="n">margeR</span><span class="p">)</span>
+        <span class="n">eq_tot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eq_tot</span><span class="p">,</span> <span class="n">eq</span><span class="p">)</span>
+        <span class="c1"># k = k + 1</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">pbar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">eq_tot_eq</span> <span class="o">=</span> <span class="n">eq_tot</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">eq_tot</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)]</span>
+    <span class="n">vprM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">v_prop</span><span class="p">(</span><span class="n">eq_tot_eq</span><span class="p">,</span> <span class="n">cond</span><span class="p">,</span> <span class="n">freq</span><span class="p">))</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">vprM</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vprM</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">vprM</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">diff</span><span class="p">)</span> <span class="o">*</span> <span class="n">S</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">vprM</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">1e9</span><span class="p">):</span>
+            <span class="n">vprM</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">S</span> <span class="o">=</span> <span class="n">vprM</span><span class="p">[</span><span class="n">u</span><span class="p">]</span>
+    <span class="n">vprM</span> <span class="o">=</span> <span class="n">vprM</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">vprM</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">vprM</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Matthieu Gallet.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
