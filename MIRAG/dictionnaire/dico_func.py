@@ -1,6 +1,6 @@
 """
-Module compémentaire de création du dictionnaire d'hyperbole pour l'``ADMM`` convolutionnel
-pour les approches mathématiques et physiques
+Complementary module for creating the hyperbola dictionary for convolutional ADMM
+for mathematical and physical approaches
 """
 
 from tqdm import tqdm
@@ -8,27 +8,27 @@ import numpy as np
 
 
 def filtre2D_B(Nx, Nt, x, t, coef=1):
-    r"""Réalise un filtre 2D de type hanning centré sur la position
-    de l'atome avec un facteur de dilation coef
+    r"""Performs a 2D Hanning filter centered on the atomic position
+    with a dilation factor coef
 
     Parameters
     ----------
     Nx :int
-        dimension horizontale de l'image de l'atome
+        horizontal dimension of the atom image
     Nt :int
-        dimension verticale de l'image de l'atome
+        vertical dimension of the atom image
     x :int
-        coordonnée centrale horizontale de l'atome (en pixels)
+        horizontal central coordinate of the atom (in pixels)
     t :int
-        coordonnée centrale verticale de l'atome (en pixels)
+        vertical central coordinate of the atom (in pixels)
     coef :int{1}, optional
-        coeff de dilation du filtre (1 = filtre pour fenêtre 256x256)
+        filter dilation coefficient (1 = filter for 256x256 window)
 
 
     Returns
     -------
     M : float
-        Matrice d'atténuation centrée (Nx*Ny)
+        Centered attenuation matrix (Nx*Ny)
     """
     M = np.zeros((Nt, Nx))
     rdimX = int(coef * 256)
@@ -63,22 +63,22 @@ def filtre2D_B(Nx, Nt, x, t, coef=1):
 
 # Fonctions dictionnaire physique
 def ref(n, param, polarisation):
-    r"""fonctions pour calculer les coefficients de reflexion à la n_ième interface
+    r"""functions to calculate the reflection coefficients at the nth interface
 
     Parameters
     ----------
     n :int
-        nombre de couche
+        number of layers
     param :float
-        dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L
-    polarisation :str{"TE","TM"}
-        polarisation désirée : electrique "TE" ou magnetique "TM".
+        dictionaries of parameters given by parametre_MAXGs or parametre_4L
+    polarization :str{"TE", "TM"}
+        desired polarization : electric "TE" or magnetic "TM".
 
 
     Returns
     -------
     out : float
-        coefficients reflexion à la n_ième interface
+        reflection coefficients at the n_th interface
 
     See Also
     --------
@@ -105,22 +105,22 @@ def ref(n, param, polarisation):
 
 
 def tra(n, param, polarisation):
-    r"""fonctions pour calculer les coefficients transmission à la n_ième interface
+    r"""functions to calculate the transmission coefficients at the nth interface
 
     Parameters
     ----------
     n :int
-        nombre de couche
+        number of layers
     param :float
-        dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L
-    polarisation :str{"TE","TM"}
-        polarisation désirée : electrique "TE" ou magnetique "TM".
+        dictionaries of parameters given by parametre_MAXGs or parametre_4L
+    polarization :str{"TE", "TM"}
+        desired polarization : electric "TE" or magnetic "TM".
 
 
     Returns
     -------
     out : float
-        coefficients transmission à la n_ième interface
+        transmission coefficients at the n_th interface
 
     See Also
     --------
@@ -141,20 +141,20 @@ def tra(n, param, polarisation):
 
 
 def Deph1(n, param):
-    r"""fonctions pour calculer les termes de déphasage (et, si pertes, d'atténuation)
+    r"""functions for calculating phase shift (and, if losses, attenuation) terms
 
     Parameters
     ----------
     n :int
-        nombre de couche
+        number of layers
     param :float
-        dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L
+        dictionaries of parameters given by parametre_MAXGs or parametre_4L
 
 
     Returns
     -------
     out : float
-        déphasage à la couche n
+        phase shift at layer n
 
     See Also
     --------
@@ -166,20 +166,20 @@ def Deph1(n, param):
 
 
 def Deph2(n, param):
-    r"""fonctions pour calculer les termes de déphasage (et, si pertes, d'atténuation)
+    r"""functions for calculating phase shift (and, if losses, attenuation) terms
 
     Parameters
     ----------
     n :int
-        nombre de couche
+        number of layers
     param :float
-        dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L
+        dictionaries of parameters given by parametre_MAXGs or parametre_4L
 
 
     Returns
     -------
     out : float
-        déphasage à la couche n
+        phase shift at layer n
 
     See Also
     --------
@@ -194,21 +194,21 @@ def Deph2(n, param):
 
 
 def ref_tot(x, param, polarisation):
-    r"""fonction récursive pour déterminer le coefficient de reflexion total
+    r"""recursive function to determine the total reflection coefficient
 
     Parameters
     ----------
     x :int{1}
-        numero de la couche de démarrage (1)
+        number of the starting layer (1)
     param :float
-        dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L
-    polarisation :str{"TE","TM"}
-        polarisation désirée : electrique "TE" ou magnetique "TM".
+        dictionaries of parameters given by parametre_MAXGs or parametre_4L
+    polarization :str{"TE", "TM"}
+        desired polarization : electric "TE" or magnetic "TM".
 
     Returns
     -------
     out : float
-        array des réflexions totales
+        array of total reflections
     
     See Also
     --------
@@ -229,21 +229,21 @@ def ref_tot(x, param, polarisation):
 
 
 def tran_tot(x, param, polarisation):
-    r"""fonction récursive pour déterminer le coefficient de transmission total
+    r"""recursive function to determine the total transmission coefficient
 
     Parameters
     ----------
     x :int{1}
-        numero de la couche de démarrage (1)
+        number of the starting layer (1)
     param :float
-        dictionnaires des paramètres donné par parametre_MAXGs ou parametre_4L
-    polarisation :str{"TE","TM"}
-        polarisation désirée : electrique "TE" ou magnetique "TM".
+        dictionaries of parameters given by parametre_MAXGs or parametre_4L
+    polarization :str{"TE", "TM"}
+        desired polarization : electric "TE" or magnetic "TM".
 
     Returns
     -------
     out : float
-        array des transmissions totales
+        array of total transmissions
     
     See Also
     --------
@@ -265,34 +265,34 @@ def tran_tot(x, param, polarisation):
 
 
 def homogeneisation_an(angle, gamma_cp, cste, c_i, polarisation="TE"):
-    r"""méthode analytique de l'homogénéisation.
+    r"""analytical method of homogenization.
 
-    Fonction de calcul de la permittivité équivalente donnant le même
-    cofficient de réflexion total pour plusieurs couches qu'une couche
-    à l'interface du vide.
+    Equivalent permittivity calculation function giving the same
+    total reflection coefficient for several layers as a layer
+    at the vacuum interface.
 
     Parameters
     ----------
     angle :float
-        angle d'incidence de l'onde considérée
+        angle of incidence of the wave considered
     gamma_cp :float
-        coefficient de réflexion total(2/4 couches)
+        total reflection coefficient (2/4 layers)
     cste :float
-        dictionnaire des constantes:
+        dictionary of constants:
 
         - pulsation (w)
-        - perméabilité vide (mu0)
-        - permittivité vide (e0)
+        - empty permeability (mu0)
+        - empty permittivity (e0)
     c_i :float
-        dictionnaire des paramètres physiques de la première couche 
-        perméabilité,permittivité et conductivité du matériaux (mui,ei,sigi) 
-    polarisation :str{"TE","TM"}
-        polarisation désirée : electrique "TE" ou magnetique "TM".
+        dictionary of physical parameters of the first layer 
+        permeability, permittivity and conductivity of the material (mui,ei,sigi) 
+    polarization :str{"TE", "TM"}
+        desired polarization: electric "TE" or magnetic "TM".
 
     Returns
     -------
     e_eq : float
-        permittivité équivalente relative
+        relative equivalent permittivity
     """
     y_propi = np.sqrt(
         1j * cste["w"] * c_i["mui"] * c_i["sigi"]
@@ -323,37 +323,37 @@ def homogeneisation_an(angle, gamma_cp, cste, c_i, polarisation="TE"):
 
 
 def parametre_MAXGs(frequence=350e6, conductivity=0, permitivity=1, thick_air=1):
-    r"""Retourne le dictionnaire complet des paramètres nécessaire à
-    l'homogénisation de la permittivité pour un coefficient de réflexion totale
-    dans le cas d'un modèle à 2 couches (air-(matrice+inclusion))
+    r"""Returns the complete dictionary of parameters needed to
+    homogenization of the permittivity for a total reflection coefficient
+    in the case of a 2 layer model (air-(matrix+inclusion))
 
     Parameters
     ----------
     frequence :float{350E6}, optional
-        fréquence de fonctionnement du radar
+        frequency of operation of the radar
     conductivity :float{0.0}, optional
-        conductivité du milieu
+        conductivity of the medium
     permitivity :list{[1.0, 1.0]}, optional
-        permittivités des matériaux (relatives)(matrice+cible)
+        material permittivity (relative)(matrix+target)
     thick_air :float{1.0}, optional
-        épaisseur de la couche d'air (m)
+        thickness of the air layer (m)
 
 
     Returns
     -------
     cste :float
-        dictionnaire des constantes (fréquence, longeur d'onde, permittivité du vide et pulsation)
+        dictionary of constants (frequency, wavelength, vacuum permittivity and pulsation)
     c_i :float
-        REDONDANT dictionnaire des paramètres de la première couche
-        (permeabilite,permittivité,conductivité)
+        REDUNDANT dictionary of parameters of the first layer
+        (permeability, permittivity, conductivity)
     p :float
-        dictionnaire complet de tous les paramètres pour chaque couche
-        (permeabilite,permittivité,conductivité,angle)
+        complete dictionary of all parameters for each layer
+        (permeability, permittivity, conductivity, angle)
     
-    .. warning::
-       **A faire**
+    ... warning::
+       **To do**
 
-       Modifier la fonction pour éviter la redondance de la variable de sortie `c_i`
+       Modify the function to avoid redundancy of the output variable `c_i`.
       
 
     See Also
@@ -413,39 +413,39 @@ def parametre_4L(
     thick_air=1.0,
     thick_mat=[1.0, 1.0],
 ):
-    r"""Retourne le dictionnaire complet des paramètres nécessaire à
-    l'homogénisation de la permittivité pour un coefficient de réflexion totale
-    dans le cas d'un modèle à 4 couches (air-matrice-cible-matrice)
+    r"""Returns the complete dictionary of parameters needed to
+    homogenization of the permittivity for a total reflection coefficient
+    in the case of a 4 layer model (air-matrix-target-matrix)
 
     Parameters
     ----------
     frequence :float{350E6}, optional
-        fréquence de fonctionnement du radar
+        frequency of operation of the radar
     conductivity :float{0.0}, optional
-        conductivité du milieu
+        conductivity of the medium
     permitivity :list{[1.0, 1.0]}, optional
-        permittivités des matériaux (relatives)(matrice+cible)
+        material permittivity (relative)(matrix+target)
     thick_air :float{1.0}, optional
-        épaisseur de la couche d'air (m)
+        thickness of the air layer (m)
     thick_mat :list{[1.0, 1.0]}, optional
-        épaisseur des matériaux (m)(matrice+cible)
+        material thickness (m)(matrix+target)
 
 
     Returns
     -------
     cste :float
-        dictionnaire des constantes (fréquence, longeur d'onde, permittivité du vide et pulsation)
+        dictionary of constants (frequency, wavelength, vacuum permittivity and pulsation)
     c_i :float
-        REDONDANT dictionnaire des paramètres de la première couche
-        (permeabilite,permittivité,conductivité)
+        REDUNDANT dictionary of parameters of the first layer
+        (permeability, permittivity, conductivity)
     p :float
-        dictionnaire complet de tous les paramètres pour chaque couche
-        (permeabilite,permittivité,conductivité,angle)
+        complete dictionary of all parameters for each layer
+        (permeability, permittivity, conductivity, angle)
     
-    .. warning::
-       **A faire**
+    ... warning::
+       **To do**
 
-       Modifier la fonction pour éviter la redondance de la variable de sortie `c_i`
+       Modify the function to avoid redundancy of the output variable `c_i`.
       
 
     See Also
@@ -503,35 +503,35 @@ def parametre_4L(
 
 
 def atompos2C(ta, tm, freq, cond, marge=0.1):
-    r"""Retourne la permittivité équivalente homogénéisée
-    par le modèle 1 ("parametre_MAXGs") à 2 couches: (air-(matrice+inclusions)).
-    Peut être en modifié en utilisant le modèle 2 ("parametre_4L")
-    qui utilise 4 couches: (air-matrice-cible-matrice)
+    r"""Returns the equivalent permittivity homogenized
+    by model 1 ("parametre_MAXGs") with 2 layers: (air-(matrix+inclusions)).
+    Can be modified by using model 2 ("parametre_4L")
+    which uses 4 layers: (air-matrix-target-matrix)
 
     Parameters
     ----------
     ta :float
-        épaisseur de la couche d'air (m)
+        thickness of the air layer (m)
     tm :float
-        permittivité effective du milieu (relative)
+        effective permittivity of the medium (relative)
     freq :float
-        fréquence de fonctionnement du radar
+        operating frequency of the radar
     cond :float
-        conductivité du milieu
-    marge :float{0.1}, optional
-        marge de variation sur la permittivité du milieu et l'épaisseur de l'air
-        pour obtenir une solution.
+        conductivity of the medium
+    margin :float{0.1}, optional
+        variation margin on the permittivity of the medium and the thickness of the air
+        to obtain a solution.
 
 
     Returns
     -------
     out : float
-        permittivité équivalente homogénéisée
+        homogenized equivalent permittivity
 
     Notes
     -----
-    Cette approche est intéressante mais reste subjective avec notamment les marges acceptées et 
-    la boucle ``while`` qui nous éloigne un peu du monde physique (~bricolage) et alourdisse le traitement. 
+    This approach is interesting but remains subjective with notably the accepted margins and 
+    the "while" loop which takes us away from the physical world (~tinkering) and makes the processing more cumbersome. 
 
     See Also
     --------
@@ -560,24 +560,24 @@ def atompos2C(ta, tm, freq, cond, marge=0.1):
 
 
 def maxwell_garnett(m, n, deli):
-    r"""Retourne la permittivité effective d'un matériau de type
-    inclusion dans une matrice.
+    r"""Returns the effective permittivity of a material of type
+    inclusion in a matrix.
 
-    Pour plus d'informations : https://en.wikipedia.org/wiki/Effective_medium_approximations
+    For more information : https://en.wikipedia.org/wiki/Effective_medium_approximations
 
     Parameters
     ----------
     m :float
-        vecteur de permittivité de matrice
+        matrix permittivity vector
     n :float
-        vecteur de permittivité d'inclusions (cibles)
+        permittivity vector of inclusions (targets)
     deli :float
-        fraction volumique des inclusions
+        volume fraction of inclusions
 
     Returns
     -------
     eff : float
-        tableau de permittivité effective
+        effective permittivity table
     """
     eff = []
     for e_m in m:
@@ -590,22 +590,22 @@ def maxwell_garnett(m, n, deli):
 
 
 def v_prop(eps, sig, ome):
-    r"""Calcule la vitesse de propagation d'une onde à partir de
-    la permittivité, conductivité et fréquence.
+    r"""Calculates the speed of propagation of a wave from the permittivity
+    permittivity, conductivity and frequency.
 
     Parameters
     ----------
     eps float
-        permittivité électrique (peut être complexe) (:math:`F/m`)
+        electrical permittivity (can be complex) (:math:`F/m`)
     sig float
-        conductivité électrique (peut être complexe) (:math:`\Omega \cdot m`)
+        electrical conductivity (can be complex) (:math:`\Omega \cdot m`)
     ome float
-        fréquence électrique (:math:`Hz`)
+        electrical frequency (:math:`Hz`)
 
     Returns
     -------
     out : float
-        vitesse de propagation
+        propagation speed
     """
     celer = 3e8
     mu = 1

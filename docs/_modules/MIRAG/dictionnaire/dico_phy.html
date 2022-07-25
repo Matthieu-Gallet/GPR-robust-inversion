@@ -67,37 +67,37 @@
              
   <h1>Source code for MIRAG.dictionnaire.dico_phy</h1><div class="highlight"><pre>
 <span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Module de création du dictionnaire d&#39;hyperbole pour l&#39;``ADMM`` convolutionnel par approche physique</span>
+<span class="sd">Hyperbola dictionary creation module for convolutional ADMM by physical approach</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">.dico_func</span> <span class="kn">import</span> <span class="o">*</span>
 
 <div class="viewcode-block" id="dico_PHY2"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_phy.dico_PHY2">[docs]</a><span class="k">def</span> <span class="nf">dico_PHY2</span><span class="p">(</span><span class="n">Dimxt</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">dim_n_m</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Une fonction pour générer un atome ou une hyperbole afin</span>
-<span class="sd">    de créer un dictionnaire pour la reconstruction GPR, et ce à partir</span>
-<span class="sd">    de la modèlisation physique du problème.</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A function to generate an atom or a hyperbola to create a dictionary for</span>
+<span class="sd">    create a dictionary for the GPR reconstruction from the physical</span>
+<span class="sd">    from the physical modeling of the problem.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    Dimxt :list{[256,256]}</span>
-<span class="sd">        dimension de l&#39;hyperbole (Nx * Ny)</span>
+<span class="sd">        dimension of the hyperbola (Nx * Ny)</span>
 <span class="sd">    pos :list{[60,128]}</span>
-<span class="sd">        position centrée de l&#39;hyperbole</span>
+<span class="sd">        centered position of the hyperbola</span>
 <span class="sd">    v :float</span>
-<span class="sd">        vitesse de propagation  pour l&#39;hyperbole</span>
+<span class="sd">        propagation speed for the hyperbola</span>
 <span class="sd">    dim_n_m :list{[900,40]}</span>
-<span class="sd">        dimensions réelles de l&#39;image (y = [ns] et x= [m])</span>
+<span class="sd">        real dimensions of the image (y = [ns] and x= [m])</span>
 <span class="sd">    A :int{None}, optional</span>
-<span class="sd">        matrice d&#39;atténuation  (Nx * Ny)</span>
+<span class="sd">        attenuation matrix (Nx * Ny)</span>
 <span class="sd">    sigma :int{5}, optional</span>
-<span class="sd">        paramètre épaisseur de l&#39;hyperbole.</span>
+<span class="sd">        parameter thickness of the hyperbola.</span>
 
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    h : float</span>
-<span class="sd">        atome construit de dimension (Nx*Ny)</span>
+<span class="sd">        constructed atom of dimension (Nx*Ny)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Setting mesh for x and t axis</span>
     <span class="n">Nt</span> <span class="o">=</span> <span class="n">Dimxt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -133,17 +133,17 @@
 
 
 <div class="viewcode-block" id="create_dicoPHY2"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_phy.create_dicoPHY2">[docs]</a><span class="k">def</span> <span class="nf">create_dicoPHY2</span><span class="p">(</span><span class="n">paraDic</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Fonction supérieure de crétion dictionnaire d&#39;hyperboles ou d&#39;atomes</span>
-<span class="sd">    par modélisation physique</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Higher function of creation of hyperbolas or atoms dictionary</span>
+<span class="sd">    by physical modeling</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    paraDic :dic</span>
-<span class="sd">        dictionnaire des paramètres de création</span>
+<span class="sd">        dictionary of creation parameters</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    - paraDic[&#39;dim&#39;] (array) : Dimension of the radargramme</span>
+<span class="sd">    - paraDic[&#39;dim&#39;] (array) : Dimension of the radargram</span>
 <span class="sd">    - paraDic[&#39;std&#39;] (array) : Input vector of sigma parameter</span>
 <span class="sd">    - paraDic[&#39;position&#39;] (array) : Position of the top of the hyperbola</span>
 <span class="sd">    - paraDic[&#39;v_prop&#39;] (array) : Input vector of velocity</span>
@@ -153,9 +153,9 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    DioH : dic</span>
-<span class="sd">        structure de la forme {&quot;atoms&quot;: Dico, &quot;param&quot;: param} où ``Dico`` est le tenseur</span>
-<span class="sd">        des hyperboles (Nx*Ny*K) et ``param`` le tenseur des caractéristiques correspondants</span>
-<span class="sd">        pour chaque hyperbole (K*3) (vitesse, coeff atténuation, sigma)</span>
+<span class="sd">        structure of the form {&quot;atoms&quot;: Dico, &quot;param&quot;: param} where ``Dico`` is the tensor</span>
+<span class="sd">        of the hyperbolas (Nx*Ny*K) and ``param`` the tensor of the corresponding features</span>
+<span class="sd">        for each hyperbola (K*3) (velocity, attenuation coefficient, sigma)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pos</span> <span class="o">=</span> <span class="n">paraDic</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
     <span class="n">vpr</span> <span class="o">=</span> <span class="n">paraDic</span><span class="p">[</span><span class="s2">&quot;v_prop&quot;</span><span class="p">]</span>
@@ -186,36 +186,36 @@
 
 
 <div class="viewcode-block" id="param_loadPHY"><a class="viewcode-back" href="../../../MIRAG.dictionnaire.html#MIRAG.dictionnaire.dico_phy.param_loadPHY">[docs]</a><span class="k">def</span> <span class="nf">param_loadPHY</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Charge les paramètres et</span>
-<span class="sd">    retourne un dictionnaire d&#39;atomes de dimension &quot;size&quot;</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Loads the parameters and</span>
+<span class="sd">    returns a dictionary of atoms of dimension &quot;size</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    size :list{[256,256]}</span>
-<span class="sd">        dimension de l&#39;image originale, donc des atomes.</span>
+<span class="sd">        dimension of the original image, thus of the atoms.</span>
 <span class="sd">    opt :dic</span>
-<span class="sd">        dictionnaire d&#39;options de creation d&#39;hyperboles</span>
+<span class="sd">        dictionary of options for creating hyperbolas</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    atm :dic</span>
-<span class="sd">        structure de la forme {&quot;atoms&quot;: Dico, &quot;param&quot;: param} où ``Dico`` est le tenseur</span>
-<span class="sd">        des hyperboles (Nx*Ny*K) et ``param`` le tenseur des caractéristiques correspondants</span>
-<span class="sd">        pour chaque hyperbole (K*3)</span>
+<span class="sd">        structure of the form {&quot;atoms&quot;: Dico, &quot;param&quot;: param} where ``Dico`` is the hyperbola tensor</span>
+<span class="sd">        of the hyperbolas (Nx*Ny*K) and ``param`` the tensor of the corresponding features</span>
+<span class="sd">        for each hyperbola (K*3)</span>
 <span class="sd">    opt :dic</span>
-<span class="sd">        dictionnaire d&#39;entrée augmenté des valeurs utilisées par la fonctions</span>
-<span class="sd">        (pour le suivit des modifications)</span>
+<span class="sd">        input dictionary augmented with the values used by the functions</span>
+<span class="sd">        (for tracking changes)</span>
 
 
 <span class="sd">    .. warning::</span>
-<span class="sd">       **ATTENTION** </span>
+<span class="sd">       **WARNING** </span>
 <span class="sd">       </span>
-<span class="sd">       Modification des paramètres de création du dico directement dans le fichier</span>
-<span class="sd">       python !! </span>
+<span class="sd">       Modification of the dictionary creation parameters directly in the</span>
+<span class="sd">       python file! </span>
 
-<span class="sd">       **A faire**</span>
+<span class="sd">       **To do**</span>
 
-<span class="sd">       - Ajout de l&#39;option lecture des paramètres par un fichier YAML</span>
+<span class="sd">       - Add the option to read the parameters from a YAML file</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Ajout yaml reader</span>
     <span class="n">Nx</span> <span class="o">=</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>

@@ -215,9 +215,9 @@
 
 
 <div class="viewcode-block" id="thresholding_nuclear"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.thresholding_nuclear">[docs]</a><span class="k">def</span> <span class="nf">thresholding_nuclear</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">lambdaS</span><span class="p">,</span><span class="n">rho</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Fonction de calcul du seuillage par valeurs singulières</span>
-<span class="sd">    Elle est la résultante de l&#39;opérateur proximal associé à la </span>
-<span class="sd">    norme nucléaire.</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Singular value thresholding function</span>
+<span class="sd">    It is the resultant of the proximal operator associated to the </span>
+<span class="sd">    nuclear norm.</span>
 
 <span class="sd">    :math:`\underset{\mathbf{{L}}}{\operatorname{argmin}}</span>
 <span class="sd">    \lambda||\mathbf{L}||_* +</span>
@@ -227,23 +227,23 @@
 <span class="sd">    \ \mathrm{avec}\ \ \mathrm{prox}_{||.||_*,\lambda/\rho_L}(x)=</span>
 <span class="sd">    \mathcal{T}_{\lambda/\rho_L}\left(x\right)`</span>
 
-<span class="sd">    Basée sur [2]_</span>
+<span class="sd">    Based on [2]_</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    M : float</span>
-<span class="sd">        tenseur de dimension Nx,Ny,K</span>
+<span class="sd">        tensor of dimension Nx,Ny,K</span>
 <span class="sd">    i : int</span>
-<span class="sd">        i ème couche à seuiller (0&lt;i&lt;K)</span>
+<span class="sd">        i th layer to threshold (0&lt;i&lt;K)</span>
 <span class="sd">    lambdaS : float</span>
-<span class="sd">        Paramètre de parcimonie (si existant &gt;0)</span>
+<span class="sd">        Parsimony parameter (if existing &gt;0)</span>
 <span class="sd">    rho : float</span>
-<span class="sd">        Paramètre de pénalité &gt;0</span>
+<span class="sd">        Penalty parameter &gt;0</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    L : float</span>
-<span class="sd">        Résultat de la minimisation pour une couche i</span>
+<span class="sd">        Result of the minimization for a layer i</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="p">[</span><span class="n">u_temp</span><span class="p">,</span><span class="n">Sig_temp</span><span class="p">,</span><span class="n">v_temp</span><span class="p">]</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">((</span><span class="n">M</span><span class="p">)[:,:,</span><span class="n">i</span><span class="p">],</span><span class="n">check_finite</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">Sig_temp</span> <span class="o">=</span> <span class="n">diag_thresh</span><span class="p">(</span><span class="n">u_temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">u_temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">Sig_temp</span><span class="p">)</span>
@@ -252,25 +252,25 @@
 
 
 <div class="viewcode-block" id="update_rhoLS_adp"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.update_rhoLS_adp">[docs]</a><span class="k">def</span> <span class="nf">update_rhoLS_adp</span><span class="p">(</span><span class="n">er_prim</span><span class="p">,</span><span class="n">er_dual</span><span class="p">,</span><span class="n">rhoLS</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Fonction d&#39;adaptation des paramètres de pénalités dans</span>
-<span class="sd">    l&#39;`ADMM` à partir des erreurs faites sur le primal et le dual.</span>
-<span class="sd">    Basée sur [3]_</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Adaptation function of the penalty parameters in the</span>
+<span class="sd">    the `ADMM` from the errors made on the primal and dual.</span>
+<span class="sd">    Based on [3]_</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    er_prim : float</span>
-<span class="sd">        erreur du primal</span>
+<span class="sd">        error of the primal</span>
 <span class="sd">    er_dual : float</span>
-<span class="sd">        erreur du dual</span>
+<span class="sd">        error of the dual</span>
 <span class="sd">    rhoLS : float</span>
-<span class="sd">        valeur du paramètre à actualiser</span>
+<span class="sd">        value of the parameter to be updated</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    rhoLS : float</span>
-<span class="sd">        paramètre de pénalité actualisé</span>
+<span class="sd">        updated penalty parameter</span>
 <span class="sd">    k : float</span>
-<span class="sd">        facteur de dilation/contraction utilisé</span>
+<span class="sd">        expansion/contraction factor used</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">er_prim</span><span class="o">&gt;</span><span class="mi">10</span><span class="o">*</span><span class="n">er_dual</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">rhoLS</span><span class="o">&lt;</span><span class="mf">1e5</span><span class="p">):</span>
         <span class="n">k</span><span class="o">=</span><span class="mi">2</span>
@@ -325,23 +325,23 @@
 
 
 <div class="viewcode-block" id="diag_thresh"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.diag_thresh">[docs]</a><span class="k">def</span> <span class="nf">diag_thresh</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Retourne une matrice diagonale de dimension mxn à partir d&#39;un vecteur s</span>
-<span class="sd">    Utilisation après `np.linalg.svd` pour obtenir une matrice à partir de S</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return a diagonal matrix of dimension mxn from a vector s</span>
+<span class="sd">    Use after `np.linalg.svd` to get a matrix from S</span>
 
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    m :int</span>
-<span class="sd">        dimension verticale de la matrice souhaitée</span>
+<span class="sd">        vertical dimension of the desired matrix</span>
 <span class="sd">    n :int</span>
-<span class="sd">        dimension horizontale de la matrice souhaitée</span>
+<span class="sd">        horizontal dimension of the desired matrix</span>
 <span class="sd">    s :float</span>
-<span class="sd">        vecteur à diagonaliser</span>
+<span class="sd">        vector to diagonalize</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    out :float</span>
-<span class="sd">        Matrice diagonale (à partir de S)    </span>
+<span class="sd">        Diagonal matrix (from S)    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">m</span><span class="p">)</span>
     <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">q</span><span class="p">)[:,</span> <span class="n">q</span><span class="p">:]</span>
@@ -374,22 +374,22 @@
 
 
 <div class="viewcode-block" id="roll_fft"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.admm_func.roll_fft">[docs]</a><span class="k">def</span> <span class="nf">roll_fft</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Correction de la position des coefficients des cartes en fonctions</span>
-<span class="sd">    de la position centrale des hyperboles + Sommation des C_k</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Correction of the position of the coefficients of the maps according to the</span>
+<span class="sd">    of the central position of the hyperbolas + Summation of the C_k</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    alpha :float</span>
-<span class="sd">        Tenseur complexe (M x N x K) des cartes de coefficients</span>
+<span class="sd">        Complex tensor (M x N x K) of the coefficients maps</span>
 <span class="sd">    t :int</span>
-<span class="sd">        position (pixel) centrale des hyperboles utilisées (ordonnée).</span>
+<span class="sd">        central position (pixel) of the used hyperbolas (ordinate).</span>
 <span class="sd">    x :int</span>
-<span class="sd">        position (pixel) centrale des hyperboles utilisées (abscisse).</span>
+<span class="sd">        central position (pixel) of the used hyperbolas (abscissa).</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    out :float</span>
-<span class="sd">        Matrice corrigée et réduite (M x N)       </span>
+<span class="sd">        Corrected and reduced matrix (M x N)       </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
     <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>

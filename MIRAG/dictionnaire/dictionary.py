@@ -1,6 +1,6 @@
 """
-Module de création du dictionnaire d'hyperbole pour l'``ADMM`` convolutionnel
-basée sur la publication [1]_
+Module for creating the hyperbola dictionary for convolutional ADMM
+based on the publication [1]_
 """
 
 import numpy as np
@@ -9,19 +9,19 @@ from .dico_func import *
 
 
 def hyperbola_atomTH(Nx, Nt, x_0, t_0, A=None, sigma=5, a=0.8, f=500):
-    r"""Une fonction pour générer un atome d'hyperbole afin
-    de créer un dictionnaire pour la reconstruction GPR. (Basée sur [1]_.)
+    r"""A function to generate a hyperbola atom in order to create a
+    create a dictionary for GPR reconstruction. (Based on [1]_.)
 
     Parameters
     ----------
     Nx :int
-        Size of GPR radargram in the distance dimension
+        Size of the GPR radargram in the distance dimension.
     Nt :int
-        Size of GPR radargram in the time dimension
+        Size of the GPR radargram in the time dimension
     x_0 :float
-        position of the hyperobla in distance dimension
+        Position of the hyperobla in the distance dimension
     t_0 :float
-        position of the hyperobla in time dimension
+        position of the hyperobla in the time dimension
     A :ndarray{None}, optional
         Attenuation array                           
     sigma :int{5}, optional
@@ -29,20 +29,20 @@ def hyperbola_atomTH(Nx, Nt, x_0, t_0, A=None, sigma=5, a=0.8, f=500):
     a :float{0.8}, optional
         Affects the opening of the hyperbola.            
     f :int{500}, optional
-        Affects the flattening at the top of the hyperbola.
+        Affects the flatness at the top of the hyperbola.
 
     Returns
     -------
     h : float
-        atome construit de dimension (Nx*Ny)
+        constructed atom of dimension (Nx*Ny)
 
     
     References
     ----------
-    .. [1] 'Sparse Decomposition of the GPR Useful Signal from Hyperbola Dictionary',
+    .. [1] 'Parsimonious decomposition of the GPR useful signal from the Hyperbola dictionary',
        Guillaume Terasse, Jean-Marie Nicolas, Emmanuel Trouvé and Émeline Drouet
        
-       Avalaible at: https://hal.archives-ouvertes.fr/hal-01351242
+       Available at: https://hal.archives-ouvertes.fr/hal-01351242
     """
     # Setting mesh for x and t axis
     x, t = np.meshgrid(range(1, Nx + 1), range(1, Nt + 1))
@@ -63,7 +63,7 @@ def hyperbola_atomTH(Nx, Nt, x_0, t_0, A=None, sigma=5, a=0.8, f=500):
 
 
 def create_dicoH(paraDic):
-    r"""Fonction supérieure de crétion dictionnaire d'hyperboles ou d'atomes (Basée sur [1]_.)
+    r"""Superior function for creating hyperbolas or atoms dictionary (Based on [1]_.)
 
     Parameters
     ----------
@@ -72,7 +72,7 @@ def create_dicoH(paraDic):
 
     Notes
     -----
-    - paraDic['dim'] (array) : Dimension of the radargramme
+    - paraDic['dim'] (array) : Dimension of the radargram
     - paraDic['scale_a'] (array) : Input vector of a parameter
     - paraDic['scale_s'] (array) : Input vector of sigma parameter
     - paraDic['f'] (array) : Input vector of f parameter
@@ -81,9 +81,9 @@ def create_dicoH(paraDic):
     Returns
     -------
     DioH : dic
-        structure de la forme {"atoms": Dico, "param": param} où ``Dico`` est le tenseur
-        des hyperboles (Nx*Ny*K) et ``param`` le tenseur des caractéristiques correspondants
-        pour chaque hyperbole (K*4)
+        structure of the form {"atoms": Dico, "param": param} where ``Dico`` is the tensor
+        of the hyperbolas (Nx*Ny*K) and ``param`` the tensor of the corresponding features
+        for each hyperbola (K*4)
     """
     Nx = paraDic["dim"][0]
     Nt = paraDic["dim"][1]
@@ -117,36 +117,36 @@ def create_dicoH(paraDic):
     return DioH
 
 def param_load(size,opt):
-    r"""Charge les paramètres et
-    retourne un dictionnaire d'atomes de dimension "size"
+    r"""Loads the parameters and
+    returns a dictionary of atoms of dimension "size
 
     Parameters
     ----------
     size :list{[256,256]}
-        dimension de l'image originale, donc des atomes.
+        dimension of the original image, thus of the atoms.
     opt :dic
-        dictionnaire d'options de creation d'hyperboles
+        dictionary of options for creating hyperbolas
 
     Returns
     -------
     out :dic
-        structure de la forme {"atoms": Dico, "param": param} où ``Dico`` est le tenseur
-        des hyperboles (Nx*Ny*K) et ``param`` le tenseur des caractéristiques correspondants
-        pour chaque hyperbole (K*4)
+        structure of the form {"atoms": Dico, "param": param} where ``Dico`` is the hyperbola tensor
+        of the hyperbolas (Nx*Ny*K) and ``param`` the tensor of the corresponding features
+        for each hyperbola (K*4)
     opt :dic
-        dictionnaire d'entrée augmenté des valeurs utilisées par la fonctions
-        (pour le suivit des modifications)
+        input dictionary augmented with the values used by the functions
+        (for tracking changes)
 
 
     .. warning::
-       **ATTENTION** 
+       **WARNING** 
        
-       Modification des paramètres de création du dico directement dans le fichier
-       python !! 
+       Modification of the dictionary creation parameters directly in the
+       python file! 
        
-       **A faire**
+       **To do**
 
-       - Ajout de l'option lecture des paramètres par un fichier YAML
+       - Add the option to read the parameters from a YAML file
     """
     param_dic={}
     param_dic['dim'] = [size[1],size[0]]      # Dim x,t

@@ -6,12 +6,10 @@ References
        Avalaible at: https://hal.archives-ouvertes.fr/hal-01351242
 
 .. warning::
-    **A faire**
+    **To do**
 
-    - Terminer la documentation de la classe (pour tous les attributs)
-    - Ajouter le logging pour le suivi
-    - Ajout condition d'arrêt sur la variation des paramètres en plus du nombre d'itération
-    - A vérifier, doute sur la reconstruction : :math:`\sum_{k}\mathbf{H}_k\star \mathbf{C}_k` ou :math:`\sum_{k}\mathbf{H}_k\star \mathbf{S}_k`
+    - Add logging for tracking
+    - Add stop condition on the variation of parameters in addition to the number of iterations
 """
 
 import logging
@@ -26,44 +24,44 @@ from . import admm_func
 
 
 def cost_function_addm2(Y,rhoS,rhoL,old_auxiliary,old_dal,old_L,L,dal,primal,auxiliary):
-    r"""Fonction de calcul des coûts et erreurs de l'`ADMM`
-    à 2 contraintes.
+    r"""ADMM cost and error calculation function
+    with 2 constraints.
 
     Parameters
     ----------
     Y : float
-        image originale (Nx,Ny,1)
+        original image (Nx,Ny,1)
     rhoS : float
-        paramètre de pénalité sur la variable S
+        penalty parameter on variable S
     rhoL : float
-        paramètre de pénalité sur la variable L
+        penalty parameter on variable L
     old_auxiliary : float
-        variable auxiliaire de l'itération précedente :math:`\mathbf{S}_k^{i-1}`
+        auxiliary variable of the previous iteration :math:`\mathbf{S}_k^{i-1}`
     old_dal : float
-        reconstruction de l'itération précedente :math:`\sum_k{\mathbf{C}_k^{i-1}\star\mathbf{H}_k}^{i-1}`
+        reconstruction of the previous iteration :math:`\sum_k{\mathbf{C}_k^{i-1}\star\mathbf{H}_k}^{i-1}`
     old_L : float
-        variable de la matrice creuse de l'itération précedente :math:`\mathbf{L}^{i-1}`
+        variable of the hollow matrix of the previous iteration :math:`\mathbf{L}^{i-1}`
     L : float
-        variable de la matrice creuse  :math:`\mathbf{L}`
+        variable of the hollow matrix :math:`\mathbf{L}`
     dal :float
         reconstruction
     primal : float
-        variable primal :math:`\mathbf{C}_k^i`
+        primal variable :math:`\mathbf{C}_k^i`
     auxiliary : float
-        variable auxiliaire :math:`\mathbf{S}_k^{i-1}`
+        auxiliary variable :math:`\mathbf{S}_k^{i-1}`
 
     Returns
     -------
     var_prim_:float
-        variation du primal
+        variation of the primal
     error_rec_:float
-        erreur de reconstruction 
+        reconstruction error 
     error_primal_:float
-        erreur du primal
+        primal error
     error_dual_S:float
-        erreur du dual de S :math:`\mathbf{U_S}`
+        error of dual of S :math:`\mathbf{U_S}`
     error_dual_L:float
-        erreur du dual de L :math:`\mathbf{U_L}`
+        error from dual of L :math:`\mathbf{U_L}`
     """
     var_prim_ = np.linalg.norm(dal-old_dal,'fro',axis=(0,1))[0]
     error_rec_ = np.linalg.norm(Y-dal-L,'fro',axis=(0,1))[0]
@@ -73,52 +71,52 @@ def cost_function_addm2(Y,rhoS,rhoL,old_auxiliary,old_dal,old_L,L,dal,primal,aux
     return var_prim_,error_rec_,error_primal_,error_dual_S,error_dual_L
    
 def addm_iteration_norm2(lambdaS,c,Y,Dal,DF,DF_H,Us,Uy,rhoS,rhoL,S,dim1,over_relax,penalty="l1",m=-1):
-    r"""fonction de calcul d'une itération d'`ADMM` avec la norme 2 et la matrice creuse
-    Basé sur [4]_ et [5]_
+    r"""function for computing an iteration of `ADMM` with norm 2 and the hollow matrix
+    Based on [4]_ and [5]_
 
     Parameters
     ----------
     lambdaS : float
-        paramètre de parcimonie
+        parsimony parameter
     c : float
-        pre-calcul du terme pour Sherman_MorrisonF 
+        pre-calculation of the term for Sherman_MorrisonF 
     Y : float
-        image originale
+        original image
     Dal : float
-        produit de convolution dictionnaire + carte coeff (Nx,Ny,1)
+        convolution product dictionary + coeff map (Nx,Ny,1)
     DF : complex
-        fft du dictionnaire (Nx,Ny,K)
+        fft of the dictionary (Nx,Ny,K)
     DF_H : complex
-        conjugué de la fft du dictionnaire (Nx,Ny,K)
+        conjugate of the dictionary fft (Nx,Ny,K)
     Us : float
-        variable duale de S
+        dual variable of S
     Uy : float
-        variable duale de L
+        dual variable of L
     rhoS : float
-        paramètre de pénalité sur S
+        penalty parameter on S
     rhoL : float
-        paramètre de pénalité sur L
+        penalty parameter on L
     S : float
-        variable auxiliaire :math:`\mathbf{S}_k`
+        auxiliary variable :math:`\mathbf{S}_k`
     dim1 : int
-        dimensions de l'image (ex: [256,256,1])
+        dimensions of the image (ex: [256,256,1])
     over_relax : float
-        paramètre d'over-relaxation (améliore la convergence pour :math:`\alpha\sim 1.6`)
-    penalty : str{"l1","l0","FirmThresholding"}, optional
-        penalité d'attache aux données, de base :math:`\sum_k{||\mathbf{S}_k||_1`
+        over-relaxation parameter (improves convergence for :math:`\alpha\sim 1.6`)
+    penalty : str{"l1", "l0", "FirmThresholding"}, optional
+        data attachment penalty, basic :math:`\sum_k{||\mathbf{S}_k||_1`
     m : int{-1}, optional
-        Nombre de workers (coeurs) utilisé pour la fft
+        Number of workers (cores) used for the fft
 
     Returns
     -------
     primal_new:float
         variable primal :math:`\mathbf{C}_k^i` (Nx,Ny,K)
     auxiliary_new:float
-        variable dual :math:`\mathbf{S}_k^i` (Nx,Ny,K)
+        dual variable :math:`\mathbf{S}_k^i` (Nx,Ny,K)
     L: float
-        matrice creuse (Nx,Ny,1)
+        hollow matrix (Nx,Ny,1)
     Dal: float
-        produit de convolution dictionnaire + carte coeff ?:math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}`?  (Nx,Ny,1)
+        convolution product dictionary + map coeff ?:math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}`? (Nx,Ny,1)
     """
     [u,Sig,v] = linalg.svd((Y-Dal+Uy)[:,:,0],check_finite=False)
     Sig = admm_func.diag_thresh(u.shape[0],v.shape[0],Sig)
@@ -157,17 +155,20 @@ class ADMMSourceSep(admm_func.ConvolutionalSparseCoding):
         Dictionary for sparse coding.
     eps : float
         sparsity coeficient. must be greater than 0.
-    n_iter : [type]
-        [description]
-    delta : [type]
-        [description]
-    rho : [type]
-        [description]
-        update_rho : [type], optional
-            [description], by default None
-    save_iterations:
-    verbosity:
-    iterations_:
+    n_iter :  int
+        number of iterations.
+    delta :  float
+        tolerance for the stopping criterion.
+    rho :  float
+        penalty parameter.
+    update_rho :  bool, optional
+        if True, rho is updated after each iteration.
+    save_iterations: bool, optional
+        if True, save the history of the ADMM algorithm.
+    verbosity: int, optional
+        verbosity level.
+    iterations_: list
+        history of the ADMM algorithm.
 
     error_:
     """    

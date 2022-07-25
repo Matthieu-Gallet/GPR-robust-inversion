@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modules complémentaires &mdash; MIRAG 1.0.0 documentation</title>
+  <title>Additional modules &mdash; MIRAG 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -45,7 +45,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">MIRAG</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="MIRAG.dictionnaire.html">MIRAG.dictionnaire package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MIRAG.optim.html">MIRAG.optim package</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Modules complémentaires</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Additional modules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#module-MIRAG.affichage">MIRAG.affichage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-MIRAG.filtrage_func">MIRAG.filtrage_func</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-MIRAG.metrique">MIRAG.metrique</a></li>
@@ -70,7 +70,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="modules.html">MIRAG</a> &raquo;</li>
-      <li>Modules complémentaires</li>
+      <li>Additional modules</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/MIRAG.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -85,7 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="MIRAG.dictionnaire.html">MIRAG.dictionnaire package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="MIRAG.dictionnaire.html#module-MIRAG.dictionnaire.dico_func">MIRAG.dictionnaire.dico_func</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MIRAG.dictionnaire.html#module-MIRAG.dictionnaire.dico_phy">MIRAG.dictionnaire.dico_phy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MIRAG.dictionnaire.html#module-MIRAG.dictionnaire.dico_phy_plot">MIRAG.dictionnaire.dico_phy_plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MIRAG.dictionnaire.html#mirag-dictionnaire-dico-phy-plot">MIRAG.dictionnaire.dico_phy_plot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MIRAG.dictionnaire.html#module-MIRAG.dictionnaire.dictionary">MIRAG.dictionnaire.dictionary</a></li>
 </ul>
 </li>
@@ -98,27 +98,22 @@
 </li>
 </ul>
 </div>
-<section id="modules-complementaires">
-<h1>Modules complémentaires<a class="headerlink" href="#modules-complementaires" title="Permalink to this heading"></a></h1>
+<section id="additional-modules">
+<h1>Additional modules<a class="headerlink" href="#additional-modules" title="Permalink to this heading"></a></h1>
 <section id="module-MIRAG.affichage">
 <span id="mirag-affichage"></span><h2>MIRAG.affichage<a class="headerlink" href="#module-MIRAG.affichage" title="Permalink to this heading"></a></h2>
-<p>Module d’affichage des résultats de l’<code class="docutils literal notranslate"><span class="pre">ADMM</span></code> sous sa forme sparse et separation</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="MIRAG.affichage.SVD_gpr">
-<span class="sig-prename descclassname"><span class="pre">MIRAG.affichage.</span></span><span class="sig-name descname"><span class="pre">SVD_gpr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/affichage.html#SVD_gpr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.affichage.SVD_gpr" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
+<p>Module for displaying the results of the ADMM in its sparse and separation form</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.affichage.cmap_perso">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.affichage.</span></span><span class="sig-name descname"><span class="pre">cmap_perso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Q</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/affichage.html#cmap_perso"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.affichage.cmap_perso" title="Permalink to this definition"></a></dt>
-<dd><p>Création d’une colormap perso divergente centrée sur la moyenne
-de la matrice Q</p>
+<dd><p>Creation of a divergent custom colormap centered on the mean
+of the Q matrix</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>Q</strong> (<em>float</em>) – Matrice à afficher (principalement somme des C_k) (Nx,Ny)</p>
+<dd class="field-odd"><p><strong>Q</strong> (<em>float</em>) – Matrix to display (mainly sum of C_k) (Nx,Ny)</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>cmap</strong> – objet cmap associé</p>
+<dd class="field-even"><p><strong>cmap</strong> – associated cmap object</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>obj</p>
@@ -127,21 +122,16 @@ de la matrice Q</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="MIRAG.affichage.param_load">
-<span class="sig-prename descclassname"><span class="pre">MIRAG.affichage.</span></span><span class="sig-name descname"><span class="pre">param_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/affichage.html#param_load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.affichage.param_load" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.affichage.plot_atomNSM">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.affichage.</span></span><span class="sig-name descname"><span class="pre">plot_atomNSM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atm2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paraDic</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/affichage.html#plot_atomNSM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.affichage.plot_atomNSM" title="Permalink to this definition"></a></dt>
-<dd><p>Affichage d’un atome du dictionnaire physique
-avec les bonnes dimensions (m et ns)</p>
+<dd><p>Display of an atom from the physical dictionary
+with the right dimensions (m and ns)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>atm2</strong> (<em>float</em>) – matrice de l’atome (Nx * Ny)</p></li>
-<li><p><strong>paraDic</strong> (<em>dic</em>) – dictionnaire des paramètres de l’atome (taille nsm)
-key necessaire : “size_ns_m”</p></li>
+<li><p><strong>atm2</strong> (<em>float</em>) – matrix of the atom (Nx * Ny)</p></li>
+<li><p><strong>paraDic</strong> (<em>dic</em>) – dictionary of the parameters of the atom (size nsm)
+necessary key : “size_ns_m</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -151,7 +141,7 @@ key necessaire : “size_ns_m”</p></li>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">paraDic</span><span class="o">=</span><span class="p">{}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">paraDic</span><span class="p">[</span><span class="s2">&quot;size_ns_m&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="mi">900</span><span class="p">,</span><span class="mi">45</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plot_atomNSM</span><span class="p">(</span><span class="n">atomes</span><span class="p">,</span><span class="n">paraDic</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot_atomNSM</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span><span class="n">paraDic</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -159,17 +149,17 @@ key necessaire : “size_ns_m”</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.affichage.plot_ckmap">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.affichage.</span></span><span class="sig-name descname"><span class="pre">plot_ckmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['_',</span> <span class="pre">'_']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/affichage.html#plot_ckmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.affichage.plot_ckmap" title="Permalink to this definition"></a></dt>
-<dd><p>Affichage d’une ou 2 cartes C_k à partir d’une cmap divergente perso</p>
+<dd><p>Display one or 2 C_k maps from a personal divergent cmap</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>alpha</strong> (<em>float</em>) – Matrice (M x N)(principalement somme des C_k ou détail d’un C_k)</p></li>
-<li><p><strong>duo</strong> (<em>bool{False}</em><em>, </em><em>optional</em>) – Affichage d’une ou 2 cartes.</p></li>
-<li><p><strong>t</strong> (<em>int{60}</em><em>, </em><em>optional</em>) – position (pixel) centrale des hyperboles utilisées (ordonnée)</p></li>
-<li><p><strong>x</strong> (<em>int{128}</em><em>, </em><em>optional</em>) – position (pixel) centrale des hyperboles utilisées (abscisse)</p></li>
-<li><p><strong>title</strong> (<em>list{</em><em>[</em><em>&quot;_&quot;</em><em>,</em><em>&quot;_&quot;</em><em>]</em><em>}</em><em>, </em><em>optional</em>) – Titres des graphes</p></li>
-<li><p><strong>nfile</strong> (<em>str{&quot;_&quot;}</em><em>, </em><em>optional</em>) – Nom du fichier pour l’enregistrement</p></li>
-<li><p><strong>save</strong> (<em>bool{False}</em><em>, </em><em>optional</em>) – Enregistrer le fichier.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Matrix (M x N)(mainly sum of C_k or detail of a C_k)</p></li>
+<li><p><strong>duo</strong> (<em>bool{False}</em><em>, </em><em>optional</em>) – Display of one or 2 cards.</p></li>
+<li><p><strong>t</strong> (<em>int{60}</em><em>, </em><em>optional</em>) – central position (pixel) of the hyperbolas used (ordinate)</p></li>
+<li><p><strong>x</strong> (<em>int{128}</em><em>, </em><em>optional</em>) – central position (pixel) of the used hyperbolas (abscissa)</p></li>
+<li><p><strong>title</strong> (<em>list{</em><em>[</em><em>&quot;_&quot;</em><em>,</em><em>&quot;_&quot;</em><em>]</em><em>}</em><em>, </em><em>optional</em>) – Titles of the graphs</p></li>
+<li><p><strong>nfile</strong> (<em>str{&quot;_&quot;}</em><em>, </em><em>optional</em>) – Name of the file for the record</p></li>
+<li><p><strong>save</strong> (<em>bool{False}</em><em>, </em><em>optional</em>) – Save the file.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -181,17 +171,17 @@ key necessaire : “size_ns_m”</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.affichage.plot_ckmap_img">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.affichage.</span></span><span class="sig-name descname"><span class="pre">plot_ckmap_img</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ck</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['_',</span> <span class="pre">'_']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/affichage.html#plot_ckmap_img"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.affichage.plot_ckmap_img" title="Permalink to this definition"></a></dt>
-<dd><p>Affichage somme des C_k et image cote-cote</p>
+<dd><p>Displaying the sum of C_k and the dimensional image</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>T</strong> (<em>float</em>) – tableau [C_k , img] ([(Nx * Ny * K) , (Nx * Ny)]) ou ([(Nx * Ny), (Nx * Ny)])</p></li>
-<li><p><strong>ck</strong> (<em>bool{False}</em><em>, </em><em>optional</em>) – Si les corrections/somme sur les C_k ont ete faites</p></li>
-<li><p><strong>title</strong> (<em>list{</em><em>[</em><em>&quot;_&quot;</em><em>,</em><em>&quot;_&quot;</em><em>]</em><em>}</em><em>, </em><em>optional</em>) – Titres des graphes</p></li>
-<li><p><strong>nfile</strong> (<em>str{&quot;_&quot;}</em><em>, </em><em>optional</em>) – Nom du fichier pour l’enregistrement</p></li>
-<li><p><strong>save</strong> (<em>bool{False}</em><em>, </em><em>optional</em>) – Enregistrer le fichier.</p></li>
-<li><p><strong>t</strong> (<em>int{60}</em><em>, </em><em>optional</em>) – position (pixel) centrale des hyperboles utilisées (ordonnée)</p></li>
-<li><p><strong>x</strong> (<em>int{128}</em><em>, </em><em>optional</em>) – position (pixel) centrale des hyperboles utilisées (abscisse)</p></li>
+<li><p><strong>T</strong> (<em>float</em>) – array [C_k , img] ([(Nx * Ny * K) , (Nx * Ny)]) or ([(Nx * Ny), (Nx * Ny)])</p></li>
+<li><p><strong>ck</strong> (<em>bool{False}</em><em>, </em><em>optional</em>) – If the corrections/sum on the C_k have been done</p></li>
+<li><p><strong>title</strong> (<em>list{</em><em>[</em><em>&quot;_&quot;</em><em>,</em><em>&quot;_&quot;</em><em>]</em><em>}</em><em>, </em><em>optional</em>) – Titles of the graphs</p></li>
+<li><p><strong>nfile</strong> (<em>str{&quot;_&quot;}</em><em>, </em><em>optional</em>) – Name of the file for the record</p></li>
+<li><p><strong>save</strong> (<em>bool{False}</em><em>, </em><em>optional</em>) – Save the file.</p></li>
+<li><p><strong>t</strong> (<em>int{60}</em><em>, </em><em>optional</em>) – central position (pixel) of the hyperbolas used (ordinate)</p></li>
+<li><p><strong>x</strong> (<em>int{128}</em><em>, </em><em>optional</em>) – central position (pixel) of the hyperbolas used (abscissa)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -203,17 +193,17 @@ key necessaire : “size_ns_m”</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.affichage.plot_recon">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.affichage.</span></span><span class="sig-name descname"><span class="pre">plot_recon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Dal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Dico</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/affichage.html#plot_recon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.affichage.plot_recon" title="Permalink to this definition"></a></dt>
-<dd><p>Affiche la reconstruction d’une image grace au dictionnaire et
-aux cartes des C_k</p>
+<dd><p>Displays the reconstruction of an image using the dictionary and
+maps of the C_k</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Dal</strong> (<em>float</em>) – Soit la reconstruction deja calculée (Nx * Ny) soit le tenseur des C_k (Nx * Ny * K).</p></li>
-<li><p><strong>Dico</strong> (<em>float{None}</em><em>, </em><em>optional</em>) – dictionnaire nécessaire pour le calcul de la reconstruction
-(si non deja calculée) (Nx * Ny * K).</p></li>
-<li><p><strong>name</strong> (<em>str{&quot;_&quot;}</em><em>, </em><em>optional</em>) – nom du fichier a enregistrer.</p></li>
-<li><p><strong>save</strong> (<em>bool{False}</em><em>, </em><em>optional</em>) – enregistrer ou non l’image.</p></li>
-<li><p><strong>compute</strong> (<em>bool{True}</em><em>, </em><em>optional</em>) – reconstruction deja calculée ou non.</p></li>
+<li><p><strong>Dal</strong> (<em>float</em>) – Either the already computed reconstruction (Nx * Ny) or the C_k tensor (Nx * Ny * K).</p></li>
+<li><p><strong>Dico</strong> (<em>float{None}</em><em>, </em><em>optional</em>) – dictionary necessary for the calculation of the reconstruction
+(if not already computed) (Nx * Ny * K).</p></li>
+<li><p><strong>name</strong> (<em>str{&quot;_&quot;}</em><em>, </em><em>optional</em>) – name of the file to save.</p></li>
+<li><p><strong>save</strong> (<em>bool{False}</em><em>, </em><em>optional</em>) – save or not the image.</p></li>
+<li><p><strong>compute</strong> (<em>bool{True}</em><em>, </em><em>optional</em>) – reconstruction already computed or not.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -240,12 +230,24 @@ aux cartes des C_k</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.affichage.scale_0_1">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.affichage.</span></span><span class="sig-name descname"><span class="pre">scale_0_1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/affichage.html#scale_0_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.affichage.scale_0_1" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Scale an image between 0 and 1</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>img</strong> (<em>numpy.ndarray</em>) – Image to scale</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>img</strong> – Scaled image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 <section id="module-MIRAG.filtrage_func">
 <span id="mirag-filtrage-func"></span><h2>MIRAG.filtrage_func<a class="headerlink" href="#module-MIRAG.filtrage_func" title="Permalink to this heading"></a></h2>
-<p>Module de filtrage des reconstructions par seuillage / abandon d’atomes du dictionnaire</p>
+<p>Module for filtering reconstructions by thresholding / dropping atoms from the dictionary</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.filtrage_func.SVD_gpr">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.filtrage_func.</span></span><span class="sig-name descname"><span class="pre">SVD_gpr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/filtrage_func.html#SVD_gpr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.filtrage_func.SVD_gpr" title="Permalink to this definition"></a></dt>
@@ -269,29 +271,29 @@ aux cartes des C_k</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.filtrage_func.dropR">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.filtrage_func.</span></span><span class="sig-name descname"><span class="pre">dropR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_acond</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acond</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/filtrage_func.html#dropR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.filtrage_func.dropR" title="Permalink to this definition"></a></dt>
-<dd><p>Supprime après ADMM les atomes non désirés pour la reconstruction</p>
+<dd><p>Removes after ADMM the unwanted atoms for reconstruction</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>A utiliser spécifiquement pour l’ADMM 1 contrainte (ADMM 2 ou Source separation
-utilise la matrice creuse L)</p>
+<p>To be used specifically for the constrained ADMM 1 (ADMM 2 or Source separation
+uses the hollow matrix L)</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>C</strong> (<em>float</em>) – Cartes des coefficients à alléger (Nx,Ny,K) avec K le nombre d’atomes,
-Nx,Ny les dimensions de la reconstruction.</p></li>
-<li><p><strong>Dic</strong> (<em>float</em>) – Dictionnaire à alléger (Nx,Ny,K) avec K le nombre d’atomes,
-Nx,Ny les dimensions de la reconstruction.</p></li>
-<li><p><strong>p_acond</strong> (<em>int{500}</em><em>, </em><em>optional</em>) – condition sur le paramètre p du dictionnaire.
-Garde tous les atomes tq <span class="math notranslate nohighlight">\(a/p &lt; p_{cond}\)</span>.</p></li>
-<li><p><strong>acond</strong> (<em>float{0.1}</em><em>, </em><em>optional</em>) – condition sur le paramètre a du dictionnaire.
-Garde tous les atomes tq <span class="math notranslate nohighlight">\(a &gt; a_{cond}\)</span>.</p></li>
+<li><p><strong>C</strong> (<em>float</em>) – Maps of the coefficients to be reduced (Nx,Ny,K) with K the number of atoms,
+Nx,Ny the dimensions of the reconstruction.</p></li>
+<li><p><strong>Dic</strong> (<em>float</em>) – Dictionary to be reduced (Nx,Ny,K) with K the number of atoms,
+Nx,Ny the dimensions of the reconstruction.</p></li>
+<li><p><strong>p_acond</strong> (<em>int{500}</em><em>, </em><em>optional</em>) – condition on the parameter p of the dictionary.
+Keep all the atoms tq <span class="math notranslate nohighlight">\(a/p &lt; p_{cond}\)</span>.</p></li>
+<li><p><strong>acond</strong> (<em>float{0.1}</em><em>, </em><em>optional</em>) – condition on the parameter a of the dictionary.
+Keep all atoms tq <span class="math notranslate nohighlight">\(a &gt; a_{cond}\)</span>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>Cprim</strong> (<em>float</em>) – Cartes des coefficients allégés (Nx,Ny,K’) avec K’&lt;K</p></li>
-<li><p><strong>Hprim</strong> (<em>float</em>) – Dictionnaire allégé (Nx,Ny,K’) avec K’&lt;K</p></li>
+<li><p><strong>Cprim</strong> (<em>float</em>) – Maps of the reduced coefficients (Nx,Ny,K’) with K’&lt;K</p></li>
+<li><p><strong>Hprim</strong> (<em>float</em>) – Lightweight dictionary (Nx,Ny,K’) with K’&lt;K</p></li>
 </ul>
 </p>
 </dd>
@@ -301,20 +303,20 @@ Garde tous les atomes tq <span class="math notranslate nohighlight">\(a &gt; a_{
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.filtrage_func.submax_Ck">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.filtrage_func.</span></span><span class="sig-name descname"><span class="pre">submax_Ck</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Csec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seuil</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/filtrage_func.html#submax_Ck"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.filtrage_func.submax_Ck" title="Permalink to this definition"></a></dt>
-<dd><p>Seuillage des cartes C_k.
-Ne garde que les valeurs qui respectent les conditions:</p>
+<dd><p>Thresholding of C_k cards.
+Keeps only the values that meet the conditions:</p>
 <div class="math notranslate nohighlight">
-\[0.5\cdot\mathrm{seuil}*1000&lt; \mathrm{signal}&lt;1000*(1- 0.5\cdot\mathrm{seuil})\]</div>
-<p>Utile pour faire ressortir les signaux faibles (principalement ADMM1).</p>
+\[0.5\cdot\mathrm{threshold}*1000&lt; \mathrm{signal}&lt;1000*(1- 0.5\cdot\mathrm{threshold})\]</div>
+<p>Useful to highlight weak signals (mainly ADMM1).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Csec</strong> (<em>float</em>) – Tenseur C_k à seuiller (dynamique 0-1) (Nx,Ny,K)</p></li>
-<li><p><strong>seuil</strong> (<em>float{0.1}</em><em>, </em><em>optional</em>) – seuil des valeurs (entre 0 et 1).</p></li>
+<li><p><strong>Csec</strong> (<em>float</em>) – C_k tensor to threshold (dynamic 0-1) (Nx,Ny,K)</p></li>
+<li><p><strong>threshold</strong> (<em>float{0.1}</em><em>, </em><em>optional</em>) – threshold of the values (between 0 and 1).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>Cfin</strong> – Tenseur des cartes de coefficients seuillé (Nx,Ny,K)</p>
+<dd class="field-even"><p><strong>Cfin</strong> – Thresholded coefficient map tensor (Nx,Ny,K)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float</p>
@@ -325,20 +327,20 @@ Ne garde que les valeurs qui respectent les conditions:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.filtrage_func.thresh_Ck">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.filtrage_func.</span></span><span class="sig-name descname"><span class="pre">thresh_Ck</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Cprim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seuil</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.45</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/filtrage_func.html#thresh_Ck"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.filtrage_func.thresh_Ck" title="Permalink to this definition"></a></dt>
-<dd><p>Seuillage des cartes C_k.
-Met à zéros les valeurs qui respecte les condtions suivantes pour un signal découpé
-en histogramme à 1000 tranches:</p>
+<dd><p>Thresholding of C_k cards.
+Sets to zero the values which respect the following conditions for a signal sliced
+in histogram with 1000 slices:</p>
 <div class="math notranslate nohighlight">
-\[0.5\cdot\mathrm{seuil}*1000&lt; \mathrm{signal}&lt;1000*(1- 0.5\cdot\mathrm{seuil})\]</div>
+\[0.5\cdot\mathrm{threshold}*1000&lt; \mathrm{signal}&lt;1000*(1- 0.5\cdot\mathrm{threshold})\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Cprim</strong> (<em>float</em>) – Tenseur C_k à seuiller (dynamique 0-1) (Nx,Ny,K)</p></li>
-<li><p><strong>seuil</strong> (<em>float{0.45}</em><em>, </em><em>optional</em>) – seuil des valeurs (entre 0 et 1).</p></li>
+<li><p><strong>Cprim</strong> (<em>float</em>) – C_k tensor to threshold (dynamic 0-1) (Nx,Ny,K)</p></li>
+<li><p><strong>threshold</strong> (<em>float{0.45}</em><em>, </em><em>optional</em>) – threshold of the values (between 0 and 1).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>Cter</strong> – Tenseur des cartes de coefficients seuillé (Nx,Ny,K)</p>
+<dd class="field-even"><p><strong>Cter</strong> – Thresholded coefficient map tensor (Nx,Ny,K)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float</p>
@@ -349,23 +351,23 @@ en histogramme à 1000 tranches:</p>
 </section>
 <section id="module-MIRAG.metrique">
 <span id="mirag-metrique"></span><h2>MIRAG.metrique<a class="headerlink" href="#module-MIRAG.metrique" title="Permalink to this heading"></a></h2>
-<p>Module de calcul de métrique pour quantifier la qualité de reconstruction des radargrammes</p>
+<p>Metric calculation module to quantify the reconstruction quality of radargrams</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.metrique.center_mask">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.metrique.</span></span><span class="sig-name descname"><span class="pre">center_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">erode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/metrique.html#center_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.metrique.center_mask" title="Permalink to this definition"></a></dt>
-<dd><p>Extrait d’un mask les positions des clusters
-Permet d’appliquer une erosion ou non sur l’image
-(permettant ainsi une meilleur détection des masks)</p>
+<dd><p>Extract from a mask the positions of the clusters
+Allows to apply an erosion or not on the image
+(allowing a better detection of masks)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mask</strong> (<em>int</em>) – array des masks</p></li>
-<li><p><strong>erode</strong> (<em>bool{True}</em><em>, </em><em>optional</em>) – active l’érosion des masks.</p></li>
-<li><p><strong>size</strong> (<em>int{20}</em><em>, </em><em>optional</em>) – taille du kernel de l’érosion si sélectionné.</p></li>
+<li><p><strong>mask</strong> (<em>int</em>) – array of masks</p></li>
+<li><p><strong>erode</strong> (<em>bool{True}</em><em>, </em><em>optional</em>) – activate erosion of masks.</p></li>
+<li><p><strong>size</strong> (<em>int{20}</em><em>, </em><em>optional</em>) – size of the erosion kernel if selected.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>centroid</strong> – Coordonnées des centres de clusters</p>
+<dd class="field-even"><p><strong>centroid</strong> – Coordinates of cluster centers</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>int</p>
@@ -376,19 +378,19 @@ Permet d’appliquer une erosion ou non sur l’image
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.metrique.centroid_adjust_win">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.metrique.</span></span><span class="sig-name descname"><span class="pre">centroid_adjust_win</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centroid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_rec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/metrique.html#centroid_adjust_win"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.metrique.centroid_adjust_win" title="Permalink to this definition"></a></dt>
-<dd><p>Retourne les centres des masks ajustés
-L’ajustement se fait par rapport à la taille de l’image,
-pour éviter les débordements.</p>
+<dd><p>Returns the centers of the adjusted masks
+The adjustment is made in relation to the size of the image,
+to avoid overflows.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>centroid</strong> (<em>float</em>) – tableau des centres des masques</p></li>
-<li><p><strong>y_mask</strong> (<em>int</em>) – dimension Y de l’image du masque</p></li>
-<li><p><strong>dim_rec</strong> (<em>int</em>) – tableau des dimensions de l’image utilisé (souvent inférieur au mask)</p></li>
+<li><p><strong>centroid</strong> (<em>float</em>) – array of mask centers</p></li>
+<li><p><strong>y_mask</strong> (<em>int</em>) – dimension Y of the mask image</p></li>
+<li><p><strong>dim_rec</strong> (<em>int</em>) – array of dimensions of the used image (often smaller than the mask)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>cent</strong> – centre des masks ajustés a l’image reconstruite</p>
+<dd class="field-even"><p><strong>cent</strong> – center of the masks adjusted to the reconstructed image</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>int</p>
@@ -399,27 +401,27 @@ pour éviter les débordements.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.metrique.comp_metric">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.metrique.</span></span><span class="sig-name descname"><span class="pre">comp_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Iorg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Irec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">erode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_rec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">100,</span> <span class="pre">0,</span> <span class="pre">600]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_win</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[80,</span> <span class="pre">40]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_win_S</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_seuil</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/metrique.html#comp_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.metrique.comp_metric" title="Permalink to this definition"></a></dt>
-<dd><p>Métrique de détection hyperboles reconstruites/vérité terrain
-Fonction principale du calcul de la détection des hyperboles par rapport à un mask</p>
+<dd><p>Metric of detection of reconstructed hyperbolas/ground truth
+Main function of the hyperbola detection calculation with respect to a mask</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Iorg</strong> (<em>float</em>) – array image originale normalisée (0-1) (MxN)</p></li>
-<li><p><strong>Irec</strong> (<em>float</em>) – array image reconstruite normalisée (0-1)(MxN)</p></li>
-<li><p><strong>Ck</strong> (<em>float</em>) – matrice de la somme des cartes de coefficients normalisées (MxN)</p></li>
-<li><p><strong>path_mask</strong> (<em>str</em>) – chemin du mask</p></li>
-<li><p><strong>erode</strong> (<em>bool {True}</em><em>, </em><em>optional</em>) – active l’erosion du mask</p></li>
-<li><p><strong>sz</strong> (<em>int {20}</em><em>, </em><em>optional:</em>) – taille du kernel pour l’erosion.</p></li>
-<li><p><strong>pos_rec</strong> (<em>list {</em><em>[</em><em>0</em><em>,</em><em>100</em><em>,</em><em>0</em><em>,</em><em>600</em><em>]</em><em>}</em><em>, </em><em>optional</em>) – position de l’image originale par rapport au mask.</p></li>
-<li><p><strong>dim_win</strong> (<em>list{</em><em>[</em><em>80</em><em>,</em><em>40</em><em>]</em><em>}</em><em>, </em><em>optional</em>) – taille de la fenêtre de détection en pixels.</p></li>
-<li><p><strong>out_win_S</strong> (<em>bool{False}</em><em>, </em><em>optional</em>) – retourne la fenêtre seuillée ou non</p></li>
-<li><p><strong>v_seuil</strong> (<em>int{3}</em><em>, </em><em>optional</em>) – Valeur du seuil par rapport à l’écart type des C_k. Par défaut mise à 0
-des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
-<li><p><strong>plot_check</strong> (<em>bool{False}</em><em>,</em><em>optional</em>) – Active l’affichage des positions des centroids sur le mask</p></li>
+<li><p><strong>Iorg</strong> (<em>float</em>) – array original normalized image (0-1) (MxN)</p></li>
+<li><p><strong>Irec</strong> (<em>float</em>) – array normalized reconstructed image (0-1)(MxN)</p></li>
+<li><p><strong>Ck</strong> (<em>float</em>) – matrix of the sum of the normalized coefficient maps (MxN)</p></li>
+<li><p><strong>path_mask</strong> (<em>str</em>) – path of the mask</p></li>
+<li><p><strong>erode</strong> (<em>bool {True}</em><em>, </em><em>optional</em>) – activate the erosion of the mask</p></li>
+<li><p><strong>sz</strong> (<em>int {20}</em><em>, </em><em>optional:</em>) – kernel size for erosion.</p></li>
+<li><p><strong>pos_rec</strong> (<em>list {</em><em>[</em><em>0</em><em>,</em><em>100</em><em>,</em><em>0</em><em>,</em><em>600</em><em>]</em><em>}</em><em>, </em><em>optional</em>) – position of the original image in relation to the mask.</p></li>
+<li><p><strong>dim_win</strong> (<em>list{</em><em>[</em><em>80</em><em>,</em><em>40</em><em>]</em><em>}</em><em>, </em><em>optional</em>) – size of the detection window in pixels.</p></li>
+<li><p><strong>out_win_S</strong> (<em>bool{False}</em><em>, </em><em>optional</em>) – return the thresholded window or not</p></li>
+<li><p><strong>v_threshold</strong> (<em>int{3}</em><em>, </em><em>optional</em>) – Value of the threshold in relation to the standard deviation of C_k. By default set to 0
+of C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
+<li><p><strong>plot_check</strong> (<em>bool{False}</em><em>,</em><em>optional</em>) – Activate the display of the centroids positions on the mask</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>score</strong> – structure des scores et metriques calculés pour une reconstruction à partir de son masque</p>
+<dd class="field-even"><p><strong>score</strong> – structure of the scores and metrics computed for a reconstruction from its mask</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>dic</p>
@@ -427,54 +429,39 @@ des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
 </dl>
 <p class="rubric">Notes</p>
 <ul class="simple">
-<li><p>score[‘MSE_local_max’] (float) : maximum MeanSquareError pour chaque masque entre l’image reconstruite et celle originale</p></li>
-<li><p>score[‘MSE_global’] (float) : MeanSquareError globale entre l’image reconstruite et celle originale.</p></li>
-<li><p>score[‘SSI_local_min’] (float) : minimum Structural similarity index pour chaque masque entre l’image reconstruite et celle originale</p></li>
-<li><p>score[‘SSI_global’] (float) : Structural similarity index globale entre l’image reconstruite et celle originale.</p></li>
-<li><p>score[‘TruePositive’] (float) : nombre d’hyperbole détectée dans l’image fournit.</p></li>
-<li><p>score[‘N_terrain’] (float) : nombre theorique d’hyperboles à partir du mask.</p></li>
-<li><p>score[“FalseNegative”] (float) : hyperboles non-créés par la reconstruction mais presentes dans les masques</p></li>
-<li><p>score[“FalsePositive”] (float) : hyperboles créés par la reconstruction mais non presentes dans les masques</p></li>
+<li><p>score[‘MSE_local_max’] (float) : maximum MeanSquareError for each mask between the reconstructed and the original image</p></li>
+<li><p>score[‘MSE_global’] (float) : global MeanSquareError between the reconstructed image and the original one.</p></li>
+<li><p>score[‘SSI_local_min’] (float) : minimum Structural similarity index for each mask between the reconstructed image and the original one</p></li>
+<li><p>score[‘SSI_global’] (float): Global structural similarity index between the reconstructed image and the original one.</p></li>
+<li><p>score[‘TruePositive’] (float) : number of hyperbola detected in the provided image.</p></li>
+<li><p>score[‘N_terrain’] (float): theoretical number of hyperbolas from the mask.</p></li>
+<li><p>score[“FalseNegative”] (float) : hyperbolas not created by the reconstruction but present in the masks</p></li>
+<li><p>score[“FalsePositive”] (float) : hyperbolas created by the reconstruction but not present in the masks</p></li>
 <li><p>score[“precision”] (float) : TruePositive/(TruePositive+FalsePositive)</p></li>
-<li><p>score[“rappel”] (float) : TruePositive/(TruePositive+FalseNegative)</p></li>
-<li><p>score[“F1_score”] (float) : (precision*rappel)/(precision+rappel)</p></li>
+<li><p>score[“recall”] (float) : TruePositive/(TruePositive+FalseNegative)</p></li>
+<li><p>score[“F1_score”] (float) : (precision*recall)/(precision+recall)</p></li>
 </ul>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p><strong>A faire</strong></p>
-<ul class="simple">
-<li><dl class="simple">
-<dt>Implémentation des métriques:</dt><dd><ul>
-<li><p>précision : <span class="math notranslate nohighlight">\(\mathrm{TruePositive/(TruePositive+FalsePositive)}\)</span></p></li>
-<li><p>rappel    : <span class="math notranslate nohighlight">\(\mathrm{TruePositive/(TruePositive+FalseNegative)}\)</span></p></li>
-<li><p>F1-score  : <span class="math notranslate nohighlight">\(\mathrm{precision\cdot rappel/(precision+rappel)}\)</span></p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.metrique.detect_Nhyper_rec">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.metrique.</span></span><span class="sig-name descname"><span class="pre">detect_Nhyper_rec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ck_stats</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_seuil</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/metrique.html#detect_Nhyper_rec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.metrique.detect_Nhyper_rec" title="Permalink to this definition"></a></dt>
-<dd><p>Detecte le nombre d’hyperbole total construite
-par l’algorithme sous réserve d’un seuil</p>
+<dd><p>Detects the total number of hyperbolas constructed
+by the algorithm subject to a threshold</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ck_stats</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p></li>
 <li><p><strong>Ck</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p></li>
-<li><p><strong>v_seuil</strong> (<em>int{3}</em><em>, </em><em>optional</em>) – Valeur du seuil par rapport à l’écart type des C_k. Par défaut mise à 0
-des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
+<li><p><strong>v_threshold</strong> (<em>int{3}</em><em>, </em><em>optional</em>) – Value of the threshold with respect to the standard deviation of C_k. By default set to 0
+of C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>[description]</p>
+<dd class="field-even"><p><strong>norm_C0_glob</strong> – total number of hyperbolas detected</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>[type]</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -482,17 +469,17 @@ des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.metrique.fenetre">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.metrique.</span></span><span class="sig-name descname"><span class="pre">fenetre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/metrique.html#fenetre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.metrique.fenetre" title="Permalink to this definition"></a></dt>
-<dd><p>Retourne une fenetre centrée sur un point de dimension totale dim (LxH)</p>
+<dd><p>Returns a window centered on a point of total dimension dim (LxH)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>cen</strong> (<em>int</em>) – centre de la fenêtre</p></li>
-<li><p><strong>img</strong> (<em>float</em>) – image à centrer</p></li>
-<li><p><strong>dim</strong> (<em>int</em>) – dimension totale de la fenêtre LxH</p></li>
+<li><p><strong>cen</strong> (<em>int</em>) – center of the window</p></li>
+<li><p><strong>img</strong> (<em>float</em>) – image to center</p></li>
+<li><p><strong>dim</strong> (<em>int</em>) – total dimension of the window LxH</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>out</strong> – fenêtre extraite de l’image initiale</p>
+<dd class="field-even"><p><strong>out</strong> – window extracted from the initial image</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float</p>
@@ -503,13 +490,13 @@ des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.metrique.get_available_masks">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.metrique.</span></span><span class="sig-name descname"><span class="pre">get_available_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/metrique.html#get_available_masks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.metrique.get_available_masks" title="Permalink to this definition"></a></dt>
-<dd><p>Obtient la liste de tous les masks dans un fichier .h5</p>
+<dd><p>Gets the list of all masks in a .h5 file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – chemin absolu du fichier .h5</p>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – absolute path of the .h5 file</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>masks_available</strong> – dictionnaire des noms des masks disponibles pour un fichier .h5</p>
+<dd class="field-even"><p><strong>masks_available</strong> – dictionary of available masks names for a .h5 file</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>str</p>
@@ -520,13 +507,13 @@ des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.metrique.load_mask">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.metrique.</span></span><span class="sig-name descname"><span class="pre">load_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/metrique.html#load_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.metrique.load_mask" title="Permalink to this definition"></a></dt>
-<dd><p>Charge le masque à partir d’un fichier .h5</p>
+<dd><p>Loads the mask from an .h5 file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – chemin absolu du fichier .h5</p>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – absolute path of the .h5 file</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>mask</strong> – array 2D des masks</p>
+<dd class="field-even"><p><strong>mask</strong> – 2D array of masks</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float</p>
@@ -537,21 +524,21 @@ des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.metrique.mask2scatter">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.metrique.</span></span><span class="sig-name descname"><span class="pre">mask2scatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">erode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/metrique.html#mask2scatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.metrique.mask2scatter" title="Permalink to this definition"></a></dt>
-<dd><p>Transforme un array de masks en scatter x,y
-Permet d’appliquer une erosion ou non sur l’image
-(permettant ainsi une meilleur détection des masks)</p>
+<dd><p>Transforms an array of masks into a scatter x,y
+Allows to apply an erosion or not on the image
+(allowing a better detection of masks)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mask</strong> (<em>int</em>) – array des masks</p></li>
-<li><p><strong>erode</strong> (<em>bool{True}</em><em>, </em><em>optional</em>) – active l’érosion des masks.</p></li>
-<li><p><strong>size</strong> (<em>int{20}</em><em>, </em><em>optional</em>) – taille du kernel de l’érosion si sélectionné.</p></li>
+<li><p><strong>mask</strong> (<em>int</em>) – array of masks</p></li>
+<li><p><strong>erode</strong> (<em>bool{True}</em><em>, </em><em>optional</em>) – activate erosion of masks.</p></li>
+<li><p><strong>size</strong> (<em>int{20}</em><em>, </em><em>optional</em>) – size of the erosion kernel if selected.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>mask_scatter</strong> (<em>int</em>) – scatter x,y des masks</p></li>
-<li><p><strong>ero</strong> (<em>int</em>) – masks erodé ou non</p></li>
+<li><p><strong>mask_scatter</strong> (<em>int</em>) – scatter x,y of masks</p></li>
+<li><p><strong>ero</strong> (<em>int</em>) – masks eroded or not</p></li>
 </ul>
 </p>
 </dd>
@@ -561,25 +548,25 @@ Permet d’appliquer une erosion ou non sur l’image
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.metrique.stats_reconstruction">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.metrique.</span></span><span class="sig-name descname"><span class="pre">stats_reconstruction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Iorg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Irec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">MSE_ce</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C0_ce</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SSI_ce</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centroid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_sta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_seuil</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/metrique.html#stats_reconstruction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.metrique.stats_reconstruction" title="Permalink to this definition"></a></dt>
-<dd><p>Calcule les statistiques et métriques (local et global)
-à partir de la reconstruction.</p>
+<dd><p>Calculates statistics and metrics (local and global)
+from the reconstruction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Iorg</strong> (<em>float</em>) – array image originale normalisée (0-1) (MxN)</p></li>
-<li><p><strong>Irec</strong> (<em>float</em>) – array image reconstruite normalisée (0-1)(MxN)</p></li>
-<li><p><strong>MSE_ce</strong> (<em>float</em>) – array des MSE locaux sur tous les objets du masque</p></li>
-<li><p><strong>C0_ce</strong> (<em>float</em>) – array des détection sur tous les objets du masque</p></li>
-<li><p><strong>SSI_ce</strong> (<em>float</em>) – array des SSI locaux sur tous les objets du masque</p></li>
-<li><p><strong>centroid</strong> (<em>int</em>) – Nombre d’hyperbole détecté sur le masque</p></li>
-<li><p><strong>c_sta</strong> (<em>dic</em>) – caractéristique de la matrice Ck. c_sta[“mean”] et c_sta[“std”]</p></li>
-<li><p><strong>Ck</strong> (<em>float</em>) – matrice de la somme des cartes de coefficients normalisées (MxN)</p></li>
-<li><p><strong>v_seuil</strong> (<em>int{3}</em><em>, </em><em>optional</em>) – Valeur du seuil par rapport à l’écart type des C_k. Par défaut mise à 0
-des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
+<li><p><strong>Iorg</strong> (<em>float</em>) – array original normalized image (0-1) (MxN)</p></li>
+<li><p><strong>Irec</strong> (<em>float</em>) – array normalized reconstructed image (0-1)(MxN)</p></li>
+<li><p><strong>MSE_ce</strong> (<em>float</em>) – array of local MSE on all mask objects</p></li>
+<li><p><strong>C0_ce</strong> (<em>float</em>) – array of detections on all objects of the mask</p></li>
+<li><p><strong>SSI_ce</strong> (<em>float</em>) – array of local SSI on all mask objects</p></li>
+<li><p><strong>centroid</strong> (<em>int</em>) – Number of hyperbola detected on the mask</p></li>
+<li><p><strong>c_sta</strong> (<em>dic</em>) – characteristic of the matrix Ck. c_sta[“mean”] and c_sta[“std”]</p></li>
+<li><p><strong>Ck</strong> (<em>float</em>) – matrix of the sum of the normalized coefficient maps (MxN)</p></li>
+<li><p><strong>v_threshold</strong> (<em>int{3}</em><em>, </em><em>optional</em>) – Value of the threshold with respect to the standard deviation of C_k. By default set to 0
+of C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>stat_strc</strong> – dictionnaire des statistiques et métriques calculées sur la reconstruction.</p>
+<dd class="field-even"><p><strong>stat_strc</strong> – dictionary of statistics and metrics calculated on the reconstruction.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>dic</p>
@@ -594,39 +581,31 @@ des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.metrique.stats_win">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.metrique.</span></span><span class="sig-name descname"><span class="pre">stats_win</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ck_stats</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ck_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rec_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">win_S</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_seuil</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/metrique.html#stats_win"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.metrique.stats_win" title="Permalink to this definition"></a></dt>
-<dd><p>Réalise les statistiques sur un masque dans image
-à savoir le nombre d’hyperbole détecté (norme C0), le MeanSquareError entre
-l’image originale et celle originale au niveau du masque.</p>
+<dd><p>Performs statistics on a mask in image
+namely the number of hyperbola detected (C0 norm), the MeanSquareError between
+the original image and the original one at the mask level.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ck_stats</strong> (<em>float</em>) – dictionnaire de la moyenne et l’écart-type des cartes c_k</p></li>
-<li><p><strong>ck_s</strong> (<em>float</em>) – fenêtre des C_k donnée par la fonction fenetre pour un masque donné</p></li>
-<li><p><strong>org_s</strong> (<em>float</em>) – fenêtre de l’image originale donnée par la fonction fenetre pour un masque donné</p></li>
-<li><p><strong>rec_s</strong> (<em>float</em>) – fenêtre de l’image reconstruite donnée par la fonction fenetre pour un masque donné</p></li>
-<li><p><strong>win_S</strong> (<em>bool{True}</em><em>, </em><em>optional</em>) – retourne la fenêtre seuillée ou non</p></li>
-<li><p><strong>v_seuil</strong> (<em>int{3}</em><em>, </em><em>optional</em>) – Valeur du seuil par rapport à l’écart type des C_k. Par défaut mise à 0
-des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
+<li><p><strong>ck_stats</strong> (<em>float</em>) – dictionary of the mean and standard deviation of the c_k maps</p></li>
+<li><p><strong>ck_s</strong> (<em>float</em>) – window of C_k given by the window function for a given mask</p></li>
+<li><p><strong>org_s</strong> (<em>float</em>) – window of the original image given by the window function for a given mask</p></li>
+<li><p><strong>rec_s</strong> (<em>float</em>) – window of the reconstructed image given by the window function for a given mask</p></li>
+<li><p><strong>win_S</strong> (<em>bool{True}</em><em>, </em><em>optional</em>) – returns the window thresholded or not</p></li>
+<li><p><strong>v_threshold</strong> (<em>int{3}</em><em>, </em><em>optional</em>) – Value of the threshold in relation to the standard deviation of the C_k. By default set to 0
+of C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>MSE</strong> (<em>float</em>) – MeanSquareError entre l’image reconstruite et celle originale.</p></li>
-<li><p><strong>norm_C0</strong> (<em>int</em>) – norme 0 de C_k sur la fenêtre(&gt;0 = détection).</p></li>
-<li><p><strong>ssim_loc</strong> (<em>float</em>) – indice de similarité local</p></li>
-<li><p><strong>ws</strong> (<em>float,optionnal</em>) – fenetre C_k seuillée</p></li>
+<li><p><strong>MSE</strong> (<em>float</em>) – MeanSquareError between the reconstructed image and the original one.</p></li>
+<li><p><strong>norm_C0</strong> (<em>int</em>) – norm 0 of C_k on the window (&gt;0 = detection).</p></li>
+<li><p><strong>ssim_loc</strong> (<em>float</em>) – local similarity index</p></li>
+<li><p><strong>ws</strong> (<em>float,optionnal</em>) – thresholded window C_k</p></li>
 </ul>
 </p>
 </dd>
 </dl>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p><strong>A faire</strong></p>
-<ul class="simple">
-<li><p>Implémentation de la métrique <span class="math notranslate nohighlight">\(\mathrm{Structural\ Similarity\ Index}\)</span> :</p></li>
-</ul>
-<p><a class="reference external" href="https://scikit-image.org/docs/dev/api/skimage.metrics.html#skimage.metrics.structural_similarity">https://scikit-image.org/docs/dev/api/skimage.metrics.html#skimage.metrics.structural_similarity</a></p>
-</div>
 </dd></dl>
 
 </section>

@@ -66,7 +66,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for MIRAG.optim.sparse_coding</h1><div class="highlight"><pre>
-<span></span><span class="c1"># Module de résolution du problème pour le GPR</span>
+<span></span><span class="c1"># Problem Solving Module for RPM</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">References</span>
 <span class="sd">----------</span>
@@ -74,12 +74,12 @@
 <span class="sd">        Avalaible at: https://arxiv.org/pdf/1709.02893.pdf</span>
 
 <span class="sd">.. warning::</span>
-<span class="sd">    **A faire**</span>
+<span class="sd">    **To do**</span>
 
-<span class="sd">    - Terminer la documentation de la classe (pour tous les attributs)</span>
-<span class="sd">    - Ajouter le logging pour le suivi</span>
-<span class="sd">    - Vérifier strucure dictionnaire tel que: :math:`D^H= \mathrm{conjugate}(D)`</span>
-<span class="sd">    - Ajouter paramètre over-relaxation (cf `source_separation` et [3]_)</span>
+<span class="sd">    - Complete class documentation (for all attributes)</span>
+<span class="sd">    - Add logging for tracking</span>
+<span class="sd">    - Check dictionary strucure such as: :math:`D^H= \mathrm{conjugate}(D)`</span>
+<span class="sd">    - Add over-relaxation parameter (see `source_separation` and [3]_)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 
@@ -96,29 +96,29 @@
 
 
 <div class="viewcode-block" id="cost_function_addm1"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.sparse_coding.cost_function_addm1">[docs]</a><span class="k">def</span> <span class="nf">cost_function_addm1</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">rho</span><span class="p">,</span><span class="n">old_auxiliary_</span><span class="p">,</span><span class="n">old_dal</span><span class="p">,</span><span class="n">dal</span><span class="p">,</span><span class="n">primal</span><span class="p">,</span><span class="n">auxiliary</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Fonction de calcul des coûts et erreurs de l&#39;`ADMM`</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;ADMM cost and error calculation function</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    Y : float</span>
-<span class="sd">        image originale (Nx,Ny,1)</span>
+<span class="sd">        original image (Nx,Ny,1)</span>
 <span class="sd">    rho : float</span>
-<span class="sd">        paramètre de pénalité</span>
+<span class="sd">        penalty parameter</span>
 <span class="sd">    old_auxiliary_ : float</span>
-<span class="sd">        variable auxiliaire de l&#39;itération précedente :math:`\mathbf{S}_k^{i-1}`</span>
+<span class="sd">        auxiliary variable of the previous iteration :math:`\mathbf{S}_k^{i-1}`</span>
 <span class="sd">    old_dal : float</span>
-<span class="sd">        reconstruction de l&#39;itération précedente :math:`\sum_k{\mathbf{C}_k^{i-1}\star\mathbf{H}_k}^{i-1}`</span>
+<span class="sd">        reconstruction of the previous iteration :math:`\sum_k{\mathbf{C}_k^{i-1}\star\mathbf{H}_k}^{i-1}`</span>
 <span class="sd">    dal : float</span>
-<span class="sd">        produit de convolution dictionnaire + carte coeff :math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}`</span>
+<span class="sd">        convolution product dictionary + coeff map :math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}`</span>
 <span class="sd">    primal : float</span>
 <span class="sd">        variable primal :math:`\mathbf{C}_k^i`</span>
 <span class="sd">    auxiliary : float</span>
-<span class="sd">        variable auxiliaire :math:`\mathbf{S}_k^{i-1}`</span>
+<span class="sd">        auxiliary variable :math:`\mathbf{S}_k^{i-1}`</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    out : list of float</span>
-<span class="sd">        variation du primal, erreur de reconstruction, erreur du primal et erreur du dual</span>
+<span class="sd">        variation of primal, reconstruction error, error of primal and error of dual</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">var_prim_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">dal</span><span class="o">-</span><span class="n">old_dal</span><span class="p">,</span><span class="s1">&#39;fro&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">error_rec_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Y</span><span class="o">-</span><span class="n">dal</span><span class="p">,</span><span class="s1">&#39;fro&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
@@ -128,40 +128,40 @@
 
 
 <div class="viewcode-block" id="addm_iteration_norm2"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.sparse_coding.addm_iteration_norm2">[docs]</a><span class="k">def</span> <span class="nf">addm_iteration_norm2</span><span class="p">(</span><span class="n">lambdaS</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">DHY</span><span class="p">,</span><span class="n">DF</span><span class="p">,</span><span class="n">DF_H</span><span class="p">,</span><span class="n">U</span><span class="p">,</span><span class="n">rho</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="n">penalty</span><span class="o">=</span><span class="s2">&quot;l1&quot;</span><span class="p">,</span><span class="n">m</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;fonction de calcul d&#39;une itération d&#39;`ADMM` avec la norme 2</span>
-<span class="sd">    Basé sur [4]_</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;function for computing an iteration of `ADMM` with the 2 norm</span>
+<span class="sd">    Based on [4]_</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    lambdaS : float</span>
-<span class="sd">        paramètre de parcimonie </span>
+<span class="sd">        parsimony parameter </span>
 <span class="sd">    c : float</span>
-<span class="sd">        pre-calcul du terme pour Sherman_MorrisonF </span>
+<span class="sd">        pre-computation of the term for Sherman_MorrisonF </span>
 <span class="sd">    DHY : complex</span>
-<span class="sd">        fft du dictionnaire * image originale</span>
+<span class="sd">        fft from dictionary * original image</span>
 <span class="sd">    DF : complex</span>
-<span class="sd">        fft du dictionnaire</span>
+<span class="sd">        fft of the dictionary</span>
 <span class="sd">    DF_H : complex</span>
-<span class="sd">        conjugué de la fft du dictionnaire</span>
+<span class="sd">        conjugate of the dictionary fft</span>
 <span class="sd">    U : float</span>
-<span class="sd">        variable duale</span>
+<span class="sd">        dual variable</span>
 <span class="sd">    rho : float</span>
-<span class="sd">        paramètre de pénalité</span>
+<span class="sd">        penalty parameter</span>
 <span class="sd">    S : float</span>
-<span class="sd">        variable auxiliaire :math:`\mathbf{S}_k`</span>
-<span class="sd">    penalty : str{&quot;l1&quot;,&quot;l0&quot;,&quot;FirmThresholding&quot;,&quot;l*&quot;}, optional</span>
-<span class="sd">        penalité d&#39;attache aux données, de base :math:`\sum_k{||\mathbf{S}_k||_1`</span>
+<span class="sd">        auxiliary variable :math:`\mathbf{S}_k`</span>
+<span class="sd">    penalty : str{&quot;l1&quot;, &quot;l0&quot;, &quot;FirmThresholding&quot;, &quot;l*&quot;}, optional</span>
+<span class="sd">        data attachment penalty, basic :math:`\sum_k{||\mathbf{S}_k||_1`</span>
 <span class="sd">    m : int{-1}, optional</span>
-<span class="sd">        Nombre de workers (coeurs) utilisé pour la fft</span>
+<span class="sd">        Number of workers (cores) used for the fft</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    primal_new:float</span>
 <span class="sd">        variable primal :math:`\mathbf{C}_k^i` (Nx,Ny,K)</span>
 <span class="sd">    auxiliary_new:float</span>
-<span class="sd">        variable dual :math:`\mathbf{S}_k^i` (Nx,Ny,K)</span>
+<span class="sd">        dual variable :math:`\mathbf{S}_k^i` (Nx,Ny,K)</span>
 <span class="sd">    Dal: float</span>
-<span class="sd">        produit de convolution dictionnaire + carte coeff :math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}`  (Nx,Ny,1)</span>
+<span class="sd">        convolution product dictionary + map coeff :math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}` (Nx,Ny,1)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">DHY</span> <span class="o">+</span> <span class="n">rho</span><span class="o">*</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">S</span><span class="o">-</span><span class="n">U</span><span class="p">,</span><span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">workers</span><span class="o">=</span><span class="n">m</span><span class="p">)</span>
     <span class="n">alphaf</span> <span class="o">=</span> <span class="n">admm_func</span><span class="o">.</span><span class="n">Sherman_MorrisonF</span><span class="p">(</span><span class="n">DF_H</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">rho</span><span class="p">)</span>
@@ -187,47 +187,47 @@
 
 <div class="viewcode-block" id="addm_iteration_normH"><a class="viewcode-back" href="../../../MIRAG.optim.html#MIRAG.optim.sparse_coding.addm_iteration_normH">[docs]</a><span class="k">def</span> <span class="nf">addm_iteration_normH</span><span class="p">(</span><span class="n">lambdaS</span><span class="p">,</span><span class="n">DF</span><span class="p">,</span> <span class="n">DFH</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">primal_tilde</span><span class="p">,</span> <span class="n">YF</span><span class="p">,</span>
                          <span class="n">grad_iter_max</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">penalty</span><span class="o">=</span><span class="s2">&quot;l1&quot;</span><span class="p">,</span> <span class="n">m</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;fonction de calcul d&#39;une itération d&#39;`ADMM` avec la norme d&#39;HUber</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;function for computing an iteration of `ADMM` with the HUber norm</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    lambdaS : float</span>
-<span class="sd">        paramètre de parcimonie</span>
+<span class="sd">        parsimony parameter</span>
 <span class="sd">    DF : complex</span>
-<span class="sd">        fft du dictionnaire (Nx,Ny,K)</span>
+<span class="sd">        fft of the dictionary (Nx,Ny,K)</span>
 <span class="sd">    DF_H : complex</span>
-<span class="sd">        conjugué de la fft du dictionnaire</span>
+<span class="sd">        conjugate of the dictionary fft</span>
 <span class="sd">    U : float</span>
-<span class="sd">        variable duale (Nx,Ny,K)</span>
+<span class="sd">        dual variable (Nx,Ny,K)</span>
 <span class="sd">    rho : float</span>
-<span class="sd">        paramètre de pénalité</span>
+<span class="sd">        penalty parameter</span>
 <span class="sd">    S : float</span>
-<span class="sd">        variable auxiliaire :math:`\mathbf{S}_k` (Nx,Ny,K)</span>
+<span class="sd">        auxiliary variable :math:`\mathbf{S}_k` (Nx,Ny,K)</span>
 <span class="sd">    primal_tilde : float</span>
-<span class="sd">        fft du primal :math:`\mathbf{\hat{C}}_k` (Nx,Ny,K)</span>
+<span class="sd">        fft of the primal :math:`\mathbf{C}_k` (Nx,Ny,K)</span>
 <span class="sd">    YF : float</span>
-<span class="sd">        fft de l&#39;image originale (Nx,Ny,1)</span>
+<span class="sd">        fft of the original image (Nx,Ny,1)</span>
 <span class="sd">    grad_iter_max{50} : int, optional</span>
-<span class="sd">        itération maximal de la descente de gradient</span>
+<span class="sd">        maximum iteration of the gradient descent</span>
 <span class="sd">    beta : float{0.001}, optional</span>
-<span class="sd">        paramètre de taux d&#39;apprentissage du gradient </span>
+<span class="sd">        learning rate parameter of the gradient </span>
 <span class="sd">    thresh : int, optional</span>
 <span class="sd">        [description], by default 250</span>
-<span class="sd">    penalty : str{&quot;l1&quot;,&quot;l0&quot;,&quot;FirmThresholding&quot;,&quot;l*&quot;}, optional</span>
-<span class="sd">        penalité d&#39;attache aux données, de base :math:`\sum_k{||\mathbf{S}_k||_1`</span>
+<span class="sd">    penalty : str{&quot;l1&quot;, &quot;l0&quot;, &quot;FirmThresholding&quot;, &quot;l*&quot;}, optional</span>
+<span class="sd">        penalty of attachment to data, basic :math:`\sum_k{||\mathbf{S}_k||_1`</span>
 <span class="sd">    m : int{-1}, optional</span>
-<span class="sd">        Nombre de workers (coeurs) utilisé pour la fft</span>
+<span class="sd">        Number of workers (cores) used for the fft</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    primal_new:float</span>
 <span class="sd">        variable primal :math:`\mathbf{C}_k^i` (Nx,Ny,K)</span>
 <span class="sd">    primal_tilde:float</span>
-<span class="sd">        fft de la variable primal :math:`\mathbf{\hat{C}}_k^i` (Nx,Ny,K)</span>
+<span class="sd">        fft of the primal variable :math:`\mathbf{C}_k^i` (Nx,Ny,K)</span>
 <span class="sd">    auxiliary_new:float</span>
-<span class="sd">        variable dual :math:`\mathbf{S}_k^i` (Nx,Ny,K)</span>
+<span class="sd">        dual variable :math:`\mathbf{S}_k^i` (Nx,Ny,K)</span>
 <span class="sd">    Dal: float</span>
-<span class="sd">        produit de convolution dictionnaire + carte coeff :math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}`  (Nx,Ny,1)</span>
+<span class="sd">        convolution product dictionary + map coeff :math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}` (Nx,Ny,1)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">Z_m_tilde</span> <span class="o">=</span> <span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">S</span><span class="o">-</span><span class="n">U</span><span class="p">,</span><span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">workers</span><span class="o">=</span><span class="n">m</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">grad_iter_max</span><span class="p">):</span>

@@ -147,9 +147,9 @@ def proxH(x,seuil,rho):
 
 
 def thresholding_nuclear(M,i,lambdaS,rho):
-    r"""Fonction de calcul du seuillage par valeurs singulières
-    Elle est la résultante de l'opérateur proximal associé à la 
-    norme nucléaire.
+    r"""Singular value thresholding function
+    It is the resultant of the proximal operator associated to the 
+    nuclear norm.
 
     :math:`\underset{\mathbf{{L}}}{\operatorname{argmin}}
     \lambda||\mathbf{L}||_* +
@@ -159,23 +159,23 @@ def thresholding_nuclear(M,i,lambdaS,rho):
     \ \mathrm{avec}\ \ \mathrm{prox}_{||.||_*,\lambda/\rho_L}(x)=
     \mathcal{T}_{\lambda/\rho_L}\left(x\right)`
 
-    Basée sur [2]_
+    Based on [2]_
 
     Parameters
     ----------
     M : float
-        tenseur de dimension Nx,Ny,K
+        tensor of dimension Nx,Ny,K
     i : int
-        i ème couche à seuiller (0<i<K)
+        i th layer to threshold (0<i<K)
     lambdaS : float
-        Paramètre de parcimonie (si existant >0)
+        Parsimony parameter (if existing >0)
     rho : float
-        Paramètre de pénalité >0
+        Penalty parameter >0
 
     Returns
     -------
     L : float
-        Résultat de la minimisation pour une couche i
+        Result of the minimization for a layer i
     """
     [u_temp,Sig_temp,v_temp] = linalg.svd((M)[:,:,i],check_finite=False)
     Sig_temp = diag_thresh(u_temp.shape[0],u_temp.shape[0],Sig_temp)
@@ -184,25 +184,25 @@ def thresholding_nuclear(M,i,lambdaS,rho):
 
 
 def update_rhoLS_adp(er_prim,er_dual,rhoLS):
-    r"""Fonction d'adaptation des paramètres de pénalités dans
-    l'`ADMM` à partir des erreurs faites sur le primal et le dual.
-    Basée sur [3]_
+    r"""Adaptation function of the penalty parameters in the
+    the `ADMM` from the errors made on the primal and dual.
+    Based on [3]_
 
     Parameters
     ----------
     er_prim : float
-        erreur du primal
+        error of the primal
     er_dual : float
-        erreur du dual
+        error of the dual
     rhoLS : float
-        valeur du paramètre à actualiser
+        value of the parameter to be updated
 
     Returns
     -------
     rhoLS : float
-        paramètre de pénalité actualisé
+        updated penalty parameter
     k : float
-        facteur de dilation/contraction utilisé
+        expansion/contraction factor used
     """
     if (er_prim>10*er_dual)&(rhoLS<1e5):
         k=2
@@ -257,23 +257,23 @@ def Sherman_MorrisonF(DF_H, b, c, rho):
 
 
 def diag_thresh(m, n, s):
-    r"""Retourne une matrice diagonale de dimension mxn à partir d'un vecteur s
-    Utilisation après `np.linalg.svd` pour obtenir une matrice à partir de S
+    r"""Return a diagonal matrix of dimension mxn from a vector s
+    Use after `np.linalg.svd` to get a matrix from S
 
 
     Parameters
     ----------
     m :int
-        dimension verticale de la matrice souhaitée
+        vertical dimension of the desired matrix
     n :int
-        dimension horizontale de la matrice souhaitée
+        horizontal dimension of the desired matrix
     s :float
-        vecteur à diagonaliser
+        vector to diagonalize
 
     Returns
     -------
     out :float
-        Matrice diagonale (à partir de S)    
+        Diagonal matrix (from S)    
     """
     q = np.abs(n - m)
     np.diag(s, q)[:, q:]
@@ -306,22 +306,22 @@ def SVD_gpr(ref,rank):
 
 
 def roll_fft(alpha, t, x):
-    r"""Correction de la position des coefficients des cartes en fonctions
-    de la position centrale des hyperboles + Sommation des C_k
+    r"""Correction of the position of the coefficients of the maps according to the
+    of the central position of the hyperbolas + Summation of the C_k
 
     Parameters
     ----------
     alpha :float
-        Tenseur complexe (M x N x K) des cartes de coefficients
+        Complex tensor (M x N x K) of the coefficients maps
     t :int
-        position (pixel) centrale des hyperboles utilisées (ordonnée).
+        central position (pixel) of the used hyperbolas (ordinate).
     x :int
-        position (pixel) centrale des hyperboles utilisées (abscisse).
+        central position (pixel) of the used hyperbolas (abscissa).
 
     Returns
     -------
     out :float
-        Matrice corrigée et réduite (M x N)       
+        Corrected and reduced matrix (M x N)       
     """
     Q = np.real(np.sum(alpha, axis=2))
     Q = np.roll(Q, t, axis=0)

@@ -4,15 +4,15 @@ MIRAG.optim package
 
 MIRAG.optim.sparse_coding
 -------------------------
-Module de résolution du problème pour le GPR en utilisant l'`ADMM`,
-pour la résolution du problème suivant:
+Problem solving module for GPR using the `ADMM`,
+for solving the following problem:
 
-:math:`\left\{\begin{array}{ll}\mathbf{minimiser}\quad 
+:math:`\left\{\begin{array}{ll}\mathbf{minimize}\quad 
 &\frac{1}{2}||\sum_{k}\mathbf{H}_k\star \mathbf{C}_k -
 \mathbf{Y} ||_2^2 +\epsilon \sum_k{||\mathbf{S}_k||_1} \\
 \text{t.q.} \quad&\mathbf{C}_k =\mathbf{S}_k\end{array}\right.`
 
-Variante avec optimisation par norme d'Huber à la place de la norme 2
+Variant with optimization by Huber norm instead of norm 2
 
 .. automodule:: MIRAG.optim.sparse_coding
    :members:
@@ -21,10 +21,10 @@ Variante avec optimisation par norme d'Huber à la place de la norme 2
 
 MIRAG.optim.source_separation
 -----------------------------
-Module de résolution du problème pour le GPR en utilisant l'`ADMM`,
-pour la résolution du problème suivant:
+Problem solving module for GPR using the `ADMM`,
+for solving the following problem:
 
-:math:`\left\{\begin{array}{ll}\mathbf{minimiser} \quad &||\mathbf{L}||_* +
+:math:`\left\{\begin{array}{ll}\mathbf{minimize} \quad &||\mathbf{L}||_* +
 \epsilon \sum_k{||\mathbf{S}_k||_1}\\
 \mathbf{t.q.}\quad& \mathbf{Y} = \mathbf{L} 
 +\sum_{k}\mathbf{H}_k\star \mathbf{C}_k \\

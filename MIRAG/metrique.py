@@ -1,5 +1,5 @@
 """
-Module de calcul de métrique pour quantifier la qualité de reconstruction des radargrammes
+Metric calculation module to quantify the reconstruction quality of radargrams
 """
 
 import cv2
@@ -13,61 +13,54 @@ from skimage.metrics import structural_similarity as ssim
 
 
 def comp_metric(Iorg,Irec,Ck,path_mask,erode=True,sz=20,pos_rec=[0,100,0,600],dim_win=[80,40],out_win_S=False,v_seuil=3,plot_check=False):
-    r"""Métrique de détection hyperboles reconstruites/vérité terrain
-    Fonction principale du calcul de la détection des hyperboles par rapport à un mask
+    r"""Metric of detection of reconstructed hyperbolas/ground truth
+    Main function of the hyperbola detection calculation with respect to a mask
 
     Parameters
     ----------
     Iorg :float
-        array image originale normalisée (0-1) (MxN)
+        array original normalized image (0-1) (MxN)
     Irec :float
-        array image reconstruite normalisée (0-1)(MxN)
+        array normalized reconstructed image (0-1)(MxN)
     Ck :float
-        matrice de la somme des cartes de coefficients normalisées (MxN)
+        matrix of the sum of the normalized coefficient maps (MxN)
     path_mask :str
-         chemin du mask
+         path of the mask
     erode :bool {True}, optional
-        active l'erosion du mask
+        activate the erosion of the mask
     sz :int {20}, optional: 
-        taille du kernel pour l'erosion.
+        kernel size for erosion.
     pos_rec :list {[0,100,0,600]}, optional
-        position de l'image originale par rapport au mask.
+        position of the original image in relation to the mask.
     dim_win :list{[80,40]}, optional
-        taille de la fenêtre de détection en pixels.
+        size of the detection window in pixels.
     out_win_S :bool{False}, optional
-        retourne la fenêtre seuillée ou non
-    v_seuil :int{3}, optional
-        Valeur du seuil par rapport à l'écart type des C_k. Par défaut mise à 0 
-        des C_K.mean-3*C_K.std<C_k< 3*C_K.std+C_K.mean
+        return the thresholded window or not
+    v_threshold :int{3}, optional
+        Value of the threshold in relation to the standard deviation of C_k. By default set to 0 
+        of C_K.mean-3*C_K.std<C_k< 3*C_K.std+C_K.mean
     plot_check:bool{False},optional
-        Active l'affichage des positions des centroids sur le mask
+        Activate the display of the centroids positions on the mask
 
     Returns
     -------
     score : dic
-        structure des scores et metriques calculés pour une reconstruction à partir de son masque
+        structure of the scores and metrics computed for a reconstruction from its mask
     
     Notes
     -----
-    - score['MSE_local_max'] (float) : maximum MeanSquareError pour chaque masque entre l'image reconstruite et celle originale
-    - score['MSE_global'] (float) : MeanSquareError globale entre l'image reconstruite et celle originale.
-    - score['SSI_local_min'] (float) : minimum Structural similarity index pour chaque masque entre l'image reconstruite et celle originale
-    - score['SSI_global'] (float) : Structural similarity index globale entre l'image reconstruite et celle originale.    
-    - score['TruePositive'] (float) : nombre d'hyperbole détectée dans l'image fournit.
-    - score['N_terrain'] (float) : nombre theorique d'hyperboles à partir du mask.
-    - score["FalseNegative"] (float) : hyperboles non-créés par la reconstruction mais presentes dans les masques
-    - score["FalsePositive"] (float) : hyperboles créés par la reconstruction mais non presentes dans les masques
+    - score['MSE_local_max'] (float) : maximum MeanSquareError for each mask between the reconstructed and the original image
+    - score['MSE_global'] (float) : global MeanSquareError between the reconstructed image and the original one.
+    - score['SSI_local_min'] (float) : minimum Structural similarity index for each mask between the reconstructed image and the original one
+    - score['SSI_global'] (float): Global structural similarity index between the reconstructed image and the original one.    
+    - score['TruePositive'] (float) : number of hyperbola detected in the provided image.
+    - score['N_terrain'] (float): theoretical number of hyperbolas from the mask.
+    - score["FalseNegative"] (float) : hyperbolas not created by the reconstruction but present in the masks
+    - score["FalsePositive"] (float) : hyperbolas created by the reconstruction but not present in the masks
     - score["precision"] (float) : TruePositive/(TruePositive+FalsePositive)
-    - score["rappel"] (float) : TruePositive/(TruePositive+FalseNegative)
-    - score["F1_score"] (float) : (precision*rappel)/(precision+rappel)
+    - score["recall"] (float) : TruePositive/(TruePositive+FalseNegative)
+    - score["F1_score"] (float) : (precision*recall)/(precision+recall)
 
-    .. warning::
-       **A faire**
-
-       - Implémentation des métriques:
-            * précision : :math:`\mathrm{TruePositive/(TruePositive+FalsePositive)}`
-            * rappel    : :math:`\mathrm{TruePositive/(TruePositive+FalseNegative)}`
-            * F1-score  : :math:`\mathrm{precision\cdot rappel/(precision+rappel)}`
     """
     c_sta={}
     MSE_ce = []
@@ -102,35 +95,35 @@ def comp_metric(Iorg,Irec,Ck,path_mask,erode=True,sz=20,pos_rec=[0,100,0,600],di
     return score
 
 def stats_reconstruction(Iorg, Irec,MSE_ce,C0_ce,SSI_ce,centroid,c_sta,Ck,v_seuil):
-    r"""Calcule les statistiques et métriques (local et global)
-    à partir de la reconstruction.
+    r"""Calculates statistics and metrics (local and global)
+    from the reconstruction.
 
     Parameters
     ----------
     Iorg :float
-        array image originale normalisée (0-1) (MxN)
+        array original normalized image (0-1) (MxN)
     Irec :float
-        array image reconstruite normalisée (0-1)(MxN)
+        array normalized reconstructed image (0-1)(MxN)
     MSE_ce : float
-        array des MSE locaux sur tous les objets du masque
+        array of local MSE on all mask objects
     C0_ce : float
-        array des détection sur tous les objets du masque
+        array of detections on all objects of the mask
     SSI_ce : float
-        array des SSI locaux sur tous les objets du masque
+        array of local SSI on all mask objects
     centroid : int
-        Nombre d'hyperbole détecté sur le masque
+        Number of hyperbola detected on the mask
     c_sta : dic
-        caractéristique de la matrice Ck. c_sta["mean"] et c_sta["std"]
+        characteristic of the matrix Ck. c_sta["mean"] and c_sta["std"]
     Ck :float
-        matrice de la somme des cartes de coefficients normalisées (MxN)
-    v_seuil :int{3}, optional
-        Valeur du seuil par rapport à l'écart type des C_k. Par défaut mise à 0 
-        des C_K.mean-3*C_K.std<C_k< 3*C_K.std+C_K.mean
+        matrix of the sum of the normalized coefficient maps (MxN)
+    v_threshold :int{3}, optional
+        Value of the threshold with respect to the standard deviation of C_k. By default set to 0 
+        of C_K.mean-3*C_K.std<C_k< 3*C_K.std+C_K.mean
 
     Returns
     -------
     stat_strc : dic
-        dictionnaire des statistiques et métriques calculées sur la reconstruction.
+        dictionary of statistics and metrics calculated on the reconstruction.
 
     See Also
     --------
@@ -160,17 +153,17 @@ def stats_reconstruction(Iorg, Irec,MSE_ce,C0_ce,SSI_ce,centroid,c_sta,Ck,v_seui
 
 
 def get_available_masks(name):
-    r"""Obtient la liste de tous les masks dans un fichier .h5
+    r"""Gets the list of all masks in a .h5 file
 
     Parameters
     ----------
     name :str
-        chemin absolu du fichier .h5
+        absolute path of the .h5 file
 
     Returns
     -------
     masks_available : str
-        dictionnaire des noms des masks disponibles pour un fichier .h5
+        dictionary of available masks names for a .h5 file
     """
     filepath =  name
     masks_available = {}
@@ -187,17 +180,17 @@ def get_available_masks(name):
 
 
 def load_mask(filename):
-    r"""Charge le masque à partir d'un fichier .h5
+    r"""Loads the mask from an .h5 file
 
     Parameters
     ----------
     filename :str
-        chemin absolu du fichier .h5
+        absolute path of the .h5 file
 
     Returns
     -------
     mask : float
-        array 2D des masks
+        2D array of masks
     """
     det_mask = get_available_masks(filename)
     mask_name = list(det_mask.keys())
@@ -211,25 +204,25 @@ def load_mask(filename):
 
 
 def mask2scatter(mask,erode=True,size=20):
-    r"""Transforme un array de masks en scatter x,y
-    Permet d'appliquer une erosion ou non sur l'image 
-    (permettant ainsi une meilleur détection des masks)
+    r"""Transforms an array of masks into a scatter x,y
+    Allows to apply an erosion or not on the image 
+    (allowing a better detection of masks)
 
     Parameters
     ----------
     mask :int
-        array des masks
+        array of masks
     erode :bool{True}, optional
-        active l'érosion des masks.
+        activate erosion of masks.
     size :int{20}, optional
-        taille du kernel de l'érosion si sélectionné.
+        size of the erosion kernel if selected.
 
     Returns
     -------
     mask_scatter :int
-        scatter x,y des masks
+        scatter x,y of masks
     ero :int
-        masks erodé ou non
+        masks eroded or not
     """
     if erode :
         ero = cv2.erode(mask, np.ones((size,size),np.uint8),iterations = 1)
@@ -243,23 +236,23 @@ def mask2scatter(mask,erode=True,size=20):
 
 
 def center_mask(mask,erode=True,sz=20):
-    r"""Extrait d'un mask les positions des clusters
-    Permet d'appliquer une erosion ou non sur l'image 
-    (permettant ainsi une meilleur détection des masks)
+    r"""Extract from a mask the positions of the clusters
+    Allows to apply an erosion or not on the image 
+    (allowing a better detection of masks)
 
     Parameters
     ----------
     mask :int
-        array des masks
+        array of masks
     erode :bool{True}, optional
-        active l'érosion des masks.
+        activate erosion of masks.
     size :int{20}, optional
-        taille du kernel de l'érosion si sélectionné.
+        size of the erosion kernel if selected.
 
     Returns
     -------
     centroid :int
-        Coordonnées des centres de clusters
+        Coordinates of cluster centers
     """
     m_scat,ero = mask2scatter(mask,erode,sz)
     image = np.uint8(ero*255)
@@ -271,23 +264,23 @@ def center_mask(mask,erode=True,sz=20):
 
 
 def centroid_adjust_win(centroid,y_mask,dim_rec):
-    r"""Retourne les centres des masks ajustés
-    L'ajustement se fait par rapport à la taille de l'image,
-    pour éviter les débordements.
+    r"""Returns the centers of the adjusted masks
+    The adjustment is made in relation to the size of the image,
+    to avoid overflows.
 
     Parameters
     ----------
     centroid :float
-        tableau des centres des masques
+        array of mask centers
     y_mask :int
-        dimension Y de l'image du masque
+        dimension Y of the mask image
     dim_rec :int
-        tableau des dimensions de l'image utilisé (souvent inférieur au mask)
+        array of dimensions of the used image (often smaller than the mask)
 
     Returns
     -------
     cent :int
-        centre des masks ajustés a l'image reconstruite
+        center of the masks adjusted to the reconstructed image
     """
     centroid[:,1]=y_mask-centroid[:,1]
     cent = centroid[(centroid[:,0]-dim_rec[2]>0)&(centroid[:,0]<dim_rec[3])]+[-dim_rec[2],0]
@@ -296,21 +289,21 @@ def centroid_adjust_win(centroid,y_mask,dim_rec):
 
 
 def fenetre(cen,img,dim):
-    r"""Retourne une fenetre centrée sur un point de dimension totale dim (LxH)
+    r"""Returns a window centered on a point of total dimension dim (LxH)
 
     Parameters
     ----------
     cen :int
-        centre de la fenêtre
+        center of the window
     img :float
-        image à centrer
+        image to center
     dim :int
-        dimension totale de la fenêtre LxH
+        total dimension of the window LxH
 
     Returns
     -------
     out :float
-        fenêtre extraite de l'image initiale
+        window extracted from the initial image
     """
     dim = 0.5*np.array(dim)
     cm = np.int32(cen-dim)
@@ -321,43 +314,36 @@ def fenetre(cen,img,dim):
 
 
 def stats_win(ck_stats,ck_s,org_s,rec_s,win_S=False,v_seuil=3):
-    r"""Réalise les statistiques sur un masque dans image
-    à savoir le nombre d'hyperbole détecté (norme C0), le MeanSquareError entre 
-    l'image originale et celle originale au niveau du masque.
+    r"""Performs statistics on a mask in image
+    namely the number of hyperbola detected (C0 norm), the MeanSquareError between 
+    the original image and the original one at the mask level.
 
     Parameters
     ----------
     ck_stats :float
-        dictionnaire de la moyenne et l'écart-type des cartes c_k
+        dictionary of the mean and standard deviation of the c_k maps
     ck_s :float
-        fenêtre des C_k donnée par la fonction fenetre pour un masque donné
+        window of C_k given by the window function for a given mask
     org_s :float
-        fenêtre de l'image originale donnée par la fonction fenetre pour un masque donné
+        window of the original image given by the window function for a given mask
     rec_s :float
-        fenêtre de l'image reconstruite donnée par la fonction fenetre pour un masque donné
+        window of the reconstructed image given by the window function for a given mask
     win_S :bool{True}, optional
-        retourne la fenêtre seuillée ou non
-    v_seuil :int{3}, optional
-        Valeur du seuil par rapport à l'écart type des C_k. Par défaut mise à 0 
-        des C_K.mean-3*C_K.std<C_k< 3*C_K.std+C_K.mean
+        returns the window thresholded or not
+    v_threshold :int{3}, optional
+        Value of the threshold in relation to the standard deviation of the C_k. By default set to 0 
+        of C_K.mean-3*C_K.std<C_k< 3*C_K.std+C_K.mean
 
     Returns
     -------
     MSE : float
-        MeanSquareError entre l'image reconstruite et celle originale.
+        MeanSquareError between the reconstructed image and the original one.
     norm_C0 : int
-        norme 0 de C_k sur la fenêtre(>0 = détection).
+        norm 0 of C_k on the window (>0 = detection).
     ssim_loc : float
-        indice de similarité local 
+        local similarity index 
     ws :float,optionnal
-        fenetre C_k seuillée
-    
-
-    .. warning::
-       **A faire**
-
-       - Implémentation de la métrique :math:`\mathrm{Structural\ Similarity\ Index}` : 
-       https://scikit-image.org/docs/dev/api/skimage.metrics.html#skimage.metrics.structural_similarity
+        thresholded window C_k
 
     """
     se_ck = v_seuil*ck_stats["std"]
@@ -372,8 +358,8 @@ def stats_win(ck_stats,ck_s,org_s,rec_s,win_S=False,v_seuil=3):
         return MSE,norm_C0,ssim_loc
 
 def detect_Nhyper_rec(ck_stats,Ck,v_seuil=3):
-    r"""Detecte le nombre d'hyperbole total construite
-    par l'algorithme sous réserve d'un seuil
+    r"""Detects the total number of hyperbolas constructed
+    by the algorithm subject to a threshold
 
     Parameters
     ----------
@@ -381,14 +367,14 @@ def detect_Nhyper_rec(ck_stats,Ck,v_seuil=3):
         [description]
     Ck : [type]
         [description]
-    v_seuil :int{3}, optional
-        Valeur du seuil par rapport à l'écart type des C_k. Par défaut mise à 0 
-        des C_K.mean-3*C_K.std<C_k< 3*C_K.std+C_K.mean
+    v_threshold :int{3}, optional
+        Value of the threshold with respect to the standard deviation of C_k. By default set to 0 
+        of C_K.mean-3*C_K.std<C_k< 3*C_K.std+C_K.mean
 
     Returns
     -------
-    [type]
-        [description]
+    norm_C0_glob : int
+        total number of hyperbolas detected
     """
     se_ck = v_seuil*ck_stats["std"]
     ws=np.where((Ck<ck_stats["mean"]-se_ck)|(Ck>ck_stats["mean"]+se_ck),Ck,0)

@@ -1,8 +1,9 @@
 """
-Module de filtrage des reconstructions par seuillage / abandon d'atomes du dictionnaire
+Module for filtering reconstructions by thresholding / dropping atoms from the dictionary
 """
 
 import numpy as np
+
 
 def SVD_gpr(ref,rank):
     """ Make a SVD of the reference image and put to zero the first rank singular values.
@@ -25,34 +26,34 @@ def SVD_gpr(ref,rank):
     return A_remake
 
 def dropR(C, Dic, p_acond=500, acond=0.1):
-    r"""Supprime après ADMM les atomes non désirés pour la reconstruction
+    r"""Removes after ADMM the unwanted atoms for reconstruction
 
     .. warning::
-        A utiliser spécifiquement pour l'ADMM 1 contrainte (ADMM 2 ou Source separation
-        utilise la matrice creuse L)
+        To be used specifically for the constrained ADMM 1 (ADMM 2 or Source separation
+        uses the hollow matrix L)
 
     Parameters
     ----------
     C :float
-        Cartes des coefficients à alléger (Nx,Ny,K) avec K le nombre d'atomes, 
-        Nx,Ny les dimensions de la reconstruction.
+        Maps of the coefficients to be reduced (Nx,Ny,K) with K the number of atoms, 
+        Nx,Ny the dimensions of the reconstruction.
     Dic :float
-        Dictionnaire à alléger (Nx,Ny,K) avec K le nombre d'atomes,
-        Nx,Ny les dimensions de la reconstruction.
+        Dictionary to be reduced (Nx,Ny,K) with K the number of atoms,
+        Nx,Ny the dimensions of the reconstruction.
     p_acond :int{500}, optional
-        condition sur le paramètre p du dictionnaire.
-        Garde tous les atomes tq :math:`a/p < p_{cond}`.
+        condition on the parameter p of the dictionary.
+        Keep all the atoms tq :math:`a/p < p_{cond}`.
     acond :float{0.1}, optional
-        condition sur le paramètre a du dictionnaire.
-        Garde tous les atomes tq :math:`a > a_{cond}`.
+        condition on the parameter a of the dictionary.
+        Keep all atoms tq :math:`a > a_{cond}`.
 
 
     Returns
     -------
     Cprim :float
-        Cartes des coefficients allégés (Nx,Ny,K') avec K'<K
+        Maps of the reduced coefficients (Nx,Ny,K') with K'<K
     Hprim :float
-        Dictionnaire allégé (Nx,Ny,K') avec K'<K
+        Lightweight dictionary (Nx,Ny,K') with K'<K
     """
     cond1 = Dic["param"][:, 0] / Dic["param"][:, 2] < p_acond
     cond2 = Dic["param"][:, 2] > acond
@@ -67,23 +68,23 @@ def dropR(C, Dic, p_acond=500, acond=0.1):
 
 
 def thresh_Ck(Cprim, seuil=0.45):
-    r"""Seuillage des cartes C_k.
-    Met à zéros les valeurs qui respecte les condtions suivantes pour un signal découpé 
-    en histogramme à 1000 tranches:
+    r"""Thresholding of C_k cards.
+    Sets to zero the values which respect the following conditions for a signal sliced 
+    in histogram with 1000 slices:
 
-    .. math:: 0.5\cdot\mathrm{seuil}*1000< \mathrm{signal}<1000*(1- 0.5\cdot\mathrm{seuil}) 
+    .. math:: 0.5\cdot\mathrm{threshold}*1000< \mathrm{signal}<1000*(1- 0.5\cdot\mathrm{threshold}) 
 
     Parameters
     ----------
     Cprim :float
-        Tenseur C_k à seuiller (dynamique 0-1) (Nx,Ny,K)
-    seuil :float{0.45}, optional
-        seuil des valeurs (entre 0 et 1).
+        C_k tensor to threshold (dynamic 0-1) (Nx,Ny,K)
+    threshold :float{0.45}, optional
+        threshold of the values (between 0 and 1).
 
     Returns
     -------
     Cter :float
-        Tenseur des cartes de coefficients seuillé (Nx,Ny,K)
+        Thresholded coefficient map tensor (Nx,Ny,K)
     """
     Cter = np.zeros(Cprim.shape)
     for i in range(Cprim.shape[2]):
@@ -96,24 +97,24 @@ def thresh_Ck(Cprim, seuil=0.45):
 
 
 def submax_Ck(Csec, seuil=0.1):
-    r"""Seuillage des cartes C_k.
-    Ne garde que les valeurs qui respectent les conditions:
+    r"""Thresholding of C_k cards.
+    Keeps only the values that meet the conditions:
 
-    .. math:: 0.5\cdot\mathrm{seuil}*1000< \mathrm{signal}<1000*(1- 0.5\cdot\mathrm{seuil}) 
+    .. math:: 0.5\cdot\mathrm{threshold}*1000< \mathrm{signal}<1000*(1- 0.5\cdot\mathrm{threshold}) 
 
-    Utile pour faire ressortir les signaux faibles (principalement ADMM1).
+    Useful to highlight weak signals (mainly ADMM1).
     
     Parameters
     ----------
     Csec :float
-        Tenseur C_k à seuiller (dynamique 0-1) (Nx,Ny,K)
-    seuil :float{0.1}, optional
-        seuil des valeurs (entre 0 et 1).
+        C_k tensor to threshold (dynamic 0-1) (Nx,Ny,K)
+    threshold :float{0.1}, optional
+        threshold of the values (between 0 and 1).
 
     Returns
     -------
     Cfin :float
-        Tenseur des cartes de coefficients seuillé (Nx,Ny,K)
+        Thresholded coefficient map tensor (Nx,Ny,K)
     """
     Cprim = Csec.copy()
     Cfin = np.zeros(Cprim.shape)

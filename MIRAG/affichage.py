@@ -1,5 +1,5 @@
 """
-Module d'affichage des résultats de l'``ADMM`` sous sa forme sparse et separation 
+Module for displaying the results of the ADMM in its sparse and separation form 
 """
 
 from matplotlib.colors import LinearSegmentedColormap
@@ -13,19 +13,19 @@ from .optim.admm_func import roll_fft
 
 
 def cmap_perso(Q):
-    r"""Création d'une colormap perso divergente centrée sur la moyenne
-    de la matrice Q
+    r"""Creation of a divergent custom colormap centered on the mean
+    of the Q matrix
 
     Parameters
     ----------
     Q :float
-        Matrice à afficher (principalement somme des C_k) (Nx,Ny)
+        Matrix to display (mainly sum of C_k) (Nx,Ny)
 
 
     Returns
     -------
     cmap :obj
-        objet cmap associé
+        associated cmap object
     """
     normQ = (Q - Q.min()) / (Q.max() - Q.min())
     colors = ["blue", "lightsteelblue", "white", "lightsalmon", "red"]
@@ -39,24 +39,24 @@ def cmap_perso(Q):
 
 def plot_ckmap(alpha, duo=False, t=60, x=128,
                title=["_", "_"], nfile="_", save=False):
-    r"""Affichage d'une ou 2 cartes C_k à partir d'une cmap divergente perso
+    r"""Display one or 2 C_k maps from a personal divergent cmap
 
     Parameters
     ----------
     alpha :float
-        Matrice (M x N)(principalement somme des C_k ou détail d'un C_k)
+        Matrix (M x N)(mainly sum of C_k or detail of a C_k)
     duo :bool{False}, optional
-        Affichage d'une ou 2 cartes.
+        Display of one or 2 cards.
     t :int{60}, optional
-        position (pixel) centrale des hyperboles utilisées (ordonnée)
+        central position (pixel) of the hyperbolas used (ordinate)
     x :int{128}, optional
-        position (pixel) centrale des hyperboles utilisées (abscisse)
+        central position (pixel) of the used hyperbolas (abscissa)
     title :list{["_","_"]}, optional
-        Titres des graphes
+        Titles of the graphs
     nfile :str{"_"}, optional
-        Nom du fichier pour l'enregistrement
+        Name of the file for the record
     save :bool{False}, optional
-        Enregistrer le fichier.
+        Save the file.
 
     Returns
     -------
@@ -83,24 +83,24 @@ def plot_ckmap(alpha, duo=False, t=60, x=128,
 
 def plot_ckmap_img(T, ck=False, title=["_", "_"],
                    nfile="_", save=False, t=60, x=128):
-    r"""Affichage somme des C_k et image cote-cote
+    r"""Displaying the sum of C_k and the dimensional image
 
     Parameters
     ----------
     T :float
-        tableau [C_k , img] ([(Nx * Ny * K) , (Nx * Ny)]) ou ([(Nx * Ny), (Nx * Ny)])
+        array [C_k , img] ([(Nx * Ny * K) , (Nx * Ny)]) or ([(Nx * Ny), (Nx * Ny)])
     ck :bool{False}, optional
-        Si les corrections/somme sur les C_k ont ete faites
+        If the corrections/sum on the C_k have been done
     title :list{["_","_"]}, optional
-        Titres des graphes
+        Titles of the graphs
     nfile :str{"_"}, optional
-        Nom du fichier pour l'enregistrement
+        Name of the file for the record
     save :bool{False}, optional
-        Enregistrer le fichier.
+        Save the file.
     t :int{60}, optional
-        position (pixel) centrale des hyperboles utilisées (ordonnée)
+        central position (pixel) of the hyperbolas used (ordinate)
     x :int{128}, optional
-        position (pixel) centrale des hyperboles utilisées (abscisse)
+        central position (pixel) of the hyperbolas used (abscissa)
 
     Returns
     -------
@@ -125,22 +125,22 @@ def plot_ckmap_img(T, ck=False, title=["_", "_"],
 
 
 def plot_recon(Dal, Dico=None, name="_", save=False, compute=True):
-    r"""Affiche la reconstruction d'une image grace au dictionnaire et
-    aux cartes des C_k
+    r"""Displays the reconstruction of an image using the dictionary and
+    maps of the C_k
 
     Parameters
     ----------
     Dal :float
-        Soit la reconstruction deja calculée (Nx * Ny) soit le tenseur des C_k (Nx * Ny * K).
+        Either the already computed reconstruction (Nx * Ny) or the C_k tensor (Nx * Ny * K).
     Dico :float{None}, optional
-        dictionnaire nécessaire pour le calcul de la reconstruction 
-        (si non deja calculée) (Nx * Ny * K).
+        dictionary necessary for the calculation of the reconstruction 
+        (if not already computed) (Nx * Ny * K).
     name :str{"_"}, optional
-        nom du fichier a enregistrer.
+        name of the file to save.
     save :bool{False}, optional
-        enregistrer ou non l'image.
+        save or not the image.
     compute :bool{True}, optional
-        reconstruction deja calculée ou non.
+        reconstruction already computed or not.
 
     Returns
     -------
@@ -162,16 +162,16 @@ def plot_recon(Dal, Dico=None, name="_", save=False, compute=True):
 
 
 def plot_atomNSM(atm2, paraDic):
-    r"""Affichage d'un atome du dictionnaire physique
-    avec les bonnes dimensions (m et ns)
+    r"""Display of an atom from the physical dictionary
+    with the right dimensions (m and ns)
 
     Parameters
     ----------
     atm2 :float
-        matrice de l'atome (Nx * Ny)
+        matrix of the atom (Nx * Ny)
     paraDic :dic
-        dictionnaire des paramètres de l'atome (taille ns\m)
-        key necessaire : "size_ns_m"
+        dictionary of the parameters of the atom (size ns\m)
+        necessary key : "size_ns_m
 
     Returns
     -------
@@ -181,7 +181,7 @@ def plot_atomNSM(atm2, paraDic):
     --------
     >>> paraDic={}
     >>> paraDic["size_ns_m"]=[900,45]
-    >>> plot_atomNSM(atomes,paraDic)
+    >>> plot_atomNSM(atoms,paraDic)
     """
     fig, ax = plt.subplots(1, figsize=(12, 3))
     m = ax.imshow(atm2, cmap="gray", aspect="equal")
@@ -197,18 +197,20 @@ def plot_atomNSM(atm2, paraDic):
     fig.show()
 
 def scale_0_1(img):
+    """ Scale an image between 0 and 1
+
+    Parameters
+    ----------
+    img :  numpy.ndarray
+        Image to scale
+
+    Returns
+    -------
+    img : numpy.ndarray
+        Scaled image
+    """
     scaled = (img-img.min())/(img.max()-img.min())
     return scaled
-def param_load(size):
-    param_dic={}
-    param_dic['dim'] = [size[1],size[0]]      # Dim x,t
-    param_dic['position'] = [int(param_dic['dim'][0]/2),int(param_dic['dim'][1]/4)]     # pos x_0,t_0
-    param_dic['coef'] = [0.91]
-    param_dic['scale_a'] = np.geomspace(0.75,35,25)
-    param_dic['scale_s'] = [5.5]                         #param sigma
-    param_dic['f'] = [100] 
-    return create_dicoH(param_dic)
-from sklearn.metrics import roc_curve, roc_auc_score
 
 def roc_curve_plot(mask,img,name):
     """ Plot ROC curve 
@@ -236,9 +238,3 @@ def roc_curve_plot(mask,img,name):
         ax.set_ylabel('True Positive Rate')
         ax.legend()
     plt.show()
-    
-def SVD_gpr(ref,rank):
-    U, D, VT = np.linalg.svd(ref, full_matrices=False)
-    D[:rank]=0
-    A_remake = (U @ np.diag(D) @ VT)
-    return A_remake

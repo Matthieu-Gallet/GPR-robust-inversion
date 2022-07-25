@@ -1,4 +1,4 @@
-# Module de résolution du problème pour le GPR
+# Problem Solving Module for RPM
 """
 References
 ----------
@@ -6,12 +6,12 @@ References
         Avalaible at: https://arxiv.org/pdf/1709.02893.pdf
 
 .. warning::
-    **A faire**
+    **To do**
 
-    - Terminer la documentation de la classe (pour tous les attributs)
-    - Ajouter le logging pour le suivi
-    - Vérifier strucure dictionnaire tel que: :math:`D^H= \mathrm{conjugate}(D)`
-    - Ajouter paramètre over-relaxation (cf `source_separation` et [3]_)
+    - Complete class documentation (for all attributes)
+    - Add logging for tracking
+    - Check dictionary strucure such as: :math:`D^H= \mathrm{conjugate}(D)`
+    - Add over-relaxation parameter (see `source_separation` and [3]_)
 """
 
 
@@ -28,29 +28,29 @@ from . import admm_func
 
 
 def cost_function_addm1(Y,rho,old_auxiliary_,old_dal,dal,primal,auxiliary):
-    r"""Fonction de calcul des coûts et erreurs de l'`ADMM`
+    r"""ADMM cost and error calculation function
 
     Parameters
     ----------
     Y : float
-        image originale (Nx,Ny,1)
+        original image (Nx,Ny,1)
     rho : float
-        paramètre de pénalité
+        penalty parameter
     old_auxiliary_ : float
-        variable auxiliaire de l'itération précedente :math:`\mathbf{S}_k^{i-1}`
+        auxiliary variable of the previous iteration :math:`\mathbf{S}_k^{i-1}`
     old_dal : float
-        reconstruction de l'itération précedente :math:`\sum_k{\mathbf{C}_k^{i-1}\star\mathbf{H}_k}^{i-1}`
+        reconstruction of the previous iteration :math:`\sum_k{\mathbf{C}_k^{i-1}\star\mathbf{H}_k}^{i-1}`
     dal : float
-        produit de convolution dictionnaire + carte coeff :math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}`
+        convolution product dictionary + coeff map :math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}`
     primal : float
         variable primal :math:`\mathbf{C}_k^i`
     auxiliary : float
-        variable auxiliaire :math:`\mathbf{S}_k^{i-1}`
+        auxiliary variable :math:`\mathbf{S}_k^{i-1}`
 
     Returns
     -------
     out : list of float
-        variation du primal, erreur de reconstruction, erreur du primal et erreur du dual
+        variation of primal, reconstruction error, error of primal and error of dual
     """
     var_prim_ = np.linalg.norm(dal-old_dal,'fro',axis=(0,1))[0]
     error_rec_ = np.linalg.norm(Y-dal,'fro',axis=(0,1))[0]
@@ -60,40 +60,40 @@ def cost_function_addm1(Y,rho,old_auxiliary_,old_dal,dal,primal,auxiliary):
 
 
 def addm_iteration_norm2(lambdaS,c,DHY,DF,DF_H,U,rho,S,penalty="l1",m=-1):
-    r"""fonction de calcul d'une itération d'`ADMM` avec la norme 2
-    Basé sur [4]_
+    r"""function for computing an iteration of `ADMM` with the 2 norm
+    Based on [4]_
 
     Parameters
     ----------
     lambdaS : float
-        paramètre de parcimonie 
+        parsimony parameter 
     c : float
-        pre-calcul du terme pour Sherman_MorrisonF 
+        pre-computation of the term for Sherman_MorrisonF 
     DHY : complex
-        fft du dictionnaire * image originale
+        fft from dictionary * original image
     DF : complex
-        fft du dictionnaire
+        fft of the dictionary
     DF_H : complex
-        conjugué de la fft du dictionnaire
+        conjugate of the dictionary fft
     U : float
-        variable duale
+        dual variable
     rho : float
-        paramètre de pénalité
+        penalty parameter
     S : float
-        variable auxiliaire :math:`\mathbf{S}_k`
-    penalty : str{"l1","l0","FirmThresholding","l*"}, optional
-        penalité d'attache aux données, de base :math:`\sum_k{||\mathbf{S}_k||_1`
+        auxiliary variable :math:`\mathbf{S}_k`
+    penalty : str{"l1", "l0", "FirmThresholding", "l*"}, optional
+        data attachment penalty, basic :math:`\sum_k{||\mathbf{S}_k||_1`
     m : int{-1}, optional
-        Nombre de workers (coeurs) utilisé pour la fft
+        Number of workers (cores) used for the fft
 
     Returns
     -------
     primal_new:float
         variable primal :math:`\mathbf{C}_k^i` (Nx,Ny,K)
     auxiliary_new:float
-        variable dual :math:`\mathbf{S}_k^i` (Nx,Ny,K)
+        dual variable :math:`\mathbf{S}_k^i` (Nx,Ny,K)
     Dal: float
-        produit de convolution dictionnaire + carte coeff :math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}`  (Nx,Ny,1)
+        convolution product dictionary + map coeff :math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}` (Nx,Ny,1)
     """
     b = DHY + rho*fft.fft2(S-U,axes=(0,1),workers=m)
     alphaf = admm_func.Sherman_MorrisonF(DF_H,b,c,rho)
@@ -119,47 +119,47 @@ def addm_iteration_norm2(lambdaS,c,DHY,DF,DF_H,U,rho,S,penalty="l1",m=-1):
 
 def addm_iteration_normH(lambdaS,DF, DFH, U, rho, S, primal_tilde, YF,
                          grad_iter_max=50, beta=0.001, thresh=250, penalty="l1", m=-1):
-    r"""fonction de calcul d'une itération d'`ADMM` avec la norme d'HUber
+    r"""function for computing an iteration of `ADMM` with the HUber norm
 
     Parameters
     ----------
     lambdaS : float
-        paramètre de parcimonie
+        parsimony parameter
     DF : complex
-        fft du dictionnaire (Nx,Ny,K)
+        fft of the dictionary (Nx,Ny,K)
     DF_H : complex
-        conjugué de la fft du dictionnaire
+        conjugate of the dictionary fft
     U : float
-        variable duale (Nx,Ny,K)
+        dual variable (Nx,Ny,K)
     rho : float
-        paramètre de pénalité
+        penalty parameter
     S : float
-        variable auxiliaire :math:`\mathbf{S}_k` (Nx,Ny,K)
+        auxiliary variable :math:`\mathbf{S}_k` (Nx,Ny,K)
     primal_tilde : float
-        fft du primal :math:`\mathbf{\hat{C}}_k` (Nx,Ny,K)
+        fft of the primal :math:`\mathbf{C}_k` (Nx,Ny,K)
     YF : float
-        fft de l'image originale (Nx,Ny,1)
+        fft of the original image (Nx,Ny,1)
     grad_iter_max{50} : int, optional
-        itération maximal de la descente de gradient
+        maximum iteration of the gradient descent
     beta : float{0.001}, optional
-        paramètre de taux d'apprentissage du gradient 
+        learning rate parameter of the gradient 
     thresh : int, optional
         [description], by default 250
-    penalty : str{"l1","l0","FirmThresholding","l*"}, optional
-        penalité d'attache aux données, de base :math:`\sum_k{||\mathbf{S}_k||_1`
+    penalty : str{"l1", "l0", "FirmThresholding", "l*"}, optional
+        penalty of attachment to data, basic :math:`\sum_k{||\mathbf{S}_k||_1`
     m : int{-1}, optional
-        Nombre de workers (coeurs) utilisé pour la fft
+        Number of workers (cores) used for the fft
 
     Returns
     -------
     primal_new:float
         variable primal :math:`\mathbf{C}_k^i` (Nx,Ny,K)
     primal_tilde:float
-        fft de la variable primal :math:`\mathbf{\hat{C}}_k^i` (Nx,Ny,K)
+        fft of the primal variable :math:`\mathbf{C}_k^i` (Nx,Ny,K)
     auxiliary_new:float
-        variable dual :math:`\mathbf{S}_k^i` (Nx,Ny,K)
+        dual variable :math:`\mathbf{S}_k^i` (Nx,Ny,K)
     Dal: float
-        produit de convolution dictionnaire + carte coeff :math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}`  (Nx,Ny,1)
+        convolution product dictionary + map coeff :math:`\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}` (Nx,Ny,1)
     """
     Z_m_tilde = fft.fft2(S-U,axes=(0,1),workers=m)
     for i in range(grad_iter_max):

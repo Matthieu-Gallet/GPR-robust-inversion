@@ -67,7 +67,7 @@
              
   <h1>Source code for MIRAG.metrique</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Module de calcul de métrique pour quantifier la qualité de reconstruction des radargrammes</span>
+<span class="sd">Metric calculation module to quantify the reconstruction quality of radargrams</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">cv2</span>
@@ -81,61 +81,54 @@
 
 
 <div class="viewcode-block" id="comp_metric"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.metrique.comp_metric">[docs]</a><span class="k">def</span> <span class="nf">comp_metric</span><span class="p">(</span><span class="n">Iorg</span><span class="p">,</span><span class="n">Irec</span><span class="p">,</span><span class="n">Ck</span><span class="p">,</span><span class="n">path_mask</span><span class="p">,</span><span class="n">erode</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">sz</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">pos_rec</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">600</span><span class="p">],</span><span class="n">dim_win</span><span class="o">=</span><span class="p">[</span><span class="mi">80</span><span class="p">,</span><span class="mi">40</span><span class="p">],</span><span class="n">out_win_S</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">v_seuil</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">plot_check</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Métrique de détection hyperboles reconstruites/vérité terrain</span>
-<span class="sd">    Fonction principale du calcul de la détection des hyperboles par rapport à un mask</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Metric of detection of reconstructed hyperbolas/ground truth</span>
+<span class="sd">    Main function of the hyperbola detection calculation with respect to a mask</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    Iorg :float</span>
-<span class="sd">        array image originale normalisée (0-1) (MxN)</span>
+<span class="sd">        array original normalized image (0-1) (MxN)</span>
 <span class="sd">    Irec :float</span>
-<span class="sd">        array image reconstruite normalisée (0-1)(MxN)</span>
+<span class="sd">        array normalized reconstructed image (0-1)(MxN)</span>
 <span class="sd">    Ck :float</span>
-<span class="sd">        matrice de la somme des cartes de coefficients normalisées (MxN)</span>
+<span class="sd">        matrix of the sum of the normalized coefficient maps (MxN)</span>
 <span class="sd">    path_mask :str</span>
-<span class="sd">         chemin du mask</span>
+<span class="sd">         path of the mask</span>
 <span class="sd">    erode :bool {True}, optional</span>
-<span class="sd">        active l&#39;erosion du mask</span>
+<span class="sd">        activate the erosion of the mask</span>
 <span class="sd">    sz :int {20}, optional: </span>
-<span class="sd">        taille du kernel pour l&#39;erosion.</span>
+<span class="sd">        kernel size for erosion.</span>
 <span class="sd">    pos_rec :list {[0,100,0,600]}, optional</span>
-<span class="sd">        position de l&#39;image originale par rapport au mask.</span>
+<span class="sd">        position of the original image in relation to the mask.</span>
 <span class="sd">    dim_win :list{[80,40]}, optional</span>
-<span class="sd">        taille de la fenêtre de détection en pixels.</span>
+<span class="sd">        size of the detection window in pixels.</span>
 <span class="sd">    out_win_S :bool{False}, optional</span>
-<span class="sd">        retourne la fenêtre seuillée ou non</span>
-<span class="sd">    v_seuil :int{3}, optional</span>
-<span class="sd">        Valeur du seuil par rapport à l&#39;écart type des C_k. Par défaut mise à 0 </span>
-<span class="sd">        des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</span>
+<span class="sd">        return the thresholded window or not</span>
+<span class="sd">    v_threshold :int{3}, optional</span>
+<span class="sd">        Value of the threshold in relation to the standard deviation of C_k. By default set to 0 </span>
+<span class="sd">        of C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</span>
 <span class="sd">    plot_check:bool{False},optional</span>
-<span class="sd">        Active l&#39;affichage des positions des centroids sur le mask</span>
+<span class="sd">        Activate the display of the centroids positions on the mask</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    score : dic</span>
-<span class="sd">        structure des scores et metriques calculés pour une reconstruction à partir de son masque</span>
+<span class="sd">        structure of the scores and metrics computed for a reconstruction from its mask</span>
 <span class="sd">    </span>
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    - score[&#39;MSE_local_max&#39;] (float) : maximum MeanSquareError pour chaque masque entre l&#39;image reconstruite et celle originale</span>
-<span class="sd">    - score[&#39;MSE_global&#39;] (float) : MeanSquareError globale entre l&#39;image reconstruite et celle originale.</span>
-<span class="sd">    - score[&#39;SSI_local_min&#39;] (float) : minimum Structural similarity index pour chaque masque entre l&#39;image reconstruite et celle originale</span>
-<span class="sd">    - score[&#39;SSI_global&#39;] (float) : Structural similarity index globale entre l&#39;image reconstruite et celle originale.    </span>
-<span class="sd">    - score[&#39;TruePositive&#39;] (float) : nombre d&#39;hyperbole détectée dans l&#39;image fournit.</span>
-<span class="sd">    - score[&#39;N_terrain&#39;] (float) : nombre theorique d&#39;hyperboles à partir du mask.</span>
-<span class="sd">    - score[&quot;FalseNegative&quot;] (float) : hyperboles non-créés par la reconstruction mais presentes dans les masques</span>
-<span class="sd">    - score[&quot;FalsePositive&quot;] (float) : hyperboles créés par la reconstruction mais non presentes dans les masques</span>
+<span class="sd">    - score[&#39;MSE_local_max&#39;] (float) : maximum MeanSquareError for each mask between the reconstructed and the original image</span>
+<span class="sd">    - score[&#39;MSE_global&#39;] (float) : global MeanSquareError between the reconstructed image and the original one.</span>
+<span class="sd">    - score[&#39;SSI_local_min&#39;] (float) : minimum Structural similarity index for each mask between the reconstructed image and the original one</span>
+<span class="sd">    - score[&#39;SSI_global&#39;] (float): Global structural similarity index between the reconstructed image and the original one.    </span>
+<span class="sd">    - score[&#39;TruePositive&#39;] (float) : number of hyperbola detected in the provided image.</span>
+<span class="sd">    - score[&#39;N_terrain&#39;] (float): theoretical number of hyperbolas from the mask.</span>
+<span class="sd">    - score[&quot;FalseNegative&quot;] (float) : hyperbolas not created by the reconstruction but present in the masks</span>
+<span class="sd">    - score[&quot;FalsePositive&quot;] (float) : hyperbolas created by the reconstruction but not present in the masks</span>
 <span class="sd">    - score[&quot;precision&quot;] (float) : TruePositive/(TruePositive+FalsePositive)</span>
-<span class="sd">    - score[&quot;rappel&quot;] (float) : TruePositive/(TruePositive+FalseNegative)</span>
-<span class="sd">    - score[&quot;F1_score&quot;] (float) : (precision*rappel)/(precision+rappel)</span>
+<span class="sd">    - score[&quot;recall&quot;] (float) : TruePositive/(TruePositive+FalseNegative)</span>
+<span class="sd">    - score[&quot;F1_score&quot;] (float) : (precision*recall)/(precision+recall)</span>
 
-<span class="sd">    .. warning::</span>
-<span class="sd">       **A faire**</span>
-
-<span class="sd">       - Implémentation des métriques:</span>
-<span class="sd">            * précision : :math:`\mathrm{TruePositive/(TruePositive+FalsePositive)}`</span>
-<span class="sd">            * rappel    : :math:`\mathrm{TruePositive/(TruePositive+FalseNegative)}`</span>
-<span class="sd">            * F1-score  : :math:`\mathrm{precision\cdot rappel/(precision+rappel)}`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">c_sta</span><span class="o">=</span><span class="p">{}</span>
     <span class="n">MSE_ce</span> <span class="o">=</span> <span class="p">[]</span>
@@ -170,35 +163,35 @@
     <span class="k">return</span> <span class="n">score</span></div>
 
 <div class="viewcode-block" id="stats_reconstruction"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.metrique.stats_reconstruction">[docs]</a><span class="k">def</span> <span class="nf">stats_reconstruction</span><span class="p">(</span><span class="n">Iorg</span><span class="p">,</span> <span class="n">Irec</span><span class="p">,</span><span class="n">MSE_ce</span><span class="p">,</span><span class="n">C0_ce</span><span class="p">,</span><span class="n">SSI_ce</span><span class="p">,</span><span class="n">centroid</span><span class="p">,</span><span class="n">c_sta</span><span class="p">,</span><span class="n">Ck</span><span class="p">,</span><span class="n">v_seuil</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calcule les statistiques et métriques (local et global)</span>
-<span class="sd">    à partir de la reconstruction.</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculates statistics and metrics (local and global)</span>
+<span class="sd">    from the reconstruction.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    Iorg :float</span>
-<span class="sd">        array image originale normalisée (0-1) (MxN)</span>
+<span class="sd">        array original normalized image (0-1) (MxN)</span>
 <span class="sd">    Irec :float</span>
-<span class="sd">        array image reconstruite normalisée (0-1)(MxN)</span>
+<span class="sd">        array normalized reconstructed image (0-1)(MxN)</span>
 <span class="sd">    MSE_ce : float</span>
-<span class="sd">        array des MSE locaux sur tous les objets du masque</span>
+<span class="sd">        array of local MSE on all mask objects</span>
 <span class="sd">    C0_ce : float</span>
-<span class="sd">        array des détection sur tous les objets du masque</span>
+<span class="sd">        array of detections on all objects of the mask</span>
 <span class="sd">    SSI_ce : float</span>
-<span class="sd">        array des SSI locaux sur tous les objets du masque</span>
+<span class="sd">        array of local SSI on all mask objects</span>
 <span class="sd">    centroid : int</span>
-<span class="sd">        Nombre d&#39;hyperbole détecté sur le masque</span>
+<span class="sd">        Number of hyperbola detected on the mask</span>
 <span class="sd">    c_sta : dic</span>
-<span class="sd">        caractéristique de la matrice Ck. c_sta[&quot;mean&quot;] et c_sta[&quot;std&quot;]</span>
+<span class="sd">        characteristic of the matrix Ck. c_sta[&quot;mean&quot;] and c_sta[&quot;std&quot;]</span>
 <span class="sd">    Ck :float</span>
-<span class="sd">        matrice de la somme des cartes de coefficients normalisées (MxN)</span>
-<span class="sd">    v_seuil :int{3}, optional</span>
-<span class="sd">        Valeur du seuil par rapport à l&#39;écart type des C_k. Par défaut mise à 0 </span>
-<span class="sd">        des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</span>
+<span class="sd">        matrix of the sum of the normalized coefficient maps (MxN)</span>
+<span class="sd">    v_threshold :int{3}, optional</span>
+<span class="sd">        Value of the threshold with respect to the standard deviation of C_k. By default set to 0 </span>
+<span class="sd">        of C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    stat_strc : dic</span>
-<span class="sd">        dictionnaire des statistiques et métriques calculées sur la reconstruction.</span>
+<span class="sd">        dictionary of statistics and metrics calculated on the reconstruction.</span>
 
 <span class="sd">    See Also</span>
 <span class="sd">    --------</span>
@@ -228,17 +221,17 @@
 
 
 <div class="viewcode-block" id="get_available_masks"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.metrique.get_available_masks">[docs]</a><span class="k">def</span> <span class="nf">get_available_masks</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Obtient la liste de tous les masks dans un fichier .h5</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Gets the list of all masks in a .h5 file</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    name :str</span>
-<span class="sd">        chemin absolu du fichier .h5</span>
+<span class="sd">        absolute path of the .h5 file</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    masks_available : str</span>
-<span class="sd">        dictionnaire des noms des masks disponibles pour un fichier .h5</span>
+<span class="sd">        dictionary of available masks names for a .h5 file</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">filepath</span> <span class="o">=</span>  <span class="n">name</span>
     <span class="n">masks_available</span> <span class="o">=</span> <span class="p">{}</span>
@@ -255,17 +248,17 @@
 
 
 <div class="viewcode-block" id="load_mask"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.metrique.load_mask">[docs]</a><span class="k">def</span> <span class="nf">load_mask</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Charge le masque à partir d&#39;un fichier .h5</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Loads the mask from an .h5 file</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    filename :str</span>
-<span class="sd">        chemin absolu du fichier .h5</span>
+<span class="sd">        absolute path of the .h5 file</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    mask : float</span>
-<span class="sd">        array 2D des masks</span>
+<span class="sd">        2D array of masks</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">det_mask</span> <span class="o">=</span> <span class="n">get_available_masks</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="n">mask_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">det_mask</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -279,25 +272,25 @@
 
 
 <div class="viewcode-block" id="mask2scatter"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.metrique.mask2scatter">[docs]</a><span class="k">def</span> <span class="nf">mask2scatter</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span><span class="n">erode</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Transforme un array de masks en scatter x,y</span>
-<span class="sd">    Permet d&#39;appliquer une erosion ou non sur l&#39;image </span>
-<span class="sd">    (permettant ainsi une meilleur détection des masks)</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Transforms an array of masks into a scatter x,y</span>
+<span class="sd">    Allows to apply an erosion or not on the image </span>
+<span class="sd">    (allowing a better detection of masks)</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    mask :int</span>
-<span class="sd">        array des masks</span>
+<span class="sd">        array of masks</span>
 <span class="sd">    erode :bool{True}, optional</span>
-<span class="sd">        active l&#39;érosion des masks.</span>
+<span class="sd">        activate erosion of masks.</span>
 <span class="sd">    size :int{20}, optional</span>
-<span class="sd">        taille du kernel de l&#39;érosion si sélectionné.</span>
+<span class="sd">        size of the erosion kernel if selected.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    mask_scatter :int</span>
-<span class="sd">        scatter x,y des masks</span>
+<span class="sd">        scatter x,y of masks</span>
 <span class="sd">    ero :int</span>
-<span class="sd">        masks erodé ou non</span>
+<span class="sd">        masks eroded or not</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">erode</span> <span class="p">:</span>
         <span class="n">ero</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">erode</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">size</span><span class="p">,</span><span class="n">size</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span><span class="n">iterations</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
@@ -311,23 +304,23 @@
 
 
 <div class="viewcode-block" id="center_mask"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.metrique.center_mask">[docs]</a><span class="k">def</span> <span class="nf">center_mask</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span><span class="n">erode</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">sz</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Extrait d&#39;un mask les positions des clusters</span>
-<span class="sd">    Permet d&#39;appliquer une erosion ou non sur l&#39;image </span>
-<span class="sd">    (permettant ainsi une meilleur détection des masks)</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Extract from a mask the positions of the clusters</span>
+<span class="sd">    Allows to apply an erosion or not on the image </span>
+<span class="sd">    (allowing a better detection of masks)</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    mask :int</span>
-<span class="sd">        array des masks</span>
+<span class="sd">        array of masks</span>
 <span class="sd">    erode :bool{True}, optional</span>
-<span class="sd">        active l&#39;érosion des masks.</span>
+<span class="sd">        activate erosion of masks.</span>
 <span class="sd">    size :int{20}, optional</span>
-<span class="sd">        taille du kernel de l&#39;érosion si sélectionné.</span>
+<span class="sd">        size of the erosion kernel if selected.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    centroid :int</span>
-<span class="sd">        Coordonnées des centres de clusters</span>
+<span class="sd">        Coordinates of cluster centers</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">m_scat</span><span class="p">,</span><span class="n">ero</span> <span class="o">=</span> <span class="n">mask2scatter</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span><span class="n">erode</span><span class="p">,</span><span class="n">sz</span><span class="p">)</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">ero</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span>
@@ -339,23 +332,23 @@
 
 
 <div class="viewcode-block" id="centroid_adjust_win"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.metrique.centroid_adjust_win">[docs]</a><span class="k">def</span> <span class="nf">centroid_adjust_win</span><span class="p">(</span><span class="n">centroid</span><span class="p">,</span><span class="n">y_mask</span><span class="p">,</span><span class="n">dim_rec</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Retourne les centres des masks ajustés</span>
-<span class="sd">    L&#39;ajustement se fait par rapport à la taille de l&#39;image,</span>
-<span class="sd">    pour éviter les débordements.</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the centers of the adjusted masks</span>
+<span class="sd">    The adjustment is made in relation to the size of the image,</span>
+<span class="sd">    to avoid overflows.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    centroid :float</span>
-<span class="sd">        tableau des centres des masques</span>
+<span class="sd">        array of mask centers</span>
 <span class="sd">    y_mask :int</span>
-<span class="sd">        dimension Y de l&#39;image du masque</span>
+<span class="sd">        dimension Y of the mask image</span>
 <span class="sd">    dim_rec :int</span>
-<span class="sd">        tableau des dimensions de l&#39;image utilisé (souvent inférieur au mask)</span>
+<span class="sd">        array of dimensions of the used image (often smaller than the mask)</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    cent :int</span>
-<span class="sd">        centre des masks ajustés a l&#39;image reconstruite</span>
+<span class="sd">        center of the masks adjusted to the reconstructed image</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">centroid</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">y_mask</span><span class="o">-</span><span class="n">centroid</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">cent</span> <span class="o">=</span> <span class="n">centroid</span><span class="p">[(</span><span class="n">centroid</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">dim_rec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">centroid</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">dim_rec</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span><span class="o">+</span><span class="p">[</span><span class="o">-</span><span class="n">dim_rec</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="mi">0</span><span class="p">]</span>
@@ -364,21 +357,21 @@
 
 
 <div class="viewcode-block" id="fenetre"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.metrique.fenetre">[docs]</a><span class="k">def</span> <span class="nf">fenetre</span><span class="p">(</span><span class="n">cen</span><span class="p">,</span><span class="n">img</span><span class="p">,</span><span class="n">dim</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Retourne une fenetre centrée sur un point de dimension totale dim (LxH)</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns a window centered on a point of total dimension dim (LxH)</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    cen :int</span>
-<span class="sd">        centre de la fenêtre</span>
+<span class="sd">        center of the window</span>
 <span class="sd">    img :float</span>
-<span class="sd">        image à centrer</span>
+<span class="sd">        image to center</span>
 <span class="sd">    dim :int</span>
-<span class="sd">        dimension totale de la fenêtre LxH</span>
+<span class="sd">        total dimension of the window LxH</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    out :float</span>
-<span class="sd">        fenêtre extraite de l&#39;image initiale</span>
+<span class="sd">        window extracted from the initial image</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dim</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
     <span class="n">cm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">cen</span><span class="o">-</span><span class="n">dim</span><span class="p">)</span>
@@ -389,43 +382,36 @@
 
 
 <div class="viewcode-block" id="stats_win"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.metrique.stats_win">[docs]</a><span class="k">def</span> <span class="nf">stats_win</span><span class="p">(</span><span class="n">ck_stats</span><span class="p">,</span><span class="n">ck_s</span><span class="p">,</span><span class="n">org_s</span><span class="p">,</span><span class="n">rec_s</span><span class="p">,</span><span class="n">win_S</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">v_seuil</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Réalise les statistiques sur un masque dans image</span>
-<span class="sd">    à savoir le nombre d&#39;hyperbole détecté (norme C0), le MeanSquareError entre </span>
-<span class="sd">    l&#39;image originale et celle originale au niveau du masque.</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Performs statistics on a mask in image</span>
+<span class="sd">    namely the number of hyperbola detected (C0 norm), the MeanSquareError between </span>
+<span class="sd">    the original image and the original one at the mask level.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    ck_stats :float</span>
-<span class="sd">        dictionnaire de la moyenne et l&#39;écart-type des cartes c_k</span>
+<span class="sd">        dictionary of the mean and standard deviation of the c_k maps</span>
 <span class="sd">    ck_s :float</span>
-<span class="sd">        fenêtre des C_k donnée par la fonction fenetre pour un masque donné</span>
+<span class="sd">        window of C_k given by the window function for a given mask</span>
 <span class="sd">    org_s :float</span>
-<span class="sd">        fenêtre de l&#39;image originale donnée par la fonction fenetre pour un masque donné</span>
+<span class="sd">        window of the original image given by the window function for a given mask</span>
 <span class="sd">    rec_s :float</span>
-<span class="sd">        fenêtre de l&#39;image reconstruite donnée par la fonction fenetre pour un masque donné</span>
+<span class="sd">        window of the reconstructed image given by the window function for a given mask</span>
 <span class="sd">    win_S :bool{True}, optional</span>
-<span class="sd">        retourne la fenêtre seuillée ou non</span>
-<span class="sd">    v_seuil :int{3}, optional</span>
-<span class="sd">        Valeur du seuil par rapport à l&#39;écart type des C_k. Par défaut mise à 0 </span>
-<span class="sd">        des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</span>
+<span class="sd">        returns the window thresholded or not</span>
+<span class="sd">    v_threshold :int{3}, optional</span>
+<span class="sd">        Value of the threshold in relation to the standard deviation of the C_k. By default set to 0 </span>
+<span class="sd">        of C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    MSE : float</span>
-<span class="sd">        MeanSquareError entre l&#39;image reconstruite et celle originale.</span>
+<span class="sd">        MeanSquareError between the reconstructed image and the original one.</span>
 <span class="sd">    norm_C0 : int</span>
-<span class="sd">        norme 0 de C_k sur la fenêtre(&gt;0 = détection).</span>
+<span class="sd">        norm 0 of C_k on the window (&gt;0 = detection).</span>
 <span class="sd">    ssim_loc : float</span>
-<span class="sd">        indice de similarité local </span>
+<span class="sd">        local similarity index </span>
 <span class="sd">    ws :float,optionnal</span>
-<span class="sd">        fenetre C_k seuillée</span>
-<span class="sd">    </span>
-
-<span class="sd">    .. warning::</span>
-<span class="sd">       **A faire**</span>
-
-<span class="sd">       - Implémentation de la métrique :math:`\mathrm{Structural\ Similarity\ Index}` : </span>
-<span class="sd">       https://scikit-image.org/docs/dev/api/skimage.metrics.html#skimage.metrics.structural_similarity</span>
+<span class="sd">        thresholded window C_k</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">se_ck</span> <span class="o">=</span> <span class="n">v_seuil</span><span class="o">*</span><span class="n">ck_stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span>
@@ -440,8 +426,8 @@
         <span class="k">return</span> <span class="n">MSE</span><span class="p">,</span><span class="n">norm_C0</span><span class="p">,</span><span class="n">ssim_loc</span></div>
 
 <div class="viewcode-block" id="detect_Nhyper_rec"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.metrique.detect_Nhyper_rec">[docs]</a><span class="k">def</span> <span class="nf">detect_Nhyper_rec</span><span class="p">(</span><span class="n">ck_stats</span><span class="p">,</span><span class="n">Ck</span><span class="p">,</span><span class="n">v_seuil</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Detecte le nombre d&#39;hyperbole total construite</span>
-<span class="sd">    par l&#39;algorithme sous réserve d&#39;un seuil</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Detects the total number of hyperbolas constructed</span>
+<span class="sd">    by the algorithm subject to a threshold</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -449,14 +435,14 @@
 <span class="sd">        [description]</span>
 <span class="sd">    Ck : [type]</span>
 <span class="sd">        [description]</span>
-<span class="sd">    v_seuil :int{3}, optional</span>
-<span class="sd">        Valeur du seuil par rapport à l&#39;écart type des C_k. Par défaut mise à 0 </span>
-<span class="sd">        des C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</span>
+<span class="sd">    v_threshold :int{3}, optional</span>
+<span class="sd">        Value of the threshold with respect to the standard deviation of C_k. By default set to 0 </span>
+<span class="sd">        of C_K.mean-3*C_K.std&lt;C_k&lt; 3*C_K.std+C_K.mean</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    [type]</span>
-<span class="sd">        [description]</span>
+<span class="sd">    norm_C0_glob : int</span>
+<span class="sd">        total number of hyperbolas detected</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">se_ck</span> <span class="o">=</span> <span class="n">v_seuil</span><span class="o">*</span><span class="n">ck_stats</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span>
     <span class="n">ws</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">Ck</span><span class="o">&lt;</span><span class="n">ck_stats</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">]</span><span class="o">-</span><span class="n">se_ck</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">Ck</span><span class="o">&gt;</span><span class="n">ck_stats</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">]</span><span class="o">+</span><span class="n">se_ck</span><span class="p">),</span><span class="n">Ck</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>

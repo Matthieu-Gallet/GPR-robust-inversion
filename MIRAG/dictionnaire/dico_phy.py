@@ -1,35 +1,35 @@
 '''
-Module de création du dictionnaire d'hyperbole pour l'``ADMM`` convolutionnel par approche physique
+Hyperbola dictionary creation module for convolutional ADMM by physical approach
 '''
 
 import numpy as np
 from .dico_func import *
 
 def dico_PHY2(Dimxt, pos, v, dim_n_m, A=None, sigma=5):
-    r"""Une fonction pour générer un atome ou une hyperbole afin
-    de créer un dictionnaire pour la reconstruction GPR, et ce à partir
-    de la modèlisation physique du problème.
+    r"""A function to generate an atom or a hyperbola to create a dictionary for
+    create a dictionary for the GPR reconstruction from the physical
+    from the physical modeling of the problem.
 
     Parameters
     ----------
     Dimxt :list{[256,256]}
-        dimension de l'hyperbole (Nx * Ny)
+        dimension of the hyperbola (Nx * Ny)
     pos :list{[60,128]}
-        position centrée de l'hyperbole
+        centered position of the hyperbola
     v :float
-        vitesse de propagation  pour l'hyperbole
+        propagation speed for the hyperbola
     dim_n_m :list{[900,40]}
-        dimensions réelles de l'image (y = [ns] et x= [m])
+        real dimensions of the image (y = [ns] and x= [m])
     A :int{None}, optional
-        matrice d'atténuation  (Nx * Ny)
+        attenuation matrix (Nx * Ny)
     sigma :int{5}, optional
-        paramètre épaisseur de l'hyperbole.
+        parameter thickness of the hyperbola.
 
 
     Returns
     -------
     h : float
-        atome construit de dimension (Nx*Ny)
+        constructed atom of dimension (Nx*Ny)
     """
     # Setting mesh for x and t axis
     Nt = Dimxt[1]
@@ -65,17 +65,17 @@ def dico_PHY2(Dimxt, pos, v, dim_n_m, A=None, sigma=5):
 
 
 def create_dicoPHY2(paraDic):
-    r"""Fonction supérieure de crétion dictionnaire d'hyperboles ou d'atomes
-    par modélisation physique
+    r"""Higher function of creation of hyperbolas or atoms dictionary
+    by physical modeling
 
     Parameters
     ----------
     paraDic :dic
-        dictionnaire des paramètres de création
+        dictionary of creation parameters
 
     Notes
     -----
-    - paraDic['dim'] (array) : Dimension of the radargramme
+    - paraDic['dim'] (array) : Dimension of the radargram
     - paraDic['std'] (array) : Input vector of sigma parameter
     - paraDic['position'] (array) : Position of the top of the hyperbola
     - paraDic['v_prop'] (array) : Input vector of velocity
@@ -85,9 +85,9 @@ def create_dicoPHY2(paraDic):
     Returns
     -------
     DioH : dic
-        structure de la forme {"atoms": Dico, "param": param} où ``Dico`` est le tenseur
-        des hyperboles (Nx*Ny*K) et ``param`` le tenseur des caractéristiques correspondants
-        pour chaque hyperbole (K*3) (vitesse, coeff atténuation, sigma)
+        structure of the form {"atoms": Dico, "param": param} where ``Dico`` is the tensor
+        of the hyperbolas (Nx*Ny*K) and ``param`` the tensor of the corresponding features
+        for each hyperbola (K*3) (velocity, attenuation coefficient, sigma)
     """
     pos = paraDic["position"]
     vpr = paraDic["v_prop"]
@@ -118,36 +118,36 @@ def create_dicoPHY2(paraDic):
 
 
 def param_loadPHY(size, opt):
-    r"""Charge les paramètres et
-    retourne un dictionnaire d'atomes de dimension "size"
+    r"""Loads the parameters and
+    returns a dictionary of atoms of dimension "size
 
     Parameters
     ----------
     size :list{[256,256]}
-        dimension de l'image originale, donc des atomes.
+        dimension of the original image, thus of the atoms.
     opt :dic
-        dictionnaire d'options de creation d'hyperboles
+        dictionary of options for creating hyperbolas
 
     Returns
     -------
     atm :dic
-        structure de la forme {"atoms": Dico, "param": param} où ``Dico`` est le tenseur
-        des hyperboles (Nx*Ny*K) et ``param`` le tenseur des caractéristiques correspondants
-        pour chaque hyperbole (K*3)
+        structure of the form {"atoms": Dico, "param": param} where ``Dico`` is the hyperbola tensor
+        of the hyperbolas (Nx*Ny*K) and ``param`` the tensor of the corresponding features
+        for each hyperbola (K*3)
     opt :dic
-        dictionnaire d'entrée augmenté des valeurs utilisées par la fonctions
-        (pour le suivit des modifications)
+        input dictionary augmented with the values used by the functions
+        (for tracking changes)
 
 
     .. warning::
-       **ATTENTION** 
+       **WARNING** 
        
-       Modification des paramètres de création du dico directement dans le fichier
-       python !! 
+       Modification of the dictionary creation parameters directly in the
+       python file! 
 
-       **A faire**
+       **To do**
 
-       - Ajout de l'option lecture des paramètres par un fichier YAML
+       - Add the option to read the parameters from a YAML file
     """
     # Ajout yaml reader
     Nx = size[1]

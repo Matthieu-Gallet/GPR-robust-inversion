@@ -67,10 +67,11 @@
              
   <h1>Source code for MIRAG.filtrage_func</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Module de filtrage des reconstructions par seuillage / abandon d&#39;atomes du dictionnaire</span>
+<span class="sd">Module for filtering reconstructions by thresholding / dropping atoms from the dictionary</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
 
 <div class="viewcode-block" id="SVD_gpr"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.filtrage_func.SVD_gpr">[docs]</a><span class="k">def</span> <span class="nf">SVD_gpr</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span><span class="n">rank</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Make a SVD of the reference image and put to zero the first rank singular values.</span>
@@ -93,34 +94,34 @@
     <span class="k">return</span> <span class="n">A_remake</span></div>
 
 <div class="viewcode-block" id="dropR"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.filtrage_func.dropR">[docs]</a><span class="k">def</span> <span class="nf">dropR</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">Dic</span><span class="p">,</span> <span class="n">p_acond</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">acond</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Supprime après ADMM les atomes non désirés pour la reconstruction</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Removes after ADMM the unwanted atoms for reconstruction</span>
 
 <span class="sd">    .. warning::</span>
-<span class="sd">        A utiliser spécifiquement pour l&#39;ADMM 1 contrainte (ADMM 2 ou Source separation</span>
-<span class="sd">        utilise la matrice creuse L)</span>
+<span class="sd">        To be used specifically for the constrained ADMM 1 (ADMM 2 or Source separation</span>
+<span class="sd">        uses the hollow matrix L)</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    C :float</span>
-<span class="sd">        Cartes des coefficients à alléger (Nx,Ny,K) avec K le nombre d&#39;atomes, </span>
-<span class="sd">        Nx,Ny les dimensions de la reconstruction.</span>
+<span class="sd">        Maps of the coefficients to be reduced (Nx,Ny,K) with K the number of atoms, </span>
+<span class="sd">        Nx,Ny the dimensions of the reconstruction.</span>
 <span class="sd">    Dic :float</span>
-<span class="sd">        Dictionnaire à alléger (Nx,Ny,K) avec K le nombre d&#39;atomes,</span>
-<span class="sd">        Nx,Ny les dimensions de la reconstruction.</span>
+<span class="sd">        Dictionary to be reduced (Nx,Ny,K) with K the number of atoms,</span>
+<span class="sd">        Nx,Ny the dimensions of the reconstruction.</span>
 <span class="sd">    p_acond :int{500}, optional</span>
-<span class="sd">        condition sur le paramètre p du dictionnaire.</span>
-<span class="sd">        Garde tous les atomes tq :math:`a/p &lt; p_{cond}`.</span>
+<span class="sd">        condition on the parameter p of the dictionary.</span>
+<span class="sd">        Keep all the atoms tq :math:`a/p &lt; p_{cond}`.</span>
 <span class="sd">    acond :float{0.1}, optional</span>
-<span class="sd">        condition sur le paramètre a du dictionnaire.</span>
-<span class="sd">        Garde tous les atomes tq :math:`a &gt; a_{cond}`.</span>
+<span class="sd">        condition on the parameter a of the dictionary.</span>
+<span class="sd">        Keep all atoms tq :math:`a &gt; a_{cond}`.</span>
 
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Cprim :float</span>
-<span class="sd">        Cartes des coefficients allégés (Nx,Ny,K&#39;) avec K&#39;&lt;K</span>
+<span class="sd">        Maps of the reduced coefficients (Nx,Ny,K&#39;) with K&#39;&lt;K</span>
 <span class="sd">    Hprim :float</span>
-<span class="sd">        Dictionnaire allégé (Nx,Ny,K&#39;) avec K&#39;&lt;K</span>
+<span class="sd">        Lightweight dictionary (Nx,Ny,K&#39;) with K&#39;&lt;K</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cond1</span> <span class="o">=</span> <span class="n">Dic</span><span class="p">[</span><span class="s2">&quot;param&quot;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">Dic</span><span class="p">[</span><span class="s2">&quot;param&quot;</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p_acond</span>
     <span class="n">cond2</span> <span class="o">=</span> <span class="n">Dic</span><span class="p">[</span><span class="s2">&quot;param&quot;</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">acond</span>
@@ -135,23 +136,23 @@
 
 
 <div class="viewcode-block" id="thresh_Ck"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.filtrage_func.thresh_Ck">[docs]</a><span class="k">def</span> <span class="nf">thresh_Ck</span><span class="p">(</span><span class="n">Cprim</span><span class="p">,</span> <span class="n">seuil</span><span class="o">=</span><span class="mf">0.45</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Seuillage des cartes C_k.</span>
-<span class="sd">    Met à zéros les valeurs qui respecte les condtions suivantes pour un signal découpé </span>
-<span class="sd">    en histogramme à 1000 tranches:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Thresholding of C_k cards.</span>
+<span class="sd">    Sets to zero the values which respect the following conditions for a signal sliced </span>
+<span class="sd">    in histogram with 1000 slices:</span>
 
-<span class="sd">    .. math:: 0.5\cdot\mathrm{seuil}*1000&lt; \mathrm{signal}&lt;1000*(1- 0.5\cdot\mathrm{seuil}) </span>
+<span class="sd">    .. math:: 0.5\cdot\mathrm{threshold}*1000&lt; \mathrm{signal}&lt;1000*(1- 0.5\cdot\mathrm{threshold}) </span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    Cprim :float</span>
-<span class="sd">        Tenseur C_k à seuiller (dynamique 0-1) (Nx,Ny,K)</span>
-<span class="sd">    seuil :float{0.45}, optional</span>
-<span class="sd">        seuil des valeurs (entre 0 et 1).</span>
+<span class="sd">        C_k tensor to threshold (dynamic 0-1) (Nx,Ny,K)</span>
+<span class="sd">    threshold :float{0.45}, optional</span>
+<span class="sd">        threshold of the values (between 0 and 1).</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Cter :float</span>
-<span class="sd">        Tenseur des cartes de coefficients seuillé (Nx,Ny,K)</span>
+<span class="sd">        Thresholded coefficient map tensor (Nx,Ny,K)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">Cter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Cprim</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Cprim</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
@@ -164,24 +165,24 @@
 
 
 <div class="viewcode-block" id="submax_Ck"><a class="viewcode-back" href="../../MIRAG.html#MIRAG.filtrage_func.submax_Ck">[docs]</a><span class="k">def</span> <span class="nf">submax_Ck</span><span class="p">(</span><span class="n">Csec</span><span class="p">,</span> <span class="n">seuil</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Seuillage des cartes C_k.</span>
-<span class="sd">    Ne garde que les valeurs qui respectent les conditions:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Thresholding of C_k cards.</span>
+<span class="sd">    Keeps only the values that meet the conditions:</span>
 
-<span class="sd">    .. math:: 0.5\cdot\mathrm{seuil}*1000&lt; \mathrm{signal}&lt;1000*(1- 0.5\cdot\mathrm{seuil}) </span>
+<span class="sd">    .. math:: 0.5\cdot\mathrm{threshold}*1000&lt; \mathrm{signal}&lt;1000*(1- 0.5\cdot\mathrm{threshold}) </span>
 
-<span class="sd">    Utile pour faire ressortir les signaux faibles (principalement ADMM1).</span>
+<span class="sd">    Useful to highlight weak signals (mainly ADMM1).</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    Csec :float</span>
-<span class="sd">        Tenseur C_k à seuiller (dynamique 0-1) (Nx,Ny,K)</span>
-<span class="sd">    seuil :float{0.1}, optional</span>
-<span class="sd">        seuil des valeurs (entre 0 et 1).</span>
+<span class="sd">        C_k tensor to threshold (dynamic 0-1) (Nx,Ny,K)</span>
+<span class="sd">    threshold :float{0.1}, optional</span>
+<span class="sd">        threshold of the values (between 0 and 1).</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Cfin :float</span>
-<span class="sd">        Tenseur des cartes de coefficients seuillé (Nx,Ny,K)</span>
+<span class="sd">        Thresholded coefficient map tensor (Nx,Ny,K)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">Cprim</span> <span class="o">=</span> <span class="n">Csec</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">Cfin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Cprim</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>

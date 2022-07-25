@@ -41,8 +41,8 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#contexte">Contexte</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#organisation-du-module">Organisation du module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#context">Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#organization-of-the-module">Organization of the module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">MIRAG</a></li>
@@ -77,45 +77,45 @@
 <blockquote>
 <div><p><strong>MIRAG</strong> : <strong>M</strong>odule d’ <strong>I</strong>nversion et de <strong>R</strong>econstruction par <strong>A</strong>DMM pour le <strong>G</strong>PR</p>
 </div></blockquote>
-<p>Le stage réalisé au sein du LISTIC et en collaboration avec l’entreprise Géolithe dans le cadre du projet SMGA <a class="footnote-reference brackets" href="#id6" id="id1">1</a>, a pour but la mise en œuvre de techniques de traitement des signaux afin d’exploiter le concept de GPR (<strong>G</strong>round <strong>P</strong>enetrating <strong>R</strong>adar) aéroporté, cette démarche s’inscrit dans une optique de preuve de concept ou faisabilité.</p>
-<p>Cette proposition est relativement nouvelle et profite de l’essor conjoint des technologies de drone et de l’intelligence artificielle. Ce stage s’articule autour de deux axes principaux : l’amélioration de la qualité des radargrammes obtenus et la classification de signaux d’intérêt au sein de ces derniers. Dans ce présent rapport nous nous concentrons principalement sur la présentation du premier axe, et présentons les pistes et méthodes du second axe qui seront utilisés pour la deuxième partie du stage.</p>
-<p>Jusqu’à très récemment l’utilisation du GPR était souvent associée à des configurations où le radar réalisant la mesure était posé, avec l’antenne plaqué au sol. De cette manière le radar peut maximiser la propagation de l’onde dans le sol avec peu de pertes au niveau de l’interface entre le radar et le sol. Mais depuis l’essor des drones, ces derniers sont des pistes intéressantes pour ausculter des lieux à distances et difficile d’accès.
-C’est dans ce contexte que l’entreprise Géolithe désire étudier la faisabilité de ces GPR aéroportés. afin d’en améliorer l’acquisition d’image radar pour l’étude de cavités.</p>
-<p>L’intérêt est double puisqu’il s’agit d’automatiser le traitement et l’interprétation de radargrammes dans le contexte des radar aéroportés où l’identification des zones d’intérêt est rendue plus difficile par 2 composantes :</p>
+<p>The internship carried out within LISTIC and in collaboration with the company Géolithe within the framework of the SMGA project <a class="footnote-reference brackets" href="#id6" id="id1">1</a>, aims at implementing signal processing techniques in order to exploit the concept of airborne GPR (<strong>G</strong>round <strong>P</strong>enetrating <strong>R</strong>adar), this approach is in line with a proof of concept or feasibility.</p>
+<p>This proposal is relatively new and benefits from the joint development of drone technologies and artificial intelligence. This internship is articulated around two main axes: the improvement of the quality of the obtained radargrams and the classification of signals of interest within them. In this report we focus mainly on the presentation of the first axis, and present the tracks and methods of the second axis that will be used for the second part of the internship.</p>
+<p>Until very recently, the use of GPR was often associated with configurations where the radar making the measurement was posed, with the antenna placed on the ground. In this way the radar can maximize the propagation of the wave in the ground with little loss at the interface between the radar and the ground. But since the rise of drones, the latter are interesting tracks to monitor places at a distance and difficult to access.
+It is in this context that Geolithe wishes to study the feasibility of these airborne GPRs in order to improve the acquisition of radar images for the study of cavities.</p>
+<p>The interest is double since it is a question of automating the treatment and the interpretation of radargrams in the context of the airborne radar where the identification of the zones of interest is made more difficult by 2 components:</p>
 <ul class="simple">
-<li><p>La stabilité et la position de l’appareil qui doivent être d’une grande précision pour permettre la construction de l’image sans artefact.</p></li>
-<li><p>La couche d’air présente entre le radar et la surface du sol à étudiée, qui atténue fortement la propagation de l’onde et qui peut varier en fonction de la hauteur de l’appareil.</p></li>
+<li><p>The stability and the position of the device which must be of a great precision to allow the construction of the image without artifact.</p></li>
+<li><p>The layer of air between the radar and the surface of the ground to be studied, which strongly attenuates the propagation of the wave and which can vary according to the height of the device.</p></li>
 </ul>
-<section id="contexte">
-<h2>Contexte<a class="headerlink" href="#contexte" title="Permalink to this heading"></a></h2>
-<p>Le principe du GPR est connu et principalement utilisé dans des domaines variés, des fouilles archéologiques en passant par la détection de mine ou la reconnaissance de marqueurs paléoclimatiques (Daniels <a class="footnote-reference brackets" href="#id7" id="id2">2</a>,Tinelli <a class="footnote-reference brackets" href="#id8" id="id3">3</a>). Cette méthode peut être schématisée de la manière suivante:</p>
-<img alt="alternate text" class="with-shadow" src="_images/contexte.png" />
-<p>Le GPR plaqué au sol se déplace lentement dans une direction et envoie une onde électromagnétique. Cette dernière est réfléchie par tous les obstacles qu’elle rencontre jusqu’à son atténuation. Le GPR va ainsi enregistrer toutes les réflexions en fonction du temps à une position donnée pour former une trace appelée A-scan. L’enregistrement et la concaténation d’un grand nombre d’A-scan le long du déplacement du GPR donne naissance au radargramme appelé B-scan.</p>
-<p>Les interfaces ou changements de matériaux, apparaissent ainsi comme des traits, tandis que les cibles sont reconnaissables à la forme de l’hyperbole, paramétrée par les caractéristiques du milieu (permittivité, fréquence de l’onde) et due à la variation de la distance entre le GPR et la cible.
-Durant ce stage, nous faisons l’hypothèse d’un radar de type mono-statique où l’antenne réceptrice et émettrice sont confondues dans le GPR.</p>
+<section id="context">
+<h2>Context<a class="headerlink" href="#context" title="Permalink to this heading"></a></h2>
+<p>The principle of GPR is known and mainly used in various fields, from archaeological excavations to mine detection or paleoclimatic marker recognition (Daniels <a class="footnote-reference brackets" href="#id7" id="id2">2</a>,Tinelli <a class="footnote-reference brackets" href="#id8" id="id3">3</a>). This method can be schematized in the following way:</p>
+<img alt="alternate text" class="with-shadow" src="_images/context.png" />
+<p>The GPR placed on the ground moves slowly in one direction and sends an electromagnetic wave. This wave is reflected by all the obstacles it meets until it is attenuated. The GPR will then record all the reflections as a function of time at a given position to form a trace called A-scan. The recording and concatenation of a large number of A-scan along the displacement of the GPR gives rise to the radargram called B-scan.</p>
+<p>Interfaces or material changes appear as lines, while targets are recognizable by the shape of the hyperbola, parameterized by the characteristics of the medium (permittivity, frequency of the wave) and due to the variation of the distance between the GPR and the target.
+During this internship, we assume a mono-static type of radar where the receiving and transmitting antenna are merged in the GPR.</p>
 </section>
-<section id="organisation-du-module">
-<h2>Organisation du module<a class="headerlink" href="#organisation-du-module" title="Permalink to this heading"></a></h2>
-<p>Afin de répondre aux problématique énoncées ci dessus, nous nous sommes basés sur les travaux de Terrasse <a class="footnote-reference brackets" href="#id9" id="id4">4</a> et Wohlberg <a class="footnote-reference brackets" href="#id10" id="id5">5</a>. La solution de reconstruction et d’amélioration des radargrammes étant la modélisation de ce dernier par le produit de convolution entre un dictionnaire de motifs simple et des cartes de coefficients.</p>
+<section id="organization-of-the-module">
+<h2>Organization of the module<a class="headerlink" href="#organization-of-the-module" title="Permalink to this heading"></a></h2>
+<p>In order to answer the problems stated above, we based ourselves on the work of Terrasse <a class="footnote-reference brackets" href="#id9" id="id4">4</a> and Wohlberg <a class="footnote-reference brackets" href="#id10" id="id5">5</a>. The solution of reconstruction and improvement of radargrams is the modeling of the latter by the convolution product between a dictionary of simple patterns and maps of coefficients.</p>
 <img alt="alternate text" class="with-shadow" src="_images/conv.png" />
-<p>Le module se divise en deux grandes catégories :</p>
+<p>The module is divided into two main categories:</p>
 <ul class="simple">
-<li><p>dictionnaire : fonctions qui permettent la création du dictionnaire pour la résolution du problème d’inversion, et ce par 2 approches mathématique et physique.</p></li>
-<li><p>optmisation : fonctions qui réalisent l’inversion pour sortir les meilleures cartes de coefficients nécessaire pour la reconstruction.</p></li>
+<li><p>dictionary: functions that allow the creation of the dictionary for the resolution of the inversion problem, and this by 2 approaches mathematical and physical.</p></li>
+<li><p>optmization: functions that perform the inversion to get the best coefficient maps necessary for the reconstruction.</p></li>
 </ul>
-<p>A cela s’ajoute des fonctions complémentaires d’affichages, de calcul de métrique et de filtrage nécessaire au bon fonctionnement du module.</p>
+<p>In addition, there are complementary functions of displays, calculation of metrics and filtering necessary for the proper functioning of the module.</p>
 <dl class="footnote brackets">
 <dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Stratigraphie de Montagne par Géoradar Aéroporté.</p>
+<dd><p>Mountain Stratigraphy by Airborne Georadar.</p>
 </dd>
 <dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
-<dd><p>David Daniels. A review of gpr for landmine detection. Sensing and Imaging,7 :90–123, 09 2006.</p>
+<dd><p>David Daniels. A review of gpr for landmine detection. Sensing and Imaging,7 :90-123, 09 2006.</p>
 </dd>
 <dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
-<dd><p>Chiara Tinelli, Adriano Ribolini, Giovanni Bianucci, Monica Bini, and Walter Landini. Ground penetrating radar and palaeontology : The detection of sirenian fossil bones under a sunflower field in tuscany (italy). Comptes Rendus Palevol,11(6) :445–454, 2012.</p>
+<dd><p>Chiara Tinelli, Adriano Ribolini, Giovanni Bianucci, Monica Bini, and Walter Landini. Ground penetrating radar and palaeontology: The detection of sirenian fossil bones under a sunflower field in tuscany (italy). Comptes Rendus Palevol,11(6) :445-454, 2012.</p>
 </dd>
 <dt class="label" id="id9"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
-<dd><p>Guillaume Terrasse. Géodétection des réseaux enterrés par imagerie radar. Theses,Télécom ParisTech, March 2017</p>
+<dd><p>Guillaume Terrasse. Geodetection of buried networks by radar imaging. Theses,Télécom ParisTech, March 2017</p>
 </dd>
 <dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
 <dd><p>Brendt Wohlberg. Admm penalty parameter selection by residual balancing, 2017</p>

@@ -5,9 +5,9 @@
    MIRAG.dictionnaire
    MIRAG.optim
 
------------------------
-Modules complémentaires
------------------------
+------------------
+Additional modules
+------------------
 
 MIRAG.affichage
 ---------------

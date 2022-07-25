@@ -50,7 +50,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-MIRAG.optim.admm_func">MIRAG.optim.admm_func</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="MIRAG.html">Modules complémentaires</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MIRAG.html">Additional modules</a></li>
 </ul>
 </li>
 </ul>
@@ -70,7 +70,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="modules.html">MIRAG</a> &raquo;</li>
-          <li><a href="MIRAG.html">Modules complémentaires</a> &raquo;</li>
+          <li><a href="MIRAG.html">Additional modules</a> &raquo;</li>
       <li>MIRAG.optim package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/MIRAG.optim.rst.txt" rel="nofollow"> View page source</a>
@@ -85,13 +85,13 @@
 <h1>MIRAG.optim package<a class="headerlink" href="#mirag-optim-package" title="Permalink to this heading"></a></h1>
 <section id="mirag-optim-sparse-coding">
 <h2>MIRAG.optim.sparse_coding<a class="headerlink" href="#mirag-optim-sparse-coding" title="Permalink to this heading"></a></h2>
-<p>Module de résolution du problème pour le GPR en utilisant l’<cite>ADMM</cite>,
-pour la résolution du problème suivant:</p>
-<p><span class="math notranslate nohighlight">\(\left\{\begin{array}{ll}\mathbf{minimiser}\quad
+<p>Problem solving module for GPR using the <cite>ADMM</cite>,
+for solving the following problem:</p>
+<p><span class="math notranslate nohighlight">\(\left\{\begin{array}{ll}\mathbf{minimize}\quad
 &amp;\frac{1}{2}||\sum_{k}\mathbf{H}_k\star \mathbf{C}_k -
 \mathbf{Y} ||_2^2 +\epsilon \sum_k{||\mathbf{S}_k||_1} \\
 \text{t.q.} \quad&amp;\mathbf{C}_k =\mathbf{S}_k\end{array}\right.\)</span></p>
-<p>Variante avec optimisation par norme d’Huber à la place de la norme 2</p>
+<p>Variant with optimization by Huber norm instead of norm 2</p>
 <span class="target" id="module-MIRAG.optim.sparse_coding"></span><p class="rubric">References</p>
 <dl class="footnote brackets">
 <dt class="label" id="id1"><span class="brackets">4</span><span class="fn-backref">(<a href="#id3">1</a>,<a href="#id5">2</a>)</span></dt>
@@ -101,39 +101,39 @@ Avalaible at: <a class="reference external" href="https://arxiv.org/pdf/1709.028
 </dl>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p><strong>A faire</strong></p>
+<p><strong>To do</strong></p>
 <ul class="simple">
-<li><p>Terminer la documentation de la classe (pour tous les attributs)</p></li>
-<li><p>Ajouter le logging pour le suivi</p></li>
-<li><p>Vérifier strucure dictionnaire tel que: <span class="math notranslate nohighlight">\(D^H= \mathrm{conjugate}(D)\)</span></p></li>
-<li><p>Ajouter paramètre over-relaxation (cf <cite>source_separation</cite> et <a class="footnote-reference brackets" href="#id9" id="id2">3</a>)</p></li>
+<li><p>Complete class documentation (for all attributes)</p></li>
+<li><p>Add logging for tracking</p></li>
+<li><p>Check dictionary strucure such as: <span class="math notranslate nohighlight">\(D^H= \mathrm{conjugate}(D)\)</span></p></li>
+<li><p>Add over-relaxation parameter (see <cite>source_separation</cite> and <a class="footnote-reference brackets" href="#id9" id="id2">3</a>)</p></li>
 </ul>
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.optim.sparse_coding.addm_iteration_norm2">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.optim.sparse_coding.</span></span><span class="sig-name descname"><span class="pre">addm_iteration_norm2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lambdaS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DHY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DF</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DF_H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">U</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penalty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'l1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/optim/sparse_coding.html#addm_iteration_norm2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.optim.sparse_coding.addm_iteration_norm2" title="Permalink to this definition"></a></dt>
-<dd><p>fonction de calcul d’une itération d’<cite>ADMM</cite> avec la norme 2
-Basé sur <a class="footnote-reference brackets" href="#id1" id="id3">4</a></p>
+<dd><p>function for computing an iteration of <cite>ADMM</cite> with the 2 norm
+Based on <a class="footnote-reference brackets" href="#id1" id="id3">4</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>lambdaS</strong> (<em>float</em>) – paramètre de parcimonie</p></li>
-<li><p><strong>c</strong> (<em>float</em>) – pre-calcul du terme pour Sherman_MorrisonF</p></li>
-<li><p><strong>DHY</strong> (<em>complex</em>) – fft du dictionnaire * image originale</p></li>
-<li><p><strong>DF</strong> (<em>complex</em>) – fft du dictionnaire</p></li>
-<li><p><strong>DF_H</strong> (<em>complex</em>) – conjugué de la fft du dictionnaire</p></li>
-<li><p><strong>U</strong> (<em>float</em>) – variable duale</p></li>
-<li><p><strong>rho</strong> (<em>float</em>) – paramètre de pénalité</p></li>
-<li><p><strong>S</strong> (<em>float</em>) – variable auxiliaire <span class="math notranslate nohighlight">\(\mathbf{S}_k\)</span></p></li>
-<li><p><strong>penalty</strong> (<em>str{&quot;l1&quot;</em><em>,</em><em>&quot;l0&quot;</em><em>,</em><em>&quot;FirmThresholding&quot;</em><em>,</em><em>&quot;l*&quot;}</em><em>, </em><em>optional</em>) – penalité d’attache aux données, de base <span class="math notranslate nohighlight">\(\sum_k{||\mathbf{S}_k||_1\)</span></p></li>
-<li><p><strong>m</strong> (<em>int{-1}</em><em>, </em><em>optional</em>) – Nombre de workers (coeurs) utilisé pour la fft</p></li>
+<li><p><strong>lambdaS</strong> (<em>float</em>) – parsimony parameter</p></li>
+<li><p><strong>c</strong> (<em>float</em>) – pre-computation of the term for Sherman_MorrisonF</p></li>
+<li><p><strong>DHY</strong> (<em>complex</em>) – fft from dictionary * original image</p></li>
+<li><p><strong>DF</strong> (<em>complex</em>) – fft of the dictionary</p></li>
+<li><p><strong>DF_H</strong> (<em>complex</em>) – conjugate of the dictionary fft</p></li>
+<li><p><strong>U</strong> (<em>float</em>) – dual variable</p></li>
+<li><p><strong>rho</strong> (<em>float</em>) – penalty parameter</p></li>
+<li><p><strong>S</strong> (<em>float</em>) – auxiliary variable <span class="math notranslate nohighlight">\(\mathbf{S}_k\)</span></p></li>
+<li><p><strong>penalty</strong> (<em>str{&quot;l1&quot;</em><em>, </em><em>&quot;l0&quot;</em><em>, </em><em>&quot;FirmThresholding&quot;</em><em>, </em><em>&quot;l*&quot;}</em><em>, </em><em>optional</em>) – data attachment penalty, basic <span class="math notranslate nohighlight">\(\sum_k{||\mathbf{S}_k||_1\)</span></p></li>
+<li><p><strong>m</strong> (<em>int{-1}</em><em>, </em><em>optional</em>) – Number of workers (cores) used for the fft</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><strong>primal_new</strong> (<em>float</em>) – variable primal <span class="math notranslate nohighlight">\(\mathbf{C}_k^i\)</span> (Nx,Ny,K)</p></li>
-<li><p><strong>auxiliary_new</strong> (<em>float</em>) – variable dual <span class="math notranslate nohighlight">\(\mathbf{S}_k^i\)</span> (Nx,Ny,K)</p></li>
-<li><p><strong>Dal</strong> (<em>float</em>) – produit de convolution dictionnaire + carte coeff <span class="math notranslate nohighlight">\(\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}\)</span>  (Nx,Ny,1)</p></li>
+<li><p><strong>auxiliary_new</strong> (<em>float</em>) – dual variable <span class="math notranslate nohighlight">\(\mathbf{S}_k^i\)</span> (Nx,Ny,K)</p></li>
+<li><p><strong>Dal</strong> (<em>float</em>) – convolution product dictionary + map coeff <span class="math notranslate nohighlight">\(\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}\)</span> (Nx,Ny,1)</p></li>
 </ul>
 </p>
 </dd>
@@ -143,31 +143,31 @@ Basé sur <a class="footnote-reference brackets" href="#id1" id="id3">4</a></p>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.optim.sparse_coding.addm_iteration_normH">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.optim.sparse_coding.</span></span><span class="sig-name descname"><span class="pre">addm_iteration_normH</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lambdaS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DF</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DFH</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">U</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primal_tilde</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">YF</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grad_iter_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">250</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penalty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'l1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/optim/sparse_coding.html#addm_iteration_normH"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.optim.sparse_coding.addm_iteration_normH" title="Permalink to this definition"></a></dt>
-<dd><p>fonction de calcul d’une itération d’<cite>ADMM</cite> avec la norme d’HUber</p>
+<dd><p>function for computing an iteration of <cite>ADMM</cite> with the HUber norm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>lambdaS</strong> (<em>float</em>) – paramètre de parcimonie</p></li>
-<li><p><strong>DF</strong> (<em>complex</em>) – fft du dictionnaire (Nx,Ny,K)</p></li>
-<li><p><strong>DF_H</strong> (<em>complex</em>) – conjugué de la fft du dictionnaire</p></li>
-<li><p><strong>U</strong> (<em>float</em>) – variable duale (Nx,Ny,K)</p></li>
-<li><p><strong>rho</strong> (<em>float</em>) – paramètre de pénalité</p></li>
-<li><p><strong>S</strong> (<em>float</em>) – variable auxiliaire <span class="math notranslate nohighlight">\(\mathbf{S}_k\)</span> (Nx,Ny,K)</p></li>
-<li><p><strong>primal_tilde</strong> (<em>float</em>) – fft du primal <span class="math notranslate nohighlight">\(\mathbf{\hat{C}}_k\)</span> (Nx,Ny,K)</p></li>
-<li><p><strong>YF</strong> (<em>float</em>) – fft de l’image originale (Nx,Ny,1)</p></li>
-<li><p><strong>grad_iter_max{50}</strong> (<em>int</em><em>, </em><em>optional</em>) – itération maximal de la descente de gradient</p></li>
-<li><p><strong>beta</strong> (<em>float{0.001}</em><em>, </em><em>optional</em>) – paramètre de taux d’apprentissage du gradient</p></li>
+<li><p><strong>lambdaS</strong> (<em>float</em>) – parsimony parameter</p></li>
+<li><p><strong>DF</strong> (<em>complex</em>) – fft of the dictionary (Nx,Ny,K)</p></li>
+<li><p><strong>DF_H</strong> (<em>complex</em>) – conjugate of the dictionary fft</p></li>
+<li><p><strong>U</strong> (<em>float</em>) – dual variable (Nx,Ny,K)</p></li>
+<li><p><strong>rho</strong> (<em>float</em>) – penalty parameter</p></li>
+<li><p><strong>S</strong> (<em>float</em>) – auxiliary variable <span class="math notranslate nohighlight">\(\mathbf{S}_k\)</span> (Nx,Ny,K)</p></li>
+<li><p><strong>primal_tilde</strong> (<em>float</em>) – fft of the primal <span class="math notranslate nohighlight">\(\mathbf{C}_k\)</span> (Nx,Ny,K)</p></li>
+<li><p><strong>YF</strong> (<em>float</em>) – fft of the original image (Nx,Ny,1)</p></li>
+<li><p><strong>grad_iter_max{50}</strong> (<em>int</em><em>, </em><em>optional</em>) – maximum iteration of the gradient descent</p></li>
+<li><p><strong>beta</strong> (<em>float{0.001}</em><em>, </em><em>optional</em>) – learning rate parameter of the gradient</p></li>
 <li><p><strong>thresh</strong> (<em>int</em><em>, </em><em>optional</em>) – [description], by default 250</p></li>
-<li><p><strong>penalty</strong> (<em>str{&quot;l1&quot;</em><em>,</em><em>&quot;l0&quot;</em><em>,</em><em>&quot;FirmThresholding&quot;</em><em>,</em><em>&quot;l*&quot;}</em><em>, </em><em>optional</em>) – penalité d’attache aux données, de base <span class="math notranslate nohighlight">\(\sum_k{||\mathbf{S}_k||_1\)</span></p></li>
-<li><p><strong>m</strong> (<em>int{-1}</em><em>, </em><em>optional</em>) – Nombre de workers (coeurs) utilisé pour la fft</p></li>
+<li><p><strong>penalty</strong> (<em>str{&quot;l1&quot;</em><em>, </em><em>&quot;l0&quot;</em><em>, </em><em>&quot;FirmThresholding&quot;</em><em>, </em><em>&quot;l*&quot;}</em><em>, </em><em>optional</em>) – penalty of attachment to data, basic <span class="math notranslate nohighlight">\(\sum_k{||\mathbf{S}_k||_1\)</span></p></li>
+<li><p><strong>m</strong> (<em>int{-1}</em><em>, </em><em>optional</em>) – Number of workers (cores) used for the fft</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><strong>primal_new</strong> (<em>float</em>) – variable primal <span class="math notranslate nohighlight">\(\mathbf{C}_k^i\)</span> (Nx,Ny,K)</p></li>
-<li><p><strong>primal_tilde</strong> (<em>float</em>) – fft de la variable primal <span class="math notranslate nohighlight">\(\mathbf{\hat{C}}_k^i\)</span> (Nx,Ny,K)</p></li>
-<li><p><strong>auxiliary_new</strong> (<em>float</em>) – variable dual <span class="math notranslate nohighlight">\(\mathbf{S}_k^i\)</span> (Nx,Ny,K)</p></li>
-<li><p><strong>Dal</strong> (<em>float</em>) – produit de convolution dictionnaire + carte coeff <span class="math notranslate nohighlight">\(\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}\)</span>  (Nx,Ny,1)</p></li>
+<li><p><strong>primal_tilde</strong> (<em>float</em>) – fft of the primal variable <span class="math notranslate nohighlight">\(\mathbf{C}_k^i\)</span> (Nx,Ny,K)</p></li>
+<li><p><strong>auxiliary_new</strong> (<em>float</em>) – dual variable <span class="math notranslate nohighlight">\(\mathbf{S}_k^i\)</span> (Nx,Ny,K)</p></li>
+<li><p><strong>Dal</strong> (<em>float</em>) – convolution product dictionary + map coeff <span class="math notranslate nohighlight">\(\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}\)</span> (Nx,Ny,1)</p></li>
 </ul>
 </p>
 </dd>
@@ -177,21 +177,21 @@ Basé sur <a class="footnote-reference brackets" href="#id1" id="id3">4</a></p>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.optim.sparse_coding.cost_function_addm1">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.optim.sparse_coding.</span></span><span class="sig-name descname"><span class="pre">cost_function_addm1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_auxiliary_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_dal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auxiliary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/optim/sparse_coding.html#cost_function_addm1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.optim.sparse_coding.cost_function_addm1" title="Permalink to this definition"></a></dt>
-<dd><p>Fonction de calcul des coûts et erreurs de l’<cite>ADMM</cite></p>
+<dd><p>ADMM cost and error calculation function</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Y</strong> (<em>float</em>) – image originale (Nx,Ny,1)</p></li>
-<li><p><strong>rho</strong> (<em>float</em>) – paramètre de pénalité</p></li>
-<li><p><strong>old_auxiliary</strong> (<em>float</em>) – variable auxiliaire de l’itération précedente <span class="math notranslate nohighlight">\(\mathbf{S}_k^{i-1}\)</span></p></li>
-<li><p><strong>old_dal</strong> (<em>float</em>) – reconstruction de l’itération précedente <span class="math notranslate nohighlight">\(\sum_k{\mathbf{C}_k^{i-1}\star\mathbf{H}_k}^{i-1}\)</span></p></li>
-<li><p><strong>dal</strong> (<em>float</em>) – produit de convolution dictionnaire + carte coeff <span class="math notranslate nohighlight">\(\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}\)</span></p></li>
+<li><p><strong>Y</strong> (<em>float</em>) – original image (Nx,Ny,1)</p></li>
+<li><p><strong>rho</strong> (<em>float</em>) – penalty parameter</p></li>
+<li><p><strong>old_auxiliary</strong> (<em>float</em>) – auxiliary variable of the previous iteration <span class="math notranslate nohighlight">\(\mathbf{S}_k^{i-1}\)</span></p></li>
+<li><p><strong>old_dal</strong> (<em>float</em>) – reconstruction of the previous iteration <span class="math notranslate nohighlight">\(\sum_k{\mathbf{C}_k^{i-1}\star\mathbf{H}_k}^{i-1}\)</span></p></li>
+<li><p><strong>dal</strong> (<em>float</em>) – convolution product dictionary + coeff map <span class="math notranslate nohighlight">\(\sum_k{\mathbf{C}_k^i\star\mathbf{H}_k^i}\)</span></p></li>
 <li><p><strong>primal</strong> (<em>float</em>) – variable primal <span class="math notranslate nohighlight">\(\mathbf{C}_k^i\)</span></p></li>
-<li><p><strong>auxiliary</strong> (<em>float</em>) – variable auxiliaire <span class="math notranslate nohighlight">\(\mathbf{S}_k^{i-1}\)</span></p></li>
+<li><p><strong>auxiliary</strong> (<em>float</em>) – auxiliary variable <span class="math notranslate nohighlight">\(\mathbf{S}_k^{i-1}\)</span></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>out</strong> – variation du primal, erreur de reconstruction, erreur du primal et erreur du dual</p>
+<dd class="field-even"><p><strong>out</strong> – variation of primal, reconstruction error, error of primal and error of dual</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>list of float</p>
@@ -202,9 +202,9 @@ Basé sur <a class="footnote-reference brackets" href="#id1" id="id3">4</a></p>
 </section>
 <section id="mirag-optim-source-separation">
 <h2>MIRAG.optim.source_separation<a class="headerlink" href="#mirag-optim-source-separation" title="Permalink to this heading"></a></h2>
-<p>Module de résolution du problème pour le GPR en utilisant l’<cite>ADMM</cite>,
-pour la résolution du problème suivant:</p>
-<p><span class="math notranslate nohighlight">\(\left\{\begin{array}{ll}\mathbf{minimiser} \quad &amp;||\mathbf{L}||_* +
+<p>Problem solving module for GPR using the <cite>ADMM</cite>,
+for solving the following problem:</p>
+<p><span class="math notranslate nohighlight">\(\left\{\begin{array}{ll}\mathbf{minimize} \quad &amp;||\mathbf{L}||_* +
 \epsilon \sum_k{||\mathbf{S}_k||_1}\\
 \mathbf{t.q.}\quad&amp; \mathbf{Y} = \mathbf{L}
 +\sum_{k}\mathbf{H}_k\star \mathbf{C}_k \\
@@ -220,45 +220,43 @@ Avalaible at: <a class="reference external" href="https://hal.archives-ouvertes.
 </dl>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p><strong>A faire</strong></p>
+<p><strong>To do</strong></p>
 <ul class="simple">
-<li><p>Terminer la documentation de la classe (pour tous les attributs)</p></li>
-<li><p>Ajouter le logging pour le suivi</p></li>
-<li><p>Ajout condition d’arrêt sur la variation des paramètres en plus du nombre d’itération</p></li>
-<li><p>A vérifier, doute sur la reconstruction : <span class="math notranslate nohighlight">\(\sum_{k}\mathbf{H}_k\star \mathbf{C}_k\)</span> ou <span class="math notranslate nohighlight">\(\sum_{k}\mathbf{H}_k\star \mathbf{S}_k\)</span></p></li>
+<li><p>Add logging for tracking</p></li>
+<li><p>Add stop condition on the variation of parameters in addition to the number of iterations</p></li>
 </ul>
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.optim.source_separation.addm_iteration_norm2">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.optim.source_separation.</span></span><span class="sig-name descname"><span class="pre">addm_iteration_norm2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lambdaS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Dal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DF</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DF_H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Us</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Uy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhoS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhoL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">over_relax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penalty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'l1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/optim/source_separation.html#addm_iteration_norm2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.optim.source_separation.addm_iteration_norm2" title="Permalink to this definition"></a></dt>
-<dd><p>fonction de calcul d’une itération d’<cite>ADMM</cite> avec la norme 2 et la matrice creuse
-Basé sur <a class="footnote-reference brackets" href="#id1" id="id5">4</a> et <a class="footnote-reference brackets" href="#id4" id="id6">5</a></p>
+<dd><p>function for computing an iteration of <cite>ADMM</cite> with norm 2 and the hollow matrix
+Based on <a class="footnote-reference brackets" href="#id1" id="id5">4</a> and <a class="footnote-reference brackets" href="#id4" id="id6">5</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>lambdaS</strong> (<em>float</em>) – paramètre de parcimonie</p></li>
-<li><p><strong>c</strong> (<em>float</em>) – pre-calcul du terme pour Sherman_MorrisonF</p></li>
-<li><p><strong>Y</strong> (<em>float</em>) – image originale</p></li>
-<li><p><strong>Dal</strong> (<em>float</em>) – produit de convolution dictionnaire + carte coeff (Nx,Ny,1)</p></li>
-<li><p><strong>DF</strong> (<em>complex</em>) – fft du dictionnaire (Nx,Ny,K)</p></li>
-<li><p><strong>DF_H</strong> (<em>complex</em>) – conjugué de la fft du dictionnaire (Nx,Ny,K)</p></li>
-<li><p><strong>Us</strong> (<em>float</em>) – variable duale de S</p></li>
-<li><p><strong>Uy</strong> (<em>float</em>) – variable duale de L</p></li>
-<li><p><strong>rhoS</strong> (<em>float</em>) – paramètre de pénalité sur S</p></li>
-<li><p><strong>rhoL</strong> (<em>float</em>) – paramètre de pénalité sur L</p></li>
-<li><p><strong>S</strong> (<em>float</em>) – variable auxiliaire <span class="math notranslate nohighlight">\(\mathbf{S}_k\)</span></p></li>
-<li><p><strong>dim1</strong> (<em>int</em>) – dimensions de l’image (ex: [256,256,1])</p></li>
-<li><p><strong>over_relax</strong> (<em>float</em>) – paramètre d’over-relaxation (améliore la convergence pour <span class="math notranslate nohighlight">\(\alpha\sim 1.6\)</span>)</p></li>
-<li><p><strong>penalty</strong> (<em>str{&quot;l1&quot;</em><em>,</em><em>&quot;l0&quot;</em><em>,</em><em>&quot;FirmThresholding&quot;}</em><em>, </em><em>optional</em>) – penalité d’attache aux données, de base <span class="math notranslate nohighlight">\(\sum_k{||\mathbf{S}_k||_1\)</span></p></li>
-<li><p><strong>m</strong> (<em>int{-1}</em><em>, </em><em>optional</em>) – Nombre de workers (coeurs) utilisé pour la fft</p></li>
+<li><p><strong>lambdaS</strong> (<em>float</em>) – parsimony parameter</p></li>
+<li><p><strong>c</strong> (<em>float</em>) – pre-calculation of the term for Sherman_MorrisonF</p></li>
+<li><p><strong>Y</strong> (<em>float</em>) – original image</p></li>
+<li><p><strong>Dal</strong> (<em>float</em>) – convolution product dictionary + coeff map (Nx,Ny,1)</p></li>
+<li><p><strong>DF</strong> (<em>complex</em>) – fft of the dictionary (Nx,Ny,K)</p></li>
+<li><p><strong>DF_H</strong> (<em>complex</em>) – conjugate of the dictionary fft (Nx,Ny,K)</p></li>
+<li><p><strong>Us</strong> (<em>float</em>) – dual variable of S</p></li>
+<li><p><strong>Uy</strong> (<em>float</em>) – dual variable of L</p></li>
+<li><p><strong>rhoS</strong> (<em>float</em>) – penalty parameter on S</p></li>
+<li><p><strong>rhoL</strong> (<em>float</em>) – penalty parameter on L</p></li>
+<li><p><strong>S</strong> (<em>float</em>) – auxiliary variable <span class="math notranslate nohighlight">\(\mathbf{S}_k\)</span></p></li>
+<li><p><strong>dim1</strong> (<em>int</em>) – dimensions of the image (ex: [256,256,1])</p></li>
+<li><p><strong>over_relax</strong> (<em>float</em>) – over-relaxation parameter (improves convergence for <span class="math notranslate nohighlight">\(\alpha\sim 1.6\)</span>)</p></li>
+<li><p><strong>penalty</strong> (<em>str{&quot;l1&quot;</em><em>, </em><em>&quot;l0&quot;</em><em>, </em><em>&quot;FirmThresholding&quot;}</em><em>, </em><em>optional</em>) – data attachment penalty, basic <span class="math notranslate nohighlight">\(\sum_k{||\mathbf{S}_k||_1\)</span></p></li>
+<li><p><strong>m</strong> (<em>int{-1}</em><em>, </em><em>optional</em>) – Number of workers (cores) used for the fft</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><strong>primal_new</strong> (<em>float</em>) – variable primal <span class="math notranslate nohighlight">\(\mathbf{C}_k^i\)</span> (Nx,Ny,K)</p></li>
-<li><p><strong>auxiliary_new</strong> (<em>float</em>) – variable dual <span class="math notranslate nohighlight">\(\mathbf{S}_k^i\)</span> (Nx,Ny,K)</p></li>
-<li><p><strong>L</strong> (<em>float</em>) – matrice creuse (Nx,Ny,1)</p></li>
-<li><p><strong>Dal</strong> (<em>float</em>) – produit de convolution dictionnaire + carte coeff ?:math:<cite>sum_k{mathbf{C}_k^istarmathbf{H}_k^i}</cite>?  (Nx,Ny,1)</p></li>
+<li><p><strong>auxiliary_new</strong> (<em>float</em>) – dual variable <span class="math notranslate nohighlight">\(\mathbf{S}_k^i\)</span> (Nx,Ny,K)</p></li>
+<li><p><strong>L</strong> (<em>float</em>) – hollow matrix (Nx,Ny,1)</p></li>
+<li><p><strong>Dal</strong> (<em>float</em>) – convolution product dictionary + map coeff ?:math:<cite>sum_k{mathbf{C}_k^istarmathbf{H}_k^i}</cite>? (Nx,Ny,1)</p></li>
 </ul>
 </p>
 </dd>
@@ -268,30 +266,30 @@ Basé sur <a class="footnote-reference brackets" href="#id1" id="id5">4</a> et <
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.optim.source_separation.cost_function_addm2">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.optim.source_separation.</span></span><span class="sig-name descname"><span class="pre">cost_function_addm2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhoS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhoL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_auxiliary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_dal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_L</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auxiliary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/optim/source_separation.html#cost_function_addm2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.optim.source_separation.cost_function_addm2" title="Permalink to this definition"></a></dt>
-<dd><p>Fonction de calcul des coûts et erreurs de l’<cite>ADMM</cite>
-à 2 contraintes.</p>
+<dd><p>ADMM cost and error calculation function
+with 2 constraints.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Y</strong> (<em>float</em>) – image originale (Nx,Ny,1)</p></li>
-<li><p><strong>rhoS</strong> (<em>float</em>) – paramètre de pénalité sur la variable S</p></li>
-<li><p><strong>rhoL</strong> (<em>float</em>) – paramètre de pénalité sur la variable L</p></li>
-<li><p><strong>old_auxiliary</strong> (<em>float</em>) – variable auxiliaire de l’itération précedente <span class="math notranslate nohighlight">\(\mathbf{S}_k^{i-1}\)</span></p></li>
-<li><p><strong>old_dal</strong> (<em>float</em>) – reconstruction de l’itération précedente <span class="math notranslate nohighlight">\(\sum_k{\mathbf{C}_k^{i-1}\star\mathbf{H}_k}^{i-1}\)</span></p></li>
-<li><p><strong>old_L</strong> (<em>float</em>) – variable de la matrice creuse de l’itération précedente <span class="math notranslate nohighlight">\(\mathbf{L}^{i-1}\)</span></p></li>
-<li><p><strong>L</strong> (<em>float</em>) – variable de la matrice creuse  <span class="math notranslate nohighlight">\(\mathbf{L}\)</span></p></li>
+<li><p><strong>Y</strong> (<em>float</em>) – original image (Nx,Ny,1)</p></li>
+<li><p><strong>rhoS</strong> (<em>float</em>) – penalty parameter on variable S</p></li>
+<li><p><strong>rhoL</strong> (<em>float</em>) – penalty parameter on variable L</p></li>
+<li><p><strong>old_auxiliary</strong> (<em>float</em>) – auxiliary variable of the previous iteration <span class="math notranslate nohighlight">\(\mathbf{S}_k^{i-1}\)</span></p></li>
+<li><p><strong>old_dal</strong> (<em>float</em>) – reconstruction of the previous iteration <span class="math notranslate nohighlight">\(\sum_k{\mathbf{C}_k^{i-1}\star\mathbf{H}_k}^{i-1}\)</span></p></li>
+<li><p><strong>old_L</strong> (<em>float</em>) – variable of the hollow matrix of the previous iteration <span class="math notranslate nohighlight">\(\mathbf{L}^{i-1}\)</span></p></li>
+<li><p><strong>L</strong> (<em>float</em>) – variable of the hollow matrix <span class="math notranslate nohighlight">\(\mathbf{L}\)</span></p></li>
 <li><p><strong>dal</strong> (<em>float</em>) – reconstruction</p></li>
-<li><p><strong>primal</strong> (<em>float</em>) – variable primal <span class="math notranslate nohighlight">\(\mathbf{C}_k^i\)</span></p></li>
-<li><p><strong>auxiliary</strong> (<em>float</em>) – variable auxiliaire <span class="math notranslate nohighlight">\(\mathbf{S}_k^{i-1}\)</span></p></li>
+<li><p><strong>primal</strong> (<em>float</em>) – primal variable <span class="math notranslate nohighlight">\(\mathbf{C}_k^i\)</span></p></li>
+<li><p><strong>auxiliary</strong> (<em>float</em>) – auxiliary variable <span class="math notranslate nohighlight">\(\mathbf{S}_k^{i-1}\)</span></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>var_prim_</strong> (<em>float</em>) – variation du primal</p></li>
-<li><p><strong>error_rec_</strong> (<em>float</em>) – erreur de reconstruction</p></li>
-<li><p><strong>error_primal_</strong> (<em>float</em>) – erreur du primal</p></li>
-<li><p><strong>error_dual_S</strong> (<em>float</em>) – erreur du dual de S <span class="math notranslate nohighlight">\(\mathbf{U_S}\)</span></p></li>
-<li><p><strong>error_dual_L</strong> (<em>float</em>) – erreur du dual de L <span class="math notranslate nohighlight">\(\mathbf{U_L}\)</span></p></li>
+<li><p><strong>var_prim_</strong> (<em>float</em>) – variation of the primal</p></li>
+<li><p><strong>error_rec_</strong> (<em>float</em>) – reconstruction error</p></li>
+<li><p><strong>error_primal_</strong> (<em>float</em>) – primal error</p></li>
+<li><p><strong>error_dual_S</strong> (<em>float</em>) – error of dual of S <span class="math notranslate nohighlight">\(\mathbf{U_S}\)</span></p></li>
+<li><p><strong>error_dual_L</strong> (<em>float</em>) – error from dual of L <span class="math notranslate nohighlight">\(\mathbf{U_L}\)</span></p></li>
 </ul>
 </p>
 </dd>
@@ -304,7 +302,7 @@ Basé sur <a class="footnote-reference brackets" href="#id1" id="id5">4</a> et <
 <dl class="py attribute">
 <dt class="sig sig-object py" id="MIRAG.optim.huber_source_separation.ADMMSourceSepHUB">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.optim.huber_source_separation.</span></span><span class="sig-name descname"><span class="pre">ADMMSourceSepHUB</span></span><a class="headerlink" href="#MIRAG.optim.huber_source_separation.ADMMSourceSepHUB" title="Permalink to this definition"></a></dt>
-<dd><p>alias of &lt;MagicMock spec=’str’ id=’140167412756016’&gt;</p>
+<dd><p>alias of &lt;MagicMock spec=’str’ id=’140306494904816’&gt;</p>
 </dd></dl>
 
 </section>
@@ -382,18 +380,18 @@ non-singleton) dimensions.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.optim.admm_func.diag_thresh">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.optim.admm_func.</span></span><span class="sig-name descname"><span class="pre">diag_thresh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/optim/admm_func.html#diag_thresh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.optim.admm_func.diag_thresh" title="Permalink to this definition"></a></dt>
-<dd><p>Retourne une matrice diagonale de dimension mxn à partir d’un vecteur s
-Utilisation après <cite>np.linalg.svd</cite> pour obtenir une matrice à partir de S</p>
+<dd><p>Return a diagonal matrix of dimension mxn from a vector s
+Use after <cite>np.linalg.svd</cite> to get a matrix from S</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>m</strong> (<em>int</em>) – dimension verticale de la matrice souhaitée</p></li>
-<li><p><strong>n</strong> (<em>int</em>) – dimension horizontale de la matrice souhaitée</p></li>
-<li><p><strong>s</strong> (<em>float</em>) – vecteur à diagonaliser</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – vertical dimension of the desired matrix</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – horizontal dimension of the desired matrix</p></li>
+<li><p><strong>s</strong> (<em>float</em>) – vector to diagonalize</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>out</strong> – Matrice diagonale (à partir de S)</p>
+<dd class="field-even"><p><strong>out</strong> – Diagonal matrix (from S)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float</p>
@@ -504,18 +502,18 @@ x, &amp; \text { for }|x| \leq \delta \\
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.optim.admm_func.roll_fft">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.optim.admm_func.</span></span><span class="sig-name descname"><span class="pre">roll_fft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/optim/admm_func.html#roll_fft"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.optim.admm_func.roll_fft" title="Permalink to this definition"></a></dt>
-<dd><p>Correction de la position des coefficients des cartes en fonctions
-de la position centrale des hyperboles + Sommation des C_k</p>
+<dd><p>Correction of the position of the coefficients of the maps according to the
+of the central position of the hyperbolas + Summation of the C_k</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>alpha</strong> (<em>float</em>) – Tenseur complexe (M x N x K) des cartes de coefficients</p></li>
-<li><p><strong>t</strong> (<em>int</em>) – position (pixel) centrale des hyperboles utilisées (ordonnée).</p></li>
-<li><p><strong>x</strong> (<em>int</em>) – position (pixel) centrale des hyperboles utilisées (abscisse).</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Complex tensor (M x N x K) of the coefficients maps</p></li>
+<li><p><strong>t</strong> (<em>int</em>) – central position (pixel) of the used hyperbolas (ordinate).</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – central position (pixel) of the used hyperbolas (abscissa).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>out</strong> – Matrice corrigée et réduite (M x N)</p>
+<dd class="field-even"><p><strong>out</strong> – Corrected and reduced matrix (M x N)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float</p>
@@ -547,9 +545,9 @@ e /|e|, &amp; \text { for } e \neq 0 \\
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.optim.admm_func.thresholding_nuclear">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.optim.admm_func.</span></span><span class="sig-name descname"><span class="pre">thresholding_nuclear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdaS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/optim/admm_func.html#thresholding_nuclear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.optim.admm_func.thresholding_nuclear" title="Permalink to this definition"></a></dt>
-<dd><p>Fonction de calcul du seuillage par valeurs singulières
-Elle est la résultante de l’opérateur proximal associé à la
-norme nucléaire.</p>
+<dd><p>Singular value thresholding function
+It is the resultant of the proximal operator associated to the
+nuclear norm.</p>
 <p><span class="math notranslate nohighlight">\(\underset{\mathbf{{L}}}{\operatorname{argmin}}
 \lambda||\mathbf{L}||_* +
 \frac{\rho_L}{2}\Big|\Big|\mathbf{X}-\mathbf{L}\Big|\Big|_2^2 =
@@ -557,18 +555,18 @@ norme nucléaire.</p>
 \\
 \ \mathrm{avec}\ \ \mathrm{prox}_{||.||_*,\lambda/\rho_L}(x)=
 \mathcal{T}_{\lambda/\rho_L}\left(x\right)\)</span></p>
-<p>Basée sur <a class="footnote-reference brackets" href="#id8" id="id13">2</a></p>
+<p>Based on <a class="footnote-reference brackets" href="#id8" id="id13">2</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>M</strong> (<em>float</em>) – tenseur de dimension Nx,Ny,K</p></li>
-<li><p><strong>i</strong> (<em>int</em>) – i ème couche à seuiller (0&lt;i&lt;K)</p></li>
-<li><p><strong>lambdaS</strong> (<em>float</em>) – Paramètre de parcimonie (si existant &gt;0)</p></li>
-<li><p><strong>rho</strong> (<em>float</em>) – Paramètre de pénalité &gt;0</p></li>
+<li><p><strong>M</strong> (<em>float</em>) – tensor of dimension Nx,Ny,K</p></li>
+<li><p><strong>i</strong> (<em>int</em>) – i th layer to threshold (0&lt;i&lt;K)</p></li>
+<li><p><strong>lambdaS</strong> (<em>float</em>) – Parsimony parameter (if existing &gt;0)</p></li>
+<li><p><strong>rho</strong> (<em>float</em>) – Penalty parameter &gt;0</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>L</strong> – Résultat de la minimisation pour une couche i</p>
+<dd class="field-even"><p><strong>L</strong> – Result of the minimization for a layer i</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float</p>
@@ -579,21 +577,21 @@ norme nucléaire.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="MIRAG.optim.admm_func.update_rhoLS_adp">
 <span class="sig-prename descclassname"><span class="pre">MIRAG.optim.admm_func.</span></span><span class="sig-name descname"><span class="pre">update_rhoLS_adp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">er_prim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">er_dual</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rhoLS</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/MIRAG/optim/admm_func.html#update_rhoLS_adp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MIRAG.optim.admm_func.update_rhoLS_adp" title="Permalink to this definition"></a></dt>
-<dd><p>Fonction d’adaptation des paramètres de pénalités dans
-l’<cite>ADMM</cite> à partir des erreurs faites sur le primal et le dual.
-Basée sur <a class="footnote-reference brackets" href="#id9" id="id14">3</a></p>
+<dd><p>Adaptation function of the penalty parameters in the
+the <cite>ADMM</cite> from the errors made on the primal and dual.
+Based on <a class="footnote-reference brackets" href="#id9" id="id14">3</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>er_prim</strong> (<em>float</em>) – erreur du primal</p></li>
-<li><p><strong>er_dual</strong> (<em>float</em>) – erreur du dual</p></li>
-<li><p><strong>rhoLS</strong> (<em>float</em>) – valeur du paramètre à actualiser</p></li>
+<li><p><strong>er_prim</strong> (<em>float</em>) – error of the primal</p></li>
+<li><p><strong>er_dual</strong> (<em>float</em>) – error of the dual</p></li>
+<li><p><strong>rhoLS</strong> (<em>float</em>) – value of the parameter to be updated</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>rhoLS</strong> (<em>float</em>) – paramètre de pénalité actualisé</p></li>
-<li><p><strong>k</strong> (<em>float</em>) – facteur de dilation/contraction utilisé</p></li>
+<li><p><strong>rhoLS</strong> (<em>float</em>) – updated penalty parameter</p></li>
+<li><p><strong>k</strong> (<em>float</em>) – expansion/contraction factor used</p></li>
 </ul>
 </p>
 </dd>
