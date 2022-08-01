@@ -3,7 +3,8 @@
 
 
 #### Citation
-@inproceedings{gallet:hal-03726282,
+@inproceedings{
+	gallet:hal-03726282,
   TITLE = {{Nouvel algorithme d'inversion robuste pour le RADAR GPR}},
   AUTHOR = {Gallet, Matthieu and Mian, Ammar and Ginolhac, Guillaume and Stelzenmuller, Nickolas},
   URL = {https://hal.archives-ouvertes.fr/hal-03726282},
