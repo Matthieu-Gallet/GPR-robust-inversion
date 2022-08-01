@@ -1,8 +1,8 @@
-# GPR-robust-inversion
+## GPR-robust-inversion
+Package of robust GPR inversion using Huber norm and source separation 
 
 
-
-#### Citation
+### Citation
 @inproceedings{	 <br /> 
 	gallet:hal-03726282,  <br /> 
   TITLE = {{Nouvel algorithme d'inversion robuste pour le RADAR GPR}}, <br /> 
