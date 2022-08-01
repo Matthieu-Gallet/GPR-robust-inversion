@@ -13,7 +13,4 @@ htmap
 pyaml
 click
 pydoe
-keras
-pytorch
 jupyter
-tensorflow
