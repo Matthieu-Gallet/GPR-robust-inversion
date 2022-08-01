@@ -3,7 +3,7 @@ import numpy as np
 from skimage.util import random_noise
 from skimage.metrics import peak_signal_noise_ratio,mean_squared_error,structural_similarity
 
-sys.path.append('../../')
+sys.path.append('../')
 from MIRAG.optim.sparse_coding import *
 from MIRAG.optim.source_separation import *
 from MIRAG.optim.huber_source_separation import *
