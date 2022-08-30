@@ -12,6 +12,7 @@ from MIRAG.dictionnaire.dictionary import *
 from MIRAG.filtrage_func import SVD_gpr
 from MIRAG.affichage import roc_curve_plot
 
+
 def scale_0_1(img):
     """ Scale an image between 0 and 1
 
