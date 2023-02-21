@@ -6,10 +6,11 @@ Package of robust GPR inversion using Huber norm and source separation. This rep
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#documentation">Documentation</a></li>
+    
     <li>
       <a href="#gpr-robust-inversion">About The Project</a>
     </li>
+    <li><a href="#documentation">Documentation</a></li>
     <li>
       <a href="#running-the-code">Running the code</a>
       <ul>
