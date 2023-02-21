@@ -44,14 +44,14 @@ The main package is located in **MIRAG/** directory, which can be copied in any 
 ### Launching an experiment
 
 ```mermaid
-graph GPR
-    A[Specifying YAML experiment file] --> B(Launching experiment with launch_experiment.py)
-    B --> C[Parsing experiments with parse_experiment.py]
-    C --> D[Plotting thanks to the menu]
+flowchart LR 
+    A([Specifying YAML experiment file]) --> B([Launching experiment with launch_experiment.py])
+    B --> C([Parsing experiments with parse_experiment.py])
+    C --> D([Plotting thanks to the menu])
 ```
 
 In order to have a repoducible framework, this repertory works on the principle of single experiments:
->In the context of this repo, an experimentis defined as a run of several inversion algorithms on a given GPR image with sharing the same atoms dictionary. For each algorithm, the hyperparameters are precised and do not vary (although it is possible to define several time the same inversion algorithm with different hyperparameters).
+>An experiment here is defined as a run of several inversion algorithms on a given GPR image while sharing the same atoms dictionary. For each algorithm, the hyperparameters are precised and do not vary (although it is possible to define several time the same inversion algorithm with different hyperparameters).
 
 An experiment is defined by its YAML file in the **experiments/** directory. Several of such files reproducing partially the results presented in the paper are given:
 * **IRADAR_00H_full.yml** produces experiment for Fig. 7 and 8. (d) of the paper
