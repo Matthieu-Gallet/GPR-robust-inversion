@@ -36,7 +36,7 @@ class ADMMSourceSepHUB(admm_func.ConvolutionalSparseCoding):
     @_deprecate_positional_args
     def __init__(self, dictionary, eps, n_iter, delta, rhoS, rhoL,
                  update_rho="adaptive", save_iterations=False, max_grad_iter = 5,
-                 alpha = 5E-4, threshold_H = 500) -> None:         
+                 alpha = 5E-4, threshold_H = 500, verbosity=0) -> None:         
         super().__init__(dictionary)
         self.eps = eps
         self.normalize = True
@@ -66,6 +66,10 @@ class ADMMSourceSepHUB(admm_func.ConvolutionalSparseCoding):
         self.dal_ = 0
         self.L_ = 0
         self.iterations_save_ = []
+        self.verbosity = verbosity
+
+    def get_estimate(self):
+        return self.dal_
 
     def _cost_function_huber(self):
             self.error_primal_C_.append(np.linalg.norm(np.sum(self.primal_-self.auxiliary_S,2)))
@@ -139,15 +143,18 @@ class ADMMSourceSepHUB(admm_func.ConvolutionalSparseCoding):
     def fit(self, X, y=None):
         X = self._validate_data(X)
         self._initialize_for_estimation(X)
-        pbar = tqdm(total = self.n_iter,leave=True)
-        pbar.n = self.iterations_
+        if self.verbosity >0:
+            pbar = tqdm(total = self.n_iter,leave=True)
+            pbar.n = self.iterations_
         while not self.converged_:
             self._iteration_addm_huber()
             info = f"rec : {float(self.error_rec_[-1]):.4}  ||duaS :  {float(self.error_dual_S_[-1]):.3} ||duaM :  {float(self.error_dual_M_[-1]):.3} ||priC :  {float(self.error_primal_C_[-1]):.4} ||priL :  {float(self.error_primal_L_[-1]):.4}"
-            pbar.set_description(info)
-            pbar.update(1)
+            if self.verbosity >0:
+                pbar.set_description(info)
+                pbar.update(1)
             self.iterations_ += 1
             cond_iter = self.iterations_ >= self.n_iter
             self.converged_ = cond_iter
-        pbar.close()
+        if self.verbosity >0:
+            pbar.close()
         return self

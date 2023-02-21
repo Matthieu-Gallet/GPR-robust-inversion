@@ -344,17 +344,22 @@ class ADMMSparseCoding(admm_func.ConvolutionalSparseCoding):
     def fit(self, X, y=None, initial_solution=None):
         X = self._validate_data(X)
         self._initialize_for_estimation(X,initial_solution)
-        pbar = tqdm(total = self.n_iter,leave=True)
-        pbar.n = self.iterations_
+        if self.verbosity >0:
+            pbar = tqdm(total = self.n_iter,leave=True)
+            pbar.n = self.iterations_
+
         while not self.converged_:
             self._iteration_addm()
-            info = f"rec : {float(self.error_rec_[-1]):.5}  ||dua :  {float(self.error_dual_[-1]):.5} ||pri :  {float(self.error_primal_[-1]):.5} ||rho :  {float(self.rho):.5}"
-            pbar.set_description(info)
-            pbar.update(1)
+            if self.verbosity >0:
+                info = f"rec : {float(self.error_rec_[-1]):.5}  ||dua :  {float(self.error_dual_[-1]):.5} ||pri :  {float(self.error_primal_[-1]):.5} ||rho :  {float(self.rho):.5}"
+                pbar.set_description(info)
+                pbar.update(1)
             self.iterations_ += 1
             cond_erro = np.max([self.error_rec_[-1], self.error_dual_[-1]]) < self.delta
             cond_iter = self.iterations_ >= self.n_iter
             self.converged_ = cond_iter or cond_erro
-        pbar.close()
+        
+        if self.verbosity >0:
+            pbar.close()
     
         return self

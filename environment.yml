@@ -1,0 +1,27 @@
+name: gpr-inversion
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - pip
+  - numpy
+  - scipy
+  - joblib
+  - pandas
+  - matplotlib
+  - plotly
+  - seaborn
+  - tqdm
+  - ipython
+  - jupyter
+  - numba
+  - pip:
+      - pyaml
+      - click
+      - pydoe
+      - h5py
+      - pywavelets
+      - rich
+      - simple-term-menu
+      - GitPython

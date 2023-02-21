@@ -1,0 +1,85 @@
+# Experiment on full image with low number of iterations
+
+# Experiments metadata
+name: IRADAR_00H_full
+tags: ["GPR-bare", "SVD", "SVD+L2", "L2", "Huber", "IRADAR__00H"]
+
+# Dataset choice
+data:
+  path: "./data/IRADAR__00H.h5"
+  type: processed #  raw or processed
+  debug: True # If True, Image is cropped to debug faster
+
+# Dictionary things
+dictionary:
+  type: "physical" # choice between "physical" or "pre-computed"
+  parameters:
+    epsilon_values: [1, 3, 5., 6.45774833, 8.34050269, 10.77217345, 13.91279701, 17.96906832, 23.20794417, 29.97421252, 38.71318413, 50]
+    R_values: [0.01, 0.1, 1]
+    hanning_coef: 4
+
+
+# Inversion methodologies
+methodologies:
+  GPR-bare:
+    name: "Unprocessed image"
+    model_file: ".estimators.gpr_image_bare"
+    hyperparameters:
+      unused: unused
+
+  SVD:
+    name: "SVD Rank 1"
+    model_file: ".estimators.svd_inversion"
+    hyperparameters:
+      rank: 1
+
+  SVD-L2:
+    name: "SVD Rank 1 + L2 inversion"
+    model_file: ".estimators.svd_l2_inversion"
+    hyperparameters:
+      rank: 1 
+      eps: 0.4
+      n_iter: 500
+      delta: 1.0e-8
+      rho: 500
+      update_rho: "adaptive"
+      penalty: "l1"
+      norm_optim: "Frobenius"
+      save_iterations: False
+      verbosity: 1
+
+  l2-inversion:
+    name: "Inversion with L2"
+    model_file: ".estimators.l2_inversion"
+    hyperparameters:
+      eps: 0.2
+      n_iter: 500
+      delta: 1.0e-8
+      rhoS: 500
+      rhoL: 250
+      over_relax: 0
+      update_rho: "adaptive"
+      penalty: "l1"
+      norm_optim: "Frobenius"
+      save_iterations: False
+      verbosity: 1
+
+  huber-inversion:
+    name: "Inversion with Huber norm"
+    model_file: ".estimators.huber_inversion"
+    hyperparameters:
+      eps: 0.2
+      n_iter: 500
+      delta: 1.0e-8
+      rhoS: 500
+      rhoL: 250
+      update_rho: "fix"
+      save_iterations: False
+      max_grad_iter : 5
+      alpha: 5.0e-4
+      threshold_H: 750
+      verbosity: 1
+
+ROC:
+  number_points: 100
+  scale:  "linear" # Choice between linear and semilogx

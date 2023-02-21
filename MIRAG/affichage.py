@@ -224,17 +224,18 @@ def roc_curve_plot(mask,img,name):
     name :  str
         name of the plot
     """
-    f,ax = plt.subplots(1,figsize=(6.5,6.5))
-    ax.plot([0,1],[0,1],'--',color='black')
+    f = plt.figure(figsize=(9,7))
+    colors = ['k', 'r', 'b', 'g', 'pink', 'orange']
     for i,ref_2 in enumerate(img):
         a = np.array(ref_2,dtype=np.float64)**2
-        b = np.where(mask>128,1,0)#mask/255.0
+        # b = np.where(mask>128,1,0)#mask/255.0
+        b = mask
         b = b.ravel()
         a = a.ravel()
         auc_score = roc_auc_score(b, a)
         fpr, tpr, thresholds = roc_curve(b, a)
-        ax.plot(fpr, tpr, label=f'{name[i]} - ROC curve (area = %0.2f)' % auc_score)
-        ax.set_xlabel('False Positive Rate')
-        ax.set_ylabel('True Positive Rate')
-        ax.legend()
-    plt.show()
+        plt.plot(fpr, tpr, c=colors[i], label=f'{name[i]} - ROC curve (area = %0.2f)' % auc_score)
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.legend()
+    return f

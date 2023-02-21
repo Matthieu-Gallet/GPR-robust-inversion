@@ -1,0 +1,31 @@
+# ----------------------------------------------------------------- 
+# HtCondor Template submit file for job runner
+# -----------------------------------------------------------------
+
+universe=vanilla
+
+# To receive a notification e-mail
+# -------------------------------------------------------------
+notification=complete
+notify_user="ammar.mian@univ-smb.fr"
+
+# Transmitting shell environment to worker
+# ------------------------------------------------------------
+getenv = True
+# environment = 
+
+# Files options
+# ------------------------------------------------------------
+should_transfer_files = IF_NEEDED
+when_to_transfer_output = ON_EXIT
+
+# User group options 
+# ------------------------------------------------------------
++WishedAcctGroup = "group_usmb.listic"
++isDefaultJob=True
+
+# Demandes de ressources sur la machine
+# ------------------------------------------------------------
+request_cpus=4
+request_memory=32GB
+request_disk=10GB

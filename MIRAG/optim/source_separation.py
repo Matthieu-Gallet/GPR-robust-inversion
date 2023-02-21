@@ -210,6 +210,9 @@ class ADMMSourceSep(admm_func.ConvolutionalSparseCoding):
         self.c_ = 0
         self.iterations_save_ = []
 
+    def get_estimate(self):
+        return self.dal_
+
     def _update_c(self):
         self.c_ = self.rhoL*self.DF_/(self.rhoS + self.rhoL*self.c_inter)
     
@@ -308,18 +311,22 @@ class ADMMSourceSep(admm_func.ConvolutionalSparseCoding):
     def fit(self, X, y=None, initial_solution=None):
         X = self._validate_data(X)
         self._initialize_for_estimation(X,initial_solution)
-        pbar = tqdm(total = self.n_iter,leave=True)
-        pbar.n = self.iterations_
+        if self.verbosity >0:
+            pbar = tqdm(total = self.n_iter,leave=True)
+            pbar.n = self.iterations_
         while not self.converged_:
             self._iteration_addm()
             info = f"rec : {float(self.error_rec_[-1]):.4}  ||duaS :  {float(self.error_dual_S_[-1]):.3} ||duaL :  {float(self.error_dual_L_[-1]):.3} ||pri :  {float(self.error_primal_[-1]):.4} ||rhoS :  {float(self.rhoS):.3} ||rhoL :  {float(self.rhoL):.3}"
-            pbar.set_description(info)
-            pbar.update(1)
+            if self.verbosity >0:
+                pbar.set_description(info)
+                pbar.update(1)
             self.iterations_ += 1
             # ajout max alpha variation + L variation
             #cond_erro = np.max([self.error_rec_[-1], self.error_dual_[-1]]) < self.delta
             cond_iter = self.iterations_ >= self.n_iter
             self.converged_ = cond_iter #or cond_erro
-        pbar.close()
+
+        if self.verbosity >0:
+            pbar.close()
     
         return self
