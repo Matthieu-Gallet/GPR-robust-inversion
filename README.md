@@ -1,11 +1,35 @@
+<a name="readme-top"></a>
 # GPR-robust-inversion
 
-## Description 
 Package of robust GPR inversion using Huber norm and source separation. This repository contains reproducible code for a submitted TGRS paper "New Robust Sparse Convolutional Coding Inversion Algorithm for Ground Penetrating Radar Images".
+
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#documentation">Documentation</a></li>
+    <li>
+      <a href="#gpr-robust-inversion">About The Project</a>
+    </li>
+    <li>
+      <a href="#running-the-code">Running the code</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#repertory-organisation">Repertory organisation</a></li>
+        <li><a href="#launching-an-experiment">Launching an experiment</a></li>
+      </ul>
+    </li>
+    <li><a href="#authors">Authors</a></li>
+    <li><a href="#citation">Citation</a></li>
+  </ol>
+</details>
+
+## Documentation
+
+Documentation for the main code package can be found [here](https://matthieu-gallet.github.io/GPR-robust-inversion/index.html).
 
 ## Running the code
 
-### Requirements
+### Prerequisites
 
 The code is provided in a running environment based upon YAML experiment files. To handle this on your machine, the best way is to isntall the conda environment provided in the file **environment.yml**:
 
@@ -76,7 +100,7 @@ This action will create a custom directory in the **results/** directory corresp
 
 Other options are also available (see: `python launch_experiment.py --help`) for running through an HTCondor job management system.
 
-> :warning: By default, the execution use parallel processing in order to save time (one thread per inversion algorithm), which also means that the image is replicated as many times as alroithms in the memory which can be too much for the PC. It is possible to deactivate this by replacing `n_jobs=-1` to `n_jobs=1`in the file **execute_experiment.py** at line 180. And of course, there is a need to commit this change in the git repertory.
+> :warning: By default, the execution use parallel processing in order to save time (one thread per inversion algorithm), which also means that the image is replicated as many times as algorithms in the memory which can exceed the amount of RAM available. It is possible to deactivate this by replacing `n_jobs=-1` to `n_jobs=1`in the file **execute_experiment.py** at line 180. And of course, there is a need to commit this change in the git repertory.
 
 When one or more experiments are done, it is possible to see a summary of all experiments done thansk to the command:
 ```bash
@@ -93,6 +117,8 @@ which allows to look up infromation and compare experiments as well as plot an e
 > python plot_experiment results/IRADAR_00H_full_02-21-2023:16-11-53/
 > ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Authors
 
 Code developed by:
@@ -107,8 +133,9 @@ Code developed by:
 
 Paper contributors: Guillaume Ginolhac, Esa Ollila and Nickolas Stelzenmuller.
 
-Data provide by [Geolithe](http://geolithe.fr).
+Data provided by [Geolithe](http://geolithe.fr).
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Citation
 ```Latex
@@ -123,3 +150,4 @@ Data provide by [Geolithe](http://geolithe.fr).
   HAL_VERSION = {v1},
 }
 ```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
