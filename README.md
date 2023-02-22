@@ -31,7 +31,7 @@ Documentation for the main code package can be found [here](https://matthieu-gal
 
 An example image is provided in the **data/** directory. Untar it before proceeding:
 ```bash
-tar -tvf data/IRADAR__00H.tar.gz
+tar -xvzf data/IRADAR__00H.tar.gz -C data
 ```
 
 ## Running the code
