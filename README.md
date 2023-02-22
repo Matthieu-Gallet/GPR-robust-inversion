@@ -30,7 +30,7 @@ Documentation for the main code package can be found [here](https://matthieu-gal
 ## Data
 
 An example image is provided in the **data/** directory. Untar it before proceeding:
-````bash
+```bash
 tar -tvf data/IRADAr__00H.tar.gz
 ```
 
