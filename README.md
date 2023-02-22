@@ -38,7 +38,7 @@ tar -xvzf data/IRADAR__00H.tar.gz -C data
 
 ### Prerequisites
 
-The code is provided in a running environment based upon YAML experiment files. To handle this on your machine, the best way is to isntall the conda environment provided in the file **environment.yml**:
+The code is provided in a running environment based upon YAML experiment files. To handle this on your machine, the best way is to install the conda environment provided in the file **environment.yml**:
 
 ```bash
 conda create -f environment.yml
@@ -70,7 +70,7 @@ The repo is organised as follows:
 └── results
 ```
 
-The main package is located in **MIRAG/** directory, which can be copied in any of your projets if needing to use the tools developed here. A documentation is available in **docs/** directory. An example image provided by Geolithe (which we thanks for) is available in **data/**. Finally experiments YAML files are stored in **experiments/** and **results/** is the default directory where the results of an experiment are sotred.
+The main package is located in **MIRAG/** directory, which can be copied in any of your projects if needing to use the tools developed here. A documentation is available in **docs/** directory. An example image provided by Geolithe (which we thank for) is available in **data/**. Finally, experiments YAML files are stored in **experiments/** and **results/** is the default directory where the results of an experiment are stored.
 
 ### Launching an experiment
 
@@ -81,7 +81,7 @@ flowchart LR
     C --> D([Plotting thanks to the menu])
 ```
 
-In order to have a repoducible framework, this repertory works on the principle of single experiments:
+In order to have a reproducible framework, this repertory works on the principle of single experiments:
 >An experiment here is defined as a run of several inversion algorithms on a given GPR image while sharing the same atoms dictionary. For each algorithm, the hyperparameters are precised and do not vary (although it is possible to define several time the same inversion algorithm with different hyperparameters).
 
 An experiment is defined by its YAML file in the **experiments/** directory. Several of such files reproducing partially the results presented in the paper are given:
@@ -90,7 +90,7 @@ An experiment is defined by its YAML file in the **experiments/** directory. Sev
 
 **When wanting to change parameters, it's better to copy those files and change the name and tags to keep in memory the parameters for the paper.**
 
-In those files, the dataset is precised as well as tags for the experiment (which can be custom). Then inversion algorithms are precised in the **methodologies** keys, where we specify the algorithm definition file (in the **./experiments/estimators** directory). An algorithm definition file create a variable estimator referencing a scikit-learn compatible class implementing a fit method. This class will then be parsed by the execution to perform the inversion. Additionally, the method's hyperparameters are attributes of the estimator class and are specified in the **hyperparameters** key of the corresponding method. See examples files for a better understanding.
+In those files, the dataset is specified as well as tags for the experiment (which can be custom). Then inversion algorithms are defined in the **methodologies** keys, where we specify the algorithm definition file (in the **./experiments/estimators** directory). An algorithm definition file created a variable estimator referencing a Scikit-learn compatible class implementing a fit method. This class will then be parsed by the execution to perform the inversion. Additionally, the method's hyperparameters are attributes of the estimator class and are specified in the **hyperparameters** key of the corresponding method. See examples files for a better understanding.
 
 > :heavy_exclamation_mark: Before launching an experiment, we check if the repertory is not dirty (uncomitted changes) otherwhise, the code will refuse to execute. This is mainly because the commit sha is saved for each experiment to be able to track back to the verion of the code used when launching the experiment.
 > The **experiments/** folder is obviously excluded from this rule as we expect to change it extensively in tests
@@ -101,22 +101,22 @@ Once an experiment is defined, we can launch the experiment thanks to **launch_e
 python launch_experiment.py experiments/IRADAR_00H_full.yml
 ```
 
-This action will create a custom directory in the **results/** directory corresponding to the experiment where the name is a combination of the experiment name oin the YAML description and the date of execution. Then it will launch **execute_experiment.py** with the good paths. There is no output on the terminal as logs files are generated in the experiment directory:
-* **experiment_management.log**: logs related to the management of the experiemnt (creating the results directory, launching the experiment and saving results)
+This action will create a custom directory in the **results/** directory corresponding to the experiment, where the name is a combination of the experiment name in the YAML description and the date of execution. Then it will launch **execute_experiment.py** with the good paths. There is no output on the terminal, as logs files are generated in the experiment directory:
+* **experiment_management.log**: logs related to the management of the experiment (creating the results' directory, launching the experiment and saving results)
 * **experiment_execution.log**: logs related to the actual execution (dictionary creation, launch of inversion algorithms and saving artifacts of results)
 
 Other options are also available (see: `python launch_experiment.py --help`) for running through an HTCondor job management system.
 
 > :warning: By default, the execution use parallel processing in order to save time (one thread per inversion algorithm), which also means that the image is replicated as many times as algorithms in the memory which can exceed the amount of RAM available. It is possible to deactivate this by replacing `n_jobs=-1` to `n_jobs=1`in the file **execute_experiment.py** at line 180. And of course, there is a need to commit this change in the git repertory.
 
-When one or more experiments are done, it is possible to see a summary of all experiments done thansk to the command:
+When one or more experiments are done, it is possible to see a summary of all experiments done thanks to the command:
 ```bash
 python parse_experiement.py
 ```
 which yields a prompt similar to this:
 ![parsing prompt](img/prompt.png)
 
-which allows to look up infromation and compare experiments as well as plot an experiment when using the option **look up information on experiment**:
+which allows looking up information and compare experiments as well as plot an experiment when using the option **look up information on experiment**:
 ![](img/plot.png)
 
 > :warning: Unfortunately, this command is not compatible with Windows command shell, so to plot, we can use the script **plot_experiment.py**. For example:
