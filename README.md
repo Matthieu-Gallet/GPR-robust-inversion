@@ -27,6 +27,13 @@ Package of robust GPR inversion using Huber norm and source separation. This rep
 
 Documentation for the main code package can be found [here](https://matthieu-gallet.github.io/GPR-robust-inversion/index.html).
 
+## Data
+
+An example image is provided in the **data/** directory. Untar it before proceeding:
+````bash
+tar -tvf data/IRADAr__00H.tar.gz
+``
+
 ## Running the code
 
 ### Prerequisites

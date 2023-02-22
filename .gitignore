@@ -1,8 +1,5 @@
 # Data
-data
 results
-src/old
-exports
 
 # Experiments
 experiments/*.yml
