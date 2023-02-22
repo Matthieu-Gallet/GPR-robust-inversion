@@ -17,7 +17,7 @@ import argparse
 import numpy as np
 import pickle
 import matplotlib.pyplot as plt
-MIRAG.affichage import scale_0_1
+from MIRAG.affichage import scale_0_1
 import matplotlib.gridspec as gridspec
 from matplotlib.widgets import Slider
 import json
