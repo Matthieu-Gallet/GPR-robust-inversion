@@ -46,7 +46,7 @@ conda create -f environment.yml
 
 and then activate the environment through:
 ```bash
-conda activate gpr-inverion
+conda activate gpr-inversion
 ```
 
 To install conda, see: https://docs.conda.io/en/latest/
@@ -92,8 +92,8 @@ An experiment is defined by its YAML file in the **experiments/** directory. Sev
 
 In those files, the dataset is specified as well as tags for the experiment (which can be custom). Then inversion algorithms are defined in the **methodologies** keys, where we specify the algorithm definition file (in the **./experiments/estimators** directory). An algorithm definition file created a variable estimator referencing a Scikit-learn compatible class implementing a fit method. This class will then be parsed by the execution to perform the inversion. Additionally, the method's hyperparameters are attributes of the estimator class and are specified in the **hyperparameters** key of the corresponding method. See examples files for a better understanding.
 
-> :heavy_exclamation_mark: Before launching an experiment, we check if the repertory is not dirty (uncomitted changes) otherwhise, the code will refuse to execute. This is mainly because the commit sha is saved for each experiment to be able to track back to the verion of the code used when launching the experiment.
-> The **experiments/** folder is obviously excluded from this rule as we expect to change it extensively in tests
+> :heavy_exclamation_mark: Before launching an experiment, we check if the repertory is not dirty (uncomitted changes) otherwhise, the code will refuse to execute. This is mainly because the commit sha is saved for each experiment to be able to track back to the version of the code used when launching the experiment.
+> The **experiments/** folder is obviously excluded from this rule as we expect to change it extensively.
 
 Once an experiment is defined, we can launch the experiment thanks to **launch_experiment.py** file which is a wrapper around the **execute_experiment.py** which actually defines what an experiment is in this context (reading data, constructing dictionary, performing inversion for all inversion methodologies and saving those results in pickle artifact). For example:
 
